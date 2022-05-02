@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Tahoma', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,4 +10,14 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: 'MontserratSemiBold';
+  src: local('MontserratSemiBold'), url("./assets/fonts/Montserrat-SemiBold.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'SofiaProSemiBold';
+  src: local('SofiaProSemiBold'), url("./assets/fonts/SofiaProSemiBoldVN.otf") format('truetype');
 }
