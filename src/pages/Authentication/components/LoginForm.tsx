@@ -1,15 +1,17 @@
 import { Button, Checkbox, Form, Input } from 'antd'
-import React, { FormEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { FormEvent, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from '../../../redux/actions/AuthAction'
 import { ApplicationDispatch } from '../../../store/store'
-import { getAccessToken } from '../../../utils/localStorage'
+import { useNavigate } from 'react-router-dom'
+import { accessTokenSelector } from '../../../redux/reducers/AuthReducer'
+
 
 export const LoginForm = () => {
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(true)
-    const accessToken = getAccessToken()
+    const accessToken = useSelector(accessTokenSelector)
     const dispatch: ApplicationDispatch = useDispatch()
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -20,6 +22,13 @@ export const LoginForm = () => {
             })
         )
     }
+    
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (accessToken) {
+            navigate('/')
+        }
+    }, [accessToken, navigate])
     return (
         <Form className='log-form' labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ remember: true }} onSubmitCapture={handleSubmit} >
             <Form.Item className='login-form-item' label="Username" name='loginUsername' rules={[{ required: true, message: 'Please input your username!', }]}>

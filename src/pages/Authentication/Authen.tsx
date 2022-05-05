@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './AuthenStyle.css'
 import { LoginForm } from './components/LoginForm'
 import { SignUpForm } from './components/SignUpForm'
 import codeGear from '../../assets/svg/code-gear.svg'
 
-export const Login = () => {
+export const Authen = () => {
     const [isLogin, setIsLogin] = useState(true)
+    
     return (
         <div className="login-page">
             <div className='login-thumbnail'>

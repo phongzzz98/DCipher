@@ -1,0 +1,33 @@
+/* .header-app {
+    height: 70px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    align-self: auto;
+    background: linear-gradient(to right, #061161, #780206);
+    font-size: 30px;
+
+}
+.header-app > a {
+    display: flex;
+}
+.open-nav-btn {
+    padding: 20px 0 20px 20px;
+    color: #FFF;
+}
+
+.open-nav-btn:hover {
+    color: rgb(255, 155, 41);
+}
+
+.header-logo {
+    color: #FFF;
+    margin: auto 0 auto 10px;
+}
+
+.header-avatar {
+    margin: auto 0 auto 20px;
+} */

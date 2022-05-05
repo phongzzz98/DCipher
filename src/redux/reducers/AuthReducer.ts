@@ -20,8 +20,9 @@ const initialState: IAuthState = {
   username: "",
   email: "",
   accessToken: localStorage.getItem("accessToken"),
-  role: "",
+  role: 99,
   id: 0,
+  isLoading: false,
 };
 
 export const authSlice = createSlice({
@@ -36,22 +37,20 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginAction.fulfilled, (state, action) => {
-        console.log("Here");
-        if (action.payload.token) {
+          state.isLoading = false
           state.accessToken = action.payload.token;
           state.role = action.payload.user.role;
           state.id = action.payload.user.id;
+          state.username = action.payload.user.username;
+          state.email = action.payload.user.email;
           setAccessToken(action.payload.token);
           setRole(action.payload.user.role);
           notification.success({
             message: "Login Success!",
           });
-        } else {
-          console.log("NO");
-          notification.error({
-            message: "You shall not pass!",
-          });
-        }
+      })
+      .addCase(loginAction.pending, (state) => {
+          state.isLoading = true;
       })
       .addCase(loginAction.rejected, () => {
         notification.error({
@@ -78,12 +77,10 @@ export const authSlice = createSlice({
 
 const selectSelf = (state: RootState) => state.authSlice;
 
-export const accessTokenSelector = createSelector(
-  selectSelf,
-  (state) => state.accessToken
-);
+export const accessTokenSelector = createSelector(selectSelf, (state) => state.accessToken);
 export const roleSelector = createSelector(selectSelf, (state) => state.role);
 export const uidSelector = createSelector(selectSelf, (state) => state.id);
+export const loadingSelector = createSelector(selectSelf, (state) => state.isLoading);
 
 export const { logout } = authSlice.actions;
 
