@@ -3,13 +3,8 @@
     font-family: 'SofiaProSemiBold';
 }
 
-.logo {
-    height: 32px;
-    margin: 16px;
-    background: rgba(255, 255, 255, 0.3);
-}
 .site-layout .site-layout-background {
-    background: #001324;
+    background: #001b31f8;
     z-index: 1;
     box-shadow: -3px 0 5px 0 rgba(0,0,0,0.2);
     font-size: 1.5em;

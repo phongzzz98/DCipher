@@ -1,0 +1,7 @@
+.logo {
+    height: 48px;
+    margin: 16px;
+    background: linear-gradient(45deg, red, blue);
+    background-size: 400%;
+    border-radius: 2em
+}

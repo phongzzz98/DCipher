@@ -22,7 +22,7 @@ export const Header = (props: HeaderProps) => {
                     src={codeGear}
                 />
             </Link>
-            <span className={!isNavbarOpen ? "header-logo-off logo-inactive" : "header-logo logo-active"}>DCipher</span>
+            <span className={!isNavbarOpen ? "header-logo-start-to-off logo-inactive" : "header-logo logo-active"}>DCipher</span>
         </div>
     )
 }
