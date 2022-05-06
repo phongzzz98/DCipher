@@ -13,7 +13,7 @@ import { Error } from './pages/Error/Error';
 function App() {
   const dark = {
     theme: {
-      primaryColor: '#17A7C6',
+      primaryColor: '#e30000',
     }
   }
 

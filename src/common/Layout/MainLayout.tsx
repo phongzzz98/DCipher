@@ -57,13 +57,7 @@ export const MainLayout = () => {
         </Layout.Sider>
         <Layout className="site-layout">
           <Header setIsNavbarOpen={setIsNavbarOpen} isNavbarOpen={isNavbarOpen} />
-          <Layout.Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              minHeight: 280,
-            }}
-          >
+          <Layout.Content className="site-layout-background">
             <Outlet />
           </Layout.Content>
         </Layout>

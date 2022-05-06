@@ -1,5 +1,5 @@
 .header-app {
-    background-color: #001529;
+    background-color: #001120;
     font-size: 2.4em;
     color: white;
     display: flex;
@@ -7,24 +7,52 @@
     justify-content: flex-start;
 
 }
-/* .header-app > a {
+.header-app > a {
     display: flex;
-} */
-
+}
 
 .trigger {
     padding: 0 24px;
-    font-size: 0.7em;
+    font-size: 0.6em;
     line-height: 64px;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: all 0.3s;
 }
 
 .trigger:hover {
-    opacity: 0.7;
+    opacity: 0.9;
 }
 
 .header-logo {
-    color: #FFF;
-    margin: auto 0 auto 10px;
+    margin: auto 0 auto 15px;
+    opacity: 0;
+    transform: translateX(-2rem);
+}
+
+.header-logo-off {
+    margin: auto 0 auto 15px;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.logo-active {
+    animation: logoAnimationOn 1000ms ease forwards;
+}
+
+.logo-inactive {
+    animation: logoAnimationOff 1000ms ease forwards;
+}
+
+@keyframes logoAnimationOn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes logoAnimationOff {
+    to {
+        opacity: 0;
+        transform: translateX(2rem);
+    }
 }

@@ -1,6 +1,8 @@
 import { Avatar } from 'antd'
-import { MenuOutlined } from '@ant-design/icons';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import './HeaderStyle.css'
+import codeGear from '../../assets/svg/code-gear.svg'
+import { Link } from 'react-router-dom';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -11,13 +13,16 @@ export const Header = (props: HeaderProps) => {
     const { setIsNavbarOpen, isNavbarOpen } = props
     return (
         <div className="header-app">
-            <MenuOutlined className="trigger" onClick={() => setIsNavbarOpen(!isNavbarOpen)} />
-            <Avatar
-                shape="square"
-                className="header-avatar"
-                src="https://cdn-icons-png.flaticon.com/512/3358/3358865.png"
-            />
-            <span className="header-logo">DCipher</span>
+            {isNavbarOpen ?
+                <MenuUnfoldOutlined className="trigger" onClick={() => setIsNavbarOpen(!isNavbarOpen)} /> : <MenuFoldOutlined className="trigger" onClick={() => setIsNavbarOpen(!isNavbarOpen)} />}
+            <Link to={'/'}>
+                <Avatar
+                    shape="square"
+                    className="header-avatar"
+                    src={codeGear}
+                />
+            </Link>
+            <span className={!isNavbarOpen ? "header-logo-off logo-inactive" : "header-logo logo-active"}>DCipher</span>
         </div>
     )
 }
