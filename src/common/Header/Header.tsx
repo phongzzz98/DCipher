@@ -11,7 +11,7 @@ export const Header = (props: HeaderProps) => {
     const { setIsNavbarOpen, isNavbarOpen } = props
     return (
         <div className="header-app">
-            <MenuOutlined className="open-nav-btn trigger" onClick={() => setIsNavbarOpen(!isNavbarOpen)} />
+            <MenuOutlined className="trigger" onClick={() => setIsNavbarOpen(!isNavbarOpen)} />
             <Avatar
                 shape="square"
                 className="header-avatar"
