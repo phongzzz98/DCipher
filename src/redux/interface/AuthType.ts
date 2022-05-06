@@ -16,5 +16,4 @@ export interface IAuthState {
   accessToken: null | string;
   role: null | number;
   id: number;
-  isLoading: boolean;
 }

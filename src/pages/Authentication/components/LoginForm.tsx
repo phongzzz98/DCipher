@@ -5,7 +5,7 @@ import { loginAction } from '../../../redux/actions/AuthAction'
 import { ApplicationDispatch } from '../../../store/store'
 import { useNavigate } from 'react-router-dom'
 import { accessTokenSelector } from '../../../redux/reducers/AuthReducer'
-
+import { toggleLoading } from '../../../redux/reducers/LoadingReducer'
 
 export const LoginForm = () => {
     const [userName, setUserName] = useState("")
@@ -13,14 +13,17 @@ export const LoginForm = () => {
     const [remember, setRemember] = useState(true)
     const accessToken = useSelector(accessTokenSelector)
     const dispatch: ApplicationDispatch = useDispatch()
-    const handleSubmit = (e: FormEvent) => {
+    
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        dispatch(
+        setTimeout(async ()=>{await dispatch(toggleLoading())}, 3000)
+        await dispatch(
             loginAction({
                 email: userName,
                 password: password,
             })
         )
+        dispatch(toggleLoading())
     }
     
     const navigate = useNavigate()
@@ -29,6 +32,7 @@ export const LoginForm = () => {
             navigate('/')
         }
     }, [accessToken, navigate])
+    
     return (
         <Form className='log-form' labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ remember: true }} onSubmitCapture={handleSubmit} >
             <Form.Item className='login-form-item' label="Username" name='loginUsername' rules={[{ required: true, message: 'Please input your username!', }]}>

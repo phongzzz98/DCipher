@@ -1,18 +1,6 @@
 .main-layout{
     height: 100vh;
     font-family: 'SofiaProSemiBold';
-    font-size: 1em;
-}
-.trigger {
-    padding: 0 24px;
-    font-size: 18px;
-    line-height: 64px;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-.trigger:hover {
-    color: #1890ff;
 }
 
 .logo {
@@ -20,7 +8,13 @@
     margin: 16px;
     background: rgba(255, 255, 255, 0.3);
 }
-
 .site-layout .site-layout-background {
-    background: #fff;
+    background: #001324;
+    z-index: 1;
+    box-shadow: -3px 0 5px 0 rgba(0,0,0,0.2);
+    font-size: 1.5em;
+    padding: 50px 70px;
+    min-height: 280px;
+    color: white;
+    overflow-y: scroll;
 }

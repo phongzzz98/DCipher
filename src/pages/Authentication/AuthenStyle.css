@@ -89,10 +89,6 @@
     color: #c9c9c9;
 }
 
-.test-color{
-    color: #21006e;
-}
-
 @keyframes logo-spin {
     from {
       transform: rotate(360deg);

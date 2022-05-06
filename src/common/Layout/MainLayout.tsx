@@ -1,6 +1,4 @@
-import { Menu } from 'antd'
-import Layout, { Content } from 'antd/lib/layout/layout'
-import Sider from 'antd/lib/layout/Sider'
+import { Menu, Layout } from 'antd'
 import React, { useState } from 'react'
 import { Header } from '../Header/Header'
 import {
@@ -12,11 +10,13 @@ import './MainLayoutStyle.css'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { removeAccessToken, removeUserInfo } from '../../utils/localStorage'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadingSelector, logout } from '../../redux/reducers/AuthReducer'
+import { logout } from '../../redux/reducers/AuthReducer'
+import { loadingSelector } from '../../redux/reducers/LoadingReducer'
 
 export const MainLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLoading = useSelector(loadingSelector)
 
   const handleClickLogOut = () => {
     removeAccessToken();
@@ -25,13 +25,11 @@ export const MainLayout = () => {
     navigate('/login');
   };
 
-  const isLoading = useSelector(loadingSelector)
-
   const [isNavbarOpen, setIsNavbarOpen] = useState(false)
   if (!isLoading) {
     return (
       <Layout className="main-layout">
-        <Sider trigger={null} collapsible={true} collapsed={isNavbarOpen}>
+        <Layout.Sider className='sider' width={250} trigger={null} collapsible={true} collapsed={isNavbarOpen}>
           <div className="logo" />
           <Menu
             theme="dark"
@@ -56,19 +54,12 @@ export const MainLayout = () => {
               <span className="navbar-span">Đăng Xuất</span>
             </Menu.Item>
           </Menu>
-        </Sider>
+        </Layout.Sider>
         <Layout className="site-layout">
           <Header setIsNavbarOpen={setIsNavbarOpen} isNavbarOpen={isNavbarOpen} />
-          <Content
-            className="site-layout-background"
-            style={{
-              margin: 12,
-              padding: 24,
-              minHeight: 280,
-            }}
-          >
+          <Layout.Content className="site-layout-background">
             <Outlet />
-          </Content>
+          </Layout.Content>
         </Layout>
       </Layout>
     )

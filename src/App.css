@@ -1,4 +1,7 @@
 @import 'antd/dist/antd.variable.min.css';
+.test-color{
+  color: #e30000;
+}
 /* .App {
   text-align: center;
 }
