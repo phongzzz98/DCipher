@@ -14,7 +14,7 @@ export const MainLayout = () => {
     return (
       <Layout className="main-layout">
         <Layout.Sider className='sider' width={250} trigger={null} collapsible={true} collapsed={isNavbarOpen}>
-          <Navbar />
+          <Navbar isNavbarOpen={isNavbarOpen} />
         </Layout.Sider>
         <Layout className="site-layout">
           <Header setIsNavbarOpen={setIsNavbarOpen} isNavbarOpen={isNavbarOpen} />

@@ -1,7 +1,30 @@
-.logo {
+.avatar-container {
     height: 48px;
     margin: 16px;
-    background: linear-gradient(45deg, red, blue);
+    padding: 5px;
+    background: linear-gradient(25deg, #f53d3d, #f14799, #b875da, #5e97ef, #00aada);
     background-size: 400%;
-    border-radius: 2em
+    background-position: left;
+    border-radius: 2em;
+    animation: avatarContainerGradient 8s infinite alternate;
+}
+
+.avatar{
+    min-height: 38px;
+    min-width: 38px;
+}
+
+.user-name{
+    color: #000000;
+    margin-left: 10px;
+    font-size: 1.1em;
+}
+
+@keyframes avatarContainerGradient {
+    from {
+        background-position: left;
+    }
+    to {
+        background-position: right;
+    }
 }
