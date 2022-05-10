@@ -22,14 +22,15 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route element={<PrivateRoute/>}>
-            <Route element={<MainLayout/>}>
-              <Route path='/' element={<Home/>} />
-              <Route path='/user' element={<User/>} />
-            </Route>
+          <Route element={<MainLayout />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/user' element={<User />} />
           </Route>
-          <Route path='/login' element={<Authen/>} />
-          <Route path='/err' element={<Error/>} />
+          <Route element={<PrivateRoute />}>
+
+          </Route>
+          <Route path='/login' element={<Authen />} />
+          <Route path='/err' element={<Error />} />
         </Routes>
       </div>
     </BrowserRouter>
