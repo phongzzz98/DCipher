@@ -22,3 +22,13 @@ code {
   font-family: 'SofiaProSemiBold';
   src: local('SofiaProSemiBold'), url("./assets/fonts/SofiaProSemiBoldVN.otf") format('truetype');
 }
+
+@font-face {
+  font-family: 'SofiaProRegular';
+  src: local('SofiaProRegular'), url("./assets/fonts/SofiaProRegularVN.otf") format('truetype');
+}
+
+@font-face {
+  font-family: 'SofiaProMedium';
+  src: local('SofiaProMedium'), url("./assets/fonts/SofiaProMediumVN.otf") format('truetype');
+}

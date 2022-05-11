@@ -7,22 +7,24 @@
     align-items: center;
     justify-content: space-between;
     min-height: 84px;
-
+    line-height: 100%;
 }
 .header-app > a {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .trigger {
     padding: 0 24px;
     font-size: 0.6em;
-    line-height: 64px;
+    line-height: 100%;
     cursor: pointer;
     transition: all 0.3s;
 }
 
 .trigger:hover {
-    opacity: 0.9;
+    opacity: 0.7;
 }
 
 .header-logo {
@@ -45,10 +47,50 @@
     animation: logoAnimationOff 1000ms ease forwards;
 }
 
+.header-main{
+    display: flex;
+    align-items: baseline;
+}
+
+.search-bar{
+    line-height: 100%;
+    flex: 0.6;
+    display: flex;
+    justify-content: flex-end;
+    font-family: 'SofiaProRegular';
+}
+
 .header-actions{
     display: flex;
-    font-size: 0.8em;
+    font-size: 0.4em;
+    font-family: 'SofiaProRegular';
+    align-items: center;
     justify-content: center;
+    line-height: 100%;
+}
+
+.login-btn{
+    color: white;
+    margin-right: 15px;
+    transition: all 0.2s;
+}
+
+.login-btn:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.more-btn{
+    color: white;
+    font-size: 2em;
+    margin: 15px;
+    font-weight: 600;
+    line-height: 100%;
+    transition: all 0.2s;
+}
+.more-btn:hover{
+    opacity: 0.7;
+    cursor: pointer;
 }
 
 @keyframes logoAnimationOn {

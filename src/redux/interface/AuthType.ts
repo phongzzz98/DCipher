@@ -11,9 +11,16 @@ export type ISignUp = {
 };
 
 export interface IAuthState {
-  username: string;
-  email: string;
   accessToken: null | string;
-  role: null | number;
+  user: IUserInfo;
+}
+
+export interface IUserInfo {
+  created_at: string;
+  email: string;
+  email_verified_at: null | string;
   id: number;
+  role: number;
+  updated_at: string;
+  username: string;
 }

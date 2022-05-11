@@ -11,6 +11,10 @@ import { User } from './pages/User/User';
 import { Error } from './pages/Error/Error';
 
 function App() {
+  // useEffect(() => {
+    
+  // }, [])
+  
   const dark = {
     theme: {
       primaryColor: '#fc2626',

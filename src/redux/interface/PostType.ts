@@ -36,10 +36,21 @@ export type IAllPostWithPagination = {
 };
 
 export type IHomePost = {
+  postinfo: IPostInfo[];
+  posttag: ITag[];
+  numberofcomment: number;
+};
+
+export type IPostInfo = {
   userid: number;
   username: string;
   postid: number;
   title: string;
   created_at: string;
   updated_at: string;
+  votenumber: number;
 };
+
+export type ITag = {
+  posttag: string;
+}

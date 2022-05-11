@@ -1,8 +1,10 @@
-import { Avatar } from 'antd'
-import { MenuUnfoldOutlined, MenuFoldOutlined, MoreOutlined, LoginOutlined } from '@ant-design/icons';
+import { Avatar, Button, Input, Tooltip } from 'antd'
+import { MenuUnfoldOutlined, MenuFoldOutlined, MoreOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import './HeaderStyle.css'
 import codeGear from '../../assets/svg/code-gear.svg'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { accessTokenSelector } from '../../redux/reducers/AuthReducer';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -11,26 +13,41 @@ interface HeaderProps {
 
 export const Header = (props: HeaderProps) => {
     const { setIsNavbarOpen, isNavbarOpen } = props
+    const navigate = useNavigate()
+    const accessToken = useSelector(accessTokenSelector)
     return (
         <div className="header-app">
-            <div style={{width: '50%'}}>
-            {isNavbarOpen ?
-                <MenuUnfoldOutlined className="trigger" onClick={() => setIsNavbarOpen(!isNavbarOpen)} /> : <MenuFoldOutlined className="trigger" onClick={() => setIsNavbarOpen(!isNavbarOpen)} />}
-            <Link to={'/'}>
-                <Avatar
-                    shape="square"
-                    className="header-avatar"
-                    src={codeGear}
+            <div className='header-main'>
+                {isNavbarOpen ?
+                    <MenuUnfoldOutlined className="trigger" onClick={() => setIsNavbarOpen(!isNavbarOpen)} /> : <MenuFoldOutlined className="trigger" onClick={() => setIsNavbarOpen(!isNavbarOpen)} />}
+                <div>
+                    <Link to={'/'}>
+                        <Avatar
+                            shape="square"
+                            className="header-avatar"
+                            src={codeGear}
+                        />
+                    </Link>
+                </div>
+                <span className={!isNavbarOpen ? "header-logo-start-to-off logo-inactive" : "header-logo logo-active"}>DCipher</span>
+            </div>
+            <div className='search-bar'>
+                <Input.Search
+                    placeholder="input search text"
+                    allowClear
+                    enterButton="Tìm kiếm"
+                    size="middle"
+                    onSearch={() => { }}
                 />
-            </Link>
-            <span className={!isNavbarOpen ? "header-logo-start-to-off logo-inactive" : "header-logo logo-active"}>DCipher</span>
             </div>
             <div className='header-actions'>
-                <div>
-                    <LoginOutlined />
-                    <span>Đăng nhập/Đăng ký</span>
-                </div>
-                <MoreOutlined />
+                {!accessToken ?
+                    <Button onClick={() => navigate('/login')} size='middle' type='ghost' className='login-btn'>Đăng nhập/Đăng ký</Button> :
+                    <Tooltip placement="bottom" title={<span>Tạo bài</span>}>
+                        <span className='more-btn' onClick={() => { console.log("Click") }}><PlusCircleOutlined /></span>
+                    </Tooltip>
+                }
+                <span className='more-btn'><MoreOutlined /></span>
             </div>
         </div>
     )

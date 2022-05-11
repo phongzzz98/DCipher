@@ -17,11 +17,16 @@ import {
 } from "../actions/AuthAction";
 
 const initialState: IAuthState = {
-  username: "",
-  email: "",
-  accessToken: localStorage.getItem("accessToken"),
-  role: 99,
-  id: 0,
+  accessToken: localStorage.getItem("accessToken") || "",
+  user: getUserInfo() || {
+    created_at: "",
+    email: "",
+    email_verified_at: null,
+    id: 0,
+    role: 0,
+    updated_at: "",
+    username: "Anonymous",
+  },
 };
 
 export const authSlice = createSlice({
@@ -30,22 +35,27 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.accessToken = null;
-      state.role = null;
+      state.user = {
+        created_at: "",
+        email: "",
+        email_verified_at: null,
+        id: 0,
+        role: 0,
+        updated_at: "",
+        username: "Anonymous",
+      };
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginAction.fulfilled, (state, action) => {
-          state.accessToken = action.payload.token;
-          state.role = action.payload.user.role;
-          state.id = action.payload.user.id;
-          state.username = action.payload.user.username;
-          state.email = action.payload.user.email;
-          setAccessToken(action.payload.token);
-          setRole(action.payload.user.role);
-          setTimeout(()=>{notification.success({
-            message: "Login Success!",
-          })}, 2500)
+        state.accessToken = action.payload.token;
+        state.user = action.payload.user;
+        setAccessToken(action.payload.token);
+        setUserInfo(action.payload.user);
+        notification.success({
+          message: "Login Success!",
+        });
       })
       .addCase(loginAction.rejected, () => {
         notification.error({
@@ -72,9 +82,15 @@ export const authSlice = createSlice({
 
 const selectSelf = (state: RootState) => state.authSlice;
 
-export const accessTokenSelector = createSelector(selectSelf, (state) => state.accessToken);
-export const roleSelector = createSelector(selectSelf, (state) => state.role);
-export const uidSelector = createSelector(selectSelf, (state) => state.id);
+export const authStateSelector = createSelector(selectSelf, (state) => state);
+export const accessTokenSelector = createSelector(
+  selectSelf,
+  (state) => state.accessToken
+);
+export const userInfoSelector = createSelector(
+  selectSelf,
+  (state) => state.user
+);
 
 export const { logout } = authSlice.actions;
 

@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { List, Avatar, Space } from 'antd';
 import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPostAction } from '../../redux/actions/PostAction';
+import { ApplicationDispatch } from '../../store/store';
+import { allPostSelector } from '../../redux/reducers/PostReducer';
 
 export const Home = () => {
+const dispatch: ApplicationDispatch = useDispatch()
+useEffect(() => {
+  dispatch(getAllPostAction())
+}, [dispatch])
+const postList = useSelector(allPostSelector);
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -32,10 +41,10 @@ const IconText = ({ icon, text }:any) => (
       onChange: page => {
         console.log(page);
       },
-      pageSize: 3,
+      pageSize: 5,
       position: 'bottom',
     }}
-    dataSource={listData}
+    dataSource={postList}
     footer={
       <div>
         <b>ant design</b> footer part
@@ -43,19 +52,16 @@ const IconText = ({ icon, text }:any) => (
     }
     renderItem={item => (
       <List.Item
-        key={item.title}
+        key={item.postinfo[0].postid}
         actions={[
-          <div className='clicked' onClick={()=>{console.log("Clicked")}}><IconText icon={StarOutlined} text="156"  key="list-vertical-star-o" /></div>,
-          <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-          <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+          <IconText icon={MessageOutlined} text={item.numberofcomment} key="list-vertical-message" />,
         ]}
       >
         <List.Item.Meta
-          avatar={<Avatar src={item.avatar} />}
-          title={<a href={item.href}>{item.title}</a>}
-          description={item.description}
+          avatar={<Avatar src={'https://joeschmoe.io/api/v1/random'} />}
+          title={<a href={'#'}>{item.postinfo[0].title}</a>}
+          description={item.postinfo[0].username}
         />
-        {item.content}
       </List.Item>
     )}
   />

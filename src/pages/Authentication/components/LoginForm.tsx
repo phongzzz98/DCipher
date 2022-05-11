@@ -1,28 +1,38 @@
 import { Button, Checkbox, Form, Input } from 'antd'
-import { FormEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { FormEvent, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from '../../../redux/actions/AuthAction'
 import { ApplicationDispatch } from '../../../store/store'
 import { toggleLoading } from '../../../redux/reducers/LoadingReducer'
+import { useNavigate } from 'react-router-dom'
+import { accessTokenSelector } from '../../../redux/reducers/AuthReducer'
 
 export const LoginForm = () => {
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [remember, setRemember] = useState(true)
     const dispatch: ApplicationDispatch = useDispatch()
-    
+    const accessToken = useSelector(accessTokenSelector)
+    const navigate = useNavigate()
+
     const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        setTimeout(async ()=>{await dispatch(toggleLoading())}, 3000)
-        await dispatch(
-            loginAction({
-                email: userName,
-                password: password,
-            })
-        )
-        dispatch(toggleLoading())
+        try {
+            e.preventDefault();
+            await dispatch(loginAction({ email: userName, password: password, }))
+        } catch (error) {
+            console.log(error);
+        }
     }
-    
+
+    useEffect(() => {
+        if (accessToken) {
+            navigate('/')
+        }
+        else
+            return
+    }, [accessToken, handleSubmit])
+
+
     return (
         <Form className='log-form' labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ remember: true }} onSubmitCapture={handleSubmit} >
             <Form.Item className='login-form-item' label="Username" name='loginUsername' rules={[{ required: true, message: 'Please input your username!', }]}>

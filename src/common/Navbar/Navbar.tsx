@@ -6,8 +6,8 @@ import {
 import { Avatar, Menu } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { removeAccessToken, removeUserInfo } from '../../utils/localStorage'
-import { useDispatch } from 'react-redux'
-import { logout } from '../../redux/reducers/AuthReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout, userInfoSelector } from '../../redux/reducers/AuthReducer'
 import './NavbarStyle.css'
 import { useEffect, useState } from "react";
 import bigOunce from '../../assets/images/BigOunce.png'
@@ -20,12 +20,14 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
+    const user = useSelector(userInfoSelector)
+    console.log(user);
 
     const handleClickLogOut = () => {
         removeAccessToken();
         removeUserInfo();
         dispatch(logout());
-        navigate('/login');
+        navigate('/');
     };
 
     const items = [
@@ -42,7 +44,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
         <div>
             <div className="avatar-container">
                 <Avatar className="avatar" src={bigOunce} />
-                {!isNavbarOpen ? <span className="user-name">Big Ounce</span> : null}
+                {!isNavbarOpen ? <span className="user-name">{user.username}</span> : null}
             </div>
             <Menu
                 theme="dark"
