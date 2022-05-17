@@ -41,7 +41,7 @@ const IconText = ({ icon, text }:any) => (
       onChange: page => {
         console.log(page);
       },
-      pageSize: 5,
+      pageSize: 9,
       position: 'bottom',
     }}
     dataSource={postList}
@@ -53,15 +53,14 @@ const IconText = ({ icon, text }:any) => (
     renderItem={item => (
       <List.Item
         key={item.postinfo[0].postid}
-        actions={[
-          <IconText icon={MessageOutlined} text={item.numberofcomment} key="list-vertical-message" />,
-        ]}
       >
         <List.Item.Meta
           avatar={<Avatar src={'https://joeschmoe.io/api/v1/random'} />}
-          title={<a href={'#'}>{item.postinfo[0].title}</a>}
+          title={<a>{item.postinfo[0].title}</a>}
           description={item.postinfo[0].username}
         />
+        <IconText icon={MessageOutlined} text={item.numberofcomment} key="list-vertical-message" />
+        <IconText icon={StarOutlined} text={item.postinfo[0].votenumber} key="list-vertical-star" />
       </List.Item>
     )}
   />

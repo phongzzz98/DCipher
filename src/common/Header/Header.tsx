@@ -44,7 +44,7 @@ export const Header = (props: HeaderProps) => {
                 {!accessToken ?
                     <Button onClick={() => navigate('/login')} size='middle' type='ghost' className='login-btn'>Đăng nhập/Đăng ký</Button> :
                     <Tooltip placement="bottom" title={<span>Tạo bài</span>}>
-                        <span className='more-btn' onClick={() => { console.log("Click") }}><PlusCircleOutlined /></span>
+                        <span className='more-btn' onClick={() => navigate('/create')}><PlusCircleOutlined /></span>
                     </Tooltip>
                 }
                 <span className='more-btn'><MoreOutlined /></span>

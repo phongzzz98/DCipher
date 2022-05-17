@@ -2,7 +2,7 @@ import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { notification } from "antd";
 import { IHomePost } from "../interface/PostType";
-import { getAllPostAction } from "../actions/PostAction";
+import { createPostAction, getAllPostAction } from "../actions/PostAction";
 
 const initialState = {
   posts: [
@@ -31,11 +31,22 @@ export const postSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllPostAction.fulfilled, (state, action) => {
-        state.posts = action.payload
+        state.posts = action.payload;
       })
       .addCase(getAllPostAction.rejected, () => {
         notification.error({
           message: "Get all post fail!",
+        });
+      });
+    builder
+      .addCase(createPostAction.fulfilled, () => {
+        notification.success({
+          message: "Create Post Success!",
+        });
+      })
+      .addCase(createPostAction.rejected, () => {
+        notification.error({
+          message: "Create post fail!",
         });
       });
   },
@@ -44,6 +55,9 @@ export const postSlice = createSlice({
 const selectSelf = (state: RootState) => state.postSlice;
 
 export const postStateSelector = createSelector(selectSelf, (state) => state);
-export const allPostSelector = createSelector(selectSelf, (state) => state.posts);
+export const allPostSelector = createSelector(
+  selectSelf,
+  (state) => state.posts
+);
 
 export default postSlice.reducer;

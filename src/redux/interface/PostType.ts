@@ -54,3 +54,11 @@ export type IPostInfo = {
 export type ITag = {
   posttag: string;
 }
+
+export interface ICreatePost {
+  title: string;
+  content: string;
+  code: string;
+  tagid: number[];
+  userid: number;
+}
