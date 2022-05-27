@@ -4,11 +4,11 @@
 }
 
 .site-layout .site-layout-background {
-    background: hsl(210,8%,95%);;
+    background: hsl(210,8%,95%);
     z-index: 1;
     box-shadow: -3px 0 5px 0 rgba(0,0,0,0.2);
     font-size: 1.5em;
-    padding: 50px 70px;
+    /* padding: 50px 70px; */
     min-height: 280px;
     color: black;
     overflow-y: scroll;

@@ -10,6 +10,20 @@ export const getAllPostAPI = async () => {
   }
 };
 
+export const getOnePostAPI = async (id: string | undefined) => {
+  try{
+    if(id === undefined)
+     return;
+    else{
+      const res = await axiosInstance.get(`/post/${id}`)
+      console.log(res)
+      return res.data
+    }
+  } catch (error: any) {
+    return error.res.data
+  }
+};
+
 export const createPostAPI = async (data: ICreatePost) => {
   try {
     const res = await axiosInstance.post(`/post`, {

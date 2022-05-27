@@ -1,10 +1,27 @@
 @import 'antd/dist/antd.variable.min.css';
-.test-color{
-  color: #e30000;
+
+:root {
+  --red: #f00;
+  --green: #0f0;
+  --blue: #00f;
+  --black: #000;
+  --white: #fff;
+  --markdown-editor-select-text: rgba(247, 23, 23, 0.297);
 }
+
+.test-color {
+  color: #cfa419;
+}
+
 .App {
   height: 100%;
 }
+
+.w-md-editor-text-input::selection {
+  color: white;
+  background-color: var(--markdown-editor-select-text);
+}
+
 /* 
 .App-logo {
   height: 40vmin;

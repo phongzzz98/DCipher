@@ -5,9 +5,10 @@ import { Authen } from './pages/Authentication/Authen';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Home } from './pages/Home/Home';
 import PrivateRoute from './routes/PrivateRoute';
-import { User } from './pages/User/User';
+import { Playground } from './pages/Playground/Playground';
 import { Error } from './pages/Error/Error';
 import { CreatePost } from './pages/CreatePost/CreatePost';
+import { Post } from './pages/Post/Post';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -32,10 +33,10 @@ function App() {
           <Routes>
             <Route element={<MainLayout />}>
               <Route path='/' element={<Home />} />
-              <Route path='/user' element={<User />} />
-              <Route path='/create' element={<CreatePost />} />
+              <Route path='/playground' element={<Playground />} />
+              <Route path='/post/:id' element={<Post />} />
               <Route element={<PrivateRoute />}>
-                
+                <Route path='/create' element={<CreatePost />} />
               </Route>
             </Route>
             <Route path='/login' element={<Authen />} />

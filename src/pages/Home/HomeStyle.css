@@ -1,0 +1,35 @@
+.home-container{
+    padding: 50px;
+}
+.tag{
+    border-radius: 2em;
+}
+.avatar-and-tags{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.home-avatar{
+    width: 400px;
+}
+.home-avatar > span{
+    padding-left: 10px;
+}
+.actions-and-time{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.home-actions{
+    align-self: flex-end;
+    display: flex;
+    width: 10%;
+    justify-content: flex-end;
+}
+.action{
+    padding-right: 17px;
+}
+.home-posttime{
+    font-family: 'SofiaProRegular';
+    color: #9b9b9b;
+}

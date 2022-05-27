@@ -5,6 +5,8 @@ import codeGear from '../../assets/svg/code-gear.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { accessTokenSelector } from '../../redux/reducers/AuthReducer';
+import { axiosInstance } from '../../configs/axios';
+import { useState } from 'react';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -15,6 +17,15 @@ export const Header = (props: HeaderProps) => {
     const { setIsNavbarOpen, isNavbarOpen } = props
     const navigate = useNavigate()
     const accessToken = useSelector(accessTokenSelector)
+
+    const searchPost = (value: string) => {
+        axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/searchpost`, {
+            search: value
+        }).then((res) => {
+            console.log(res.data)
+        })
+    }
+
     return (
         <div className="header-app">
             <div className='header-main'>
@@ -37,7 +48,7 @@ export const Header = (props: HeaderProps) => {
                     allowClear
                     enterButton="Tìm kiếm"
                     size="middle"
-                    onSearch={() => { }}
+                    onSearch={value => searchPost(value)}
                 />
             </div>
             <div className='header-actions'>

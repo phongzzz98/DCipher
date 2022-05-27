@@ -5,6 +5,7 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/mode-csharp";
+import "ace-builds/src-noconflict/mode-php";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-merbivore_soft";
@@ -17,10 +18,10 @@ import { Select } from 'antd';
 
 interface CodeEditorProps {
     userCode: string;
-    setUserCode: (value:string) => void;
+    setUserCode: (value: string) => void;
 }
 
-export const CodeEditor = ({userCode, setUserCode}: CodeEditorProps) => {
+export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
     // State variable to set users source code
     const [userLang, setUserLang] = useState("python");
     const [userTheme, setUserTheme] = useState("monokai");
@@ -31,12 +32,13 @@ export const CodeEditor = ({userCode, setUserCode}: CodeEditorProps) => {
     const [apiLang, setApiLang] = useState('');
 
     const languages = [
-		{ value: "c", label: "C" },
-		{ value: "c_cpp", label: "C++" },
-		{ value: "python", label: "Python" },
-		{ value: "java", label: "Java" },
-		{ value: "javascript", label: "Javascript" },
-	];
+        { value: "c", label: "C" },
+        { value: "c_cpp", label: "C++" },
+        { value: "python", label: "Python" },
+        { value: "java", label: "Java" },
+        { value: "javascript", label: "Javascript" },
+        { value: "php", label: "PHP" },
+    ];
 
     useEffect(() => {
         switch (userLang) {
@@ -47,10 +49,13 @@ export const CodeEditor = ({userCode, setUserCode}: CodeEditorProps) => {
                 setApiLang('cpp')
                 break;
             case 'python':
-                setApiLang('py')
+                setApiLang('python')
                 break;
             case 'java':
                 setApiLang('java')
+                break;
+            case 'php':
+                setApiLang('php')
                 break;
             default:
                 break;
@@ -68,7 +73,7 @@ export const CodeEditor = ({userCode, setUserCode}: CodeEditorProps) => {
             input: userInput
         }).then((res) => {
             console.log(res)
-            setUserOutput(res.data.data.code_compile);
+            setUserOutput(res.data.output);
         }).then(() => {
             setLoading(false);
         })
@@ -81,7 +86,7 @@ export const CodeEditor = ({userCode, setUserCode}: CodeEditorProps) => {
         <div className='main'>
             <div className='code-editor-header'>
                 <Select defaultValue="python" style={{ width: 120 }} onChange={(v) => setUserLang(v)}>
-                    {languages.map((item)=>{
+                    {languages.map((item) => {
                         return <Select.Option value={item.value}>{item.label}</Select.Option>
                     })}
                 </Select></div>
@@ -104,6 +109,7 @@ export const CodeEditor = ({userCode, setUserCode}: CodeEditorProps) => {
                             spellcheck: true,
                             behavioursEnabled: true,
                         }}
+                        value={userCode}
                     />
                     <button className="run-btn" onClick={() => compileCode()}>
                         Run

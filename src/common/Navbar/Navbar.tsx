@@ -21,7 +21,6 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
     const navigate = useNavigate();
     const location = useLocation();
     const user = useSelector(userInfoSelector)
-    console.log(user);
 
     const handleClickLogOut = () => {
         removeAccessToken();
@@ -32,7 +31,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
 
     const items = [
         { key: '1', label: 'Home', path: '/' },
-        { key: '2', label: 'User', path: '/user' },
+        { key: '2', label: 'Playground', path: '/playground' },
     ]
     const [selectedKey, setSelectedKey] = useState(items.find(item => location.pathname === item.path)?.key)
 
@@ -57,8 +56,8 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<FormOutlined />}>
-                    <Link to={'user'}>
-                        <span className="navbar-span">Test</span>
+                    <Link to={'playground'}>
+                        <span className="navbar-span">IDE</span>
                     </Link>
                 </Menu.Item>
                 <Menu.Item
