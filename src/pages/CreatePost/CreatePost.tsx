@@ -1,7 +1,8 @@
 import MDEditor from '@uiw/react-md-editor';
-import { Button, Form, Input, Select } from 'antd'
+import { Button, Collapse, Form, Input, Select } from 'antd'
 import { FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import { CodeEditor } from '../../common/CodeEditor/CodeEditor';
 import { createPostAction } from '../../redux/actions/PostAction';
 import { getAllTagAction } from '../../redux/actions/TagAction';
@@ -17,12 +18,12 @@ export const CreatePost = () => {
   const [value, setValue] = useState<any>("**Hello world!!!**");
   const [userCode, setUserCode] = useState(``);
   const [tags, setTags] = useState<number[]>([])
-  const dispatch: ApplicationDispatch = useDispatch()  
+  const dispatch: ApplicationDispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getAllTagAction())
   }, [dispatch])
-  
+
   const handleChange = (value: number[]) => {
     console.log(`selected ${value}`);
     setTags(value)
@@ -47,7 +48,7 @@ export const CreatePost = () => {
     <div>
       <div className='create-post-container'>
         <h1>Tạo bài viết</h1>
-        <Form labelCol={{ span: 3 }} wrapperCol={{ span: 20 }} initialValues={{ remember: true }} >
+        <Form labelCol={{ span: 2 }} wrapperCol={{ span: 25 }} initialValues={{ remember: true }} >
           <Form.Item className='create-post-form-item' label="Tiêu đề" name='createPostTitle' rules={[{ required: true, message: 'Please input your title!', }]}>
             <Input size="large" onChange={e => setTitle(e.target.value)} />
           </Form.Item>
@@ -59,23 +60,28 @@ export const CreatePost = () => {
                 onChange={setValue}
               />
             </div>
+            <QuestionCircleOutlined />
           </Form.Item>
           <Form.Item className='create-post-form-item' label="Gán thẻ" name='createPostTag'>
             <Select
               mode="multiple"
               allowClear
               style={{ width: '100%' }}
-              placeholder="Please select"
+              placeholder="Chọn các thẻ liên quan đến bài viết"
               onChange={handleChange}
             >
               {tagList.map((tag) => <Select.Option key={tag.id}>{tag.content}</Select.Option>)}
             </Select>
           </Form.Item>
           <Form.Item className='create-post-form-item' label="Code" name='createPostCode'>
-            <CodeEditor userCode={userCode} setUserCode={setUserCode} />
+            <Collapse defaultActiveKey={['1']}>
+              <Collapse.Panel header="Thêm code" key="1">
+                <CodeEditor userCode={userCode} setUserCode={setUserCode} />
+              </Collapse.Panel>
+            </Collapse>
           </Form.Item>
           <Form.Item className='create-post-form-item' id='createPostButton' valuePropName="checked" wrapperCol={{ offset: 9, span: 20 }}>
-            <Button style={{width: '50%'}} shape='round' size='large' type="primary" htmlType="submit" onClick={handleSubmit} >Tạo bài viết</Button>
+            <Button style={{ width: '50%' }} shape='round' size='large' type="primary" htmlType="submit" onClick={handleSubmit} >Tạo bài viết</Button>
           </Form.Item>
         </Form>
       </div>

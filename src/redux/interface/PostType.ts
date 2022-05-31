@@ -35,18 +35,13 @@ export type IAllPostWithPagination = {
   total: number;
 };
 
-export type IHomePost = {
-  userid: number;
-  username: string;
-  postid: number;
-  title: string;
-  votenumber: number;
-  commentnumber: number;
-  posttag: IHomeTag[];
-  created_at: string;
-};
+export interface IPostState {
+  posts: IHomePost[];
+  mostVotedPosts: IHomePost[];
+  searchedPosts: IHomePost[];
+}
 
-export type IPostInfo = {
+export type IHomePost = {
   userid: number;
   username: string;
   postid: number;
@@ -54,6 +49,10 @@ export type IPostInfo = {
   created_at: string;
   updated_at: string;
   votenumber: number;
+  commentnumber: number;
+  content: string;
+  posttag: IHomeTag[];
+  viewnumber: number;
 };
 
 export type IHomeTag = {

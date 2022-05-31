@@ -3,10 +3,12 @@ import { MenuUnfoldOutlined, MenuFoldOutlined, MoreOutlined, PlusCircleOutlined 
 import './HeaderStyle.css'
 import codeGear from '../../assets/svg/code-gear.svg'
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { accessTokenSelector } from '../../redux/reducers/AuthReducer';
 import { axiosInstance } from '../../configs/axios';
 import { useState } from 'react';
+import { ApplicationDispatch } from '../../store/store';
+import { searchPostAction } from '../../redux/actions/PostAction';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -16,14 +18,15 @@ interface HeaderProps {
 export const Header = (props: HeaderProps) => {
     const { setIsNavbarOpen, isNavbarOpen } = props
     const navigate = useNavigate()
+    const dispatch: ApplicationDispatch = useDispatch()
     const accessToken = useSelector(accessTokenSelector)
 
     const searchPost = (value: string) => {
-        axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/searchpost`, {
-            search: value
-        }).then((res) => {
-            console.log(res.data)
-        })
+        dispatch(searchPostAction(value))
+            .then((res) => {
+                navigate('/search')
+                console.log(res)
+            })
     }
 
     return (

@@ -1,5 +1,19 @@
 .home-container{
     padding: 50px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+}
+.ramdom-list{
+    width: 70%;
+    padding-right: 20px;
+}
+.most-voted-list{
+    position: sticky;
+    width: 30%;
+    padding-left: 20px;
+    border-left: 1px rgba(0, 0, 0, 0.05) solid;
 }
 .tag{
     border-radius: 2em;
@@ -15,6 +29,9 @@
 .home-avatar > span{
     padding-left: 10px;
 }
+.post-username{
+    font-family: 'SofiaProRegular';
+}
 .actions-and-time{
     display: flex;
     justify-content: space-between;
@@ -27,7 +44,12 @@
     justify-content: flex-end;
 }
 .action{
-    padding-right: 17px;
+    padding-right: 8px;
+}
+.action:last-child{
+    border-left: 1px rgba(0, 0, 0, 0.2) solid;
+    padding-left: 8px;
+    padding-right: 0px;
 }
 .home-posttime{
     font-family: 'SofiaProRegular';

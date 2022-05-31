@@ -1,6 +1,6 @@
 import MDEditor from '@uiw/react-md-editor'
-import { Avatar, Form, Input, Select, Tag, Tooltip, Comment, Button, notification } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Avatar, Tag, Tooltip, Comment, Button, notification, Space } from 'antd'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { CodeEditor } from '../../common/CodeEditor/CodeEditor'
@@ -8,10 +8,11 @@ import { getOnePostAction } from '../../redux/actions/PostAction'
 import { onePostSelector } from '../../redux/reducers/PostReducer'
 import { ApplicationDispatch } from '../../store/store'
 import './PostStyle.css'
-import { HeartOutlined } from '@ant-design/icons'
+import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import { axiosInstance } from '../../configs/axios'
 import { userInfoSelector } from '../../redux/reducers/AuthReducer'
 import moment from 'moment'
+import React from 'react'
 
 export const Post = () => {
   const { id } = useParams<{ id: string }>()
@@ -31,8 +32,25 @@ export const Post = () => {
       postid: id,
     }).then(() => {
       dispatch(getOnePostAction(id!))
+    }).then(() => {
+      setVoted(true);
     })
   }
+
+  const unvotePost = () => {
+    axiosInstance.delete(`https://code-ide-forum.herokuapp.com/api/deletevote`, {
+      data: {
+        userid: user.id,
+        postid: parseInt(id!),
+      }
+    }).then(() => {
+      dispatch(getOnePostAction(id!))
+    }).then(() => {
+      setVoted(false);
+    })
+  }
+
+
 
   const handleSubmitComment = () => {
     axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/comment`, {
@@ -46,6 +64,13 @@ export const Post = () => {
     })
   }
 
+  const IconText = ({ icon, text }: any) => (
+    <Space>
+      {React.createElement(icon)}
+      {text}
+    </Space>
+  );
+
   return (
     <div>
       <div className='post-container'>
@@ -58,7 +83,11 @@ export const Post = () => {
         </div>
         <div className="post-main" data-color-mode="light">
           <div className='vote-container'>
-            <HeartOutlined className='heart' onClick={() => votePost()} />
+            {
+              voted ?
+                <HeartFilled className='heart' onClick={() => unvotePost()} /> :
+                <HeartOutlined onClick={() => votePost()} />
+            }
             {selectedPost.postuser[0].votenumber}
           </div>
           <MDEditor.Markdown
@@ -99,6 +128,11 @@ export const Post = () => {
                     <span>{moment(comment.created_at).fromNow()}</span>
                   </Tooltip>
                 }
+                actions={[
+                  <div className='comment-action'>
+                    <IconText icon={HeartOutlined} text={comment.commentvotenumber} key="list-vertical-star" />
+                  </div>
+                ]}
               />)
           }
         </div>

@@ -15,6 +15,7 @@ import { axiosInstance } from '../../configs/axios';
 import './CodeEditorStyle.css'
 import codeGear from '../../assets/svg/code-gear.svg';
 import { Select } from 'antd';
+import { Loading } from '../Loading/Loading';
 
 interface CodeEditorProps {
     userCode: string;
@@ -125,7 +126,8 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
                     <h4>Output:</h4>
                     {loading ? (
                         <div className="spinner-box">
-                            <img src={codeGear} alt="Loading..." />
+                            {/* <img src={codeGear} alt="Loading..." /> */}
+                            <Loading/>
                         </div>
                     ) : (
                         <div className="output-box">

@@ -22,6 +22,10 @@
   background-color: var(--markdown-editor-select-text);
 }
 
+.ant-list-vertical .ant-list-item-meta{
+  margin: 3px;
+}
+
 /* 
 .App-logo {
   height: 40vmin;

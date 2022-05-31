@@ -5,28 +5,15 @@ import { notification } from "antd";
 import {
   createPostAction,
   getAllPostAction,
+  getMostVotedPostAction,
   getOnePostAction,
+  searchPostAction,
 } from "../actions/PostAction";
 
 const initialState = {
-  posts: [
-    {
-      userid: 0,
-      username: "",
-      postid: 0,
-      title: "",
-      votenumber: 0,
-      commentnumber: 0,
-      posttag: [
-        {
-          tagid: 0,
-          tagcontent: "",
-          colorcode: "",
-        },
-      ],
-      created_at: "",
-    },
-  ],
+  posts: [],
+  mostVotedPosts: [],
+  searchedPosts: [],
   singlePost: {
     postuser: [
       {
@@ -94,6 +81,24 @@ export const postSlice = createSlice({
           message: "Get post fail!",
         });
       });
+    builder
+      .addCase(getMostVotedPostAction.fulfilled, (state, action) => {
+        state.mostVotedPosts = action.payload;
+      })
+      .addCase(getMostVotedPostAction.rejected, () => {
+        notification.error({
+          message: "Get most voted post fail!",
+        });
+      });
+    builder
+    .addCase(searchPostAction.fulfilled, (state, action) => {
+      state.searchedPosts = action.payload
+    })
+    .addCase(searchPostAction.rejected, () => {
+      notification.error({
+        message: "Search fail!",
+      });
+    });
   },
 });
 
@@ -107,6 +112,14 @@ export const allPostSelector = createSelector(
 export const onePostSelector = createSelector(
   selectSelf,
   (state) => state.singlePost
+);
+export const mostVotedPostsSelector = createSelector(
+  selectSelf,
+  (state) => state.mostVotedPosts
+);
+export const searchedPostsSelector = createSelector(
+  selectSelf,
+  (state) => state.searchedPosts
 );
 
 export default postSlice.reducer;

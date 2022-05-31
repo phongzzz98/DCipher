@@ -9,6 +9,8 @@ import { Playground } from './pages/Playground/Playground';
 import { Error } from './pages/Error/Error';
 import { CreatePost } from './pages/CreatePost/CreatePost';
 import { Post } from './pages/Post/Post';
+import { Loading } from './pages/LoadingPage/LoadingPage';
+import { Search } from './pages/Search/Search';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -29,12 +31,13 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Suspense fallback={<span>Loading...</span>} >
+        <Suspense fallback={<Loading/>} >
           <Routes>
             <Route element={<MainLayout />}>
               <Route path='/' element={<Home />} />
               <Route path='/playground' element={<Playground />} />
               <Route path='/post/:id' element={<Post />} />
+              <Route path='/search' element={<Search />} />
               <Route element={<PrivateRoute />}>
                 <Route path='/create' element={<CreatePost />} />
               </Route>

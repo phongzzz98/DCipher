@@ -10,6 +10,15 @@ export const getAllPostAPI = async () => {
   }
 };
 
+export const getMostVotedPostAPI = async () => {
+  try {
+    const res = await axiosInstance.get(`/sortpostbyvote`);
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
 export const getOnePostAPI = async (id: string | undefined) => {
   try{
     if(id === undefined)
@@ -32,6 +41,17 @@ export const createPostAPI = async (data: ICreatePost) => {
       code: data.code,
       tagid: data.tagid,
       userid: data.userid,
+    });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const searchPostAPI = async (value: string) => {
+  try {
+    const res = await axiosInstance.post(`/searchpost`, {
+      search: value
     });
     return res.data;
   } catch (error: any) {

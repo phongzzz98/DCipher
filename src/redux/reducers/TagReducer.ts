@@ -2,18 +2,10 @@ import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { notification } from "antd";
 import { createTagAction, getAllTagAction } from "../actions/TagAction";
+import { ITagState } from "../interface/TagType";
 
-const initialState = {
-  tags: [
-    {
-        id: 0,
-        content: "____",
-        colorcode: "#F5F9F9",
-        created_at: "",
-        updated_at: '',
-        postusetag: 0
-    },
-  ],
+const initialState: ITagState = {
+  tags: [],
 };
 
 export const tagSlice = createSlice({
