@@ -15,6 +15,31 @@
     padding-left: 20px;
     border-left: 1px rgba(0, 0, 0, 0.05) solid;
 }
+.most-voted-list .ant-list-item {
+    border-bottom: 2px rgba(0, 0, 0, 0.2) solid;;
+}
+.most-voted-list .ant-list-item:last-child {
+    border-bottom: 2px rgba(0, 0, 0, 0.2) solid;;
+}
+.most-voted-list-item{
+    border: 2px rgba(0, 0, 0, 0.2) solid;
+    margin-bottom: 15px;
+    border-radius: 25px;
+}
+.most-voted-list-item:first-child{
+    border: 3px rgb(219, 172, 0) solid;
+    margin-bottom: 15px;
+    border-radius: 25px;
+}
+.most-voted-list-item:n-child(2) {
+    border: 3px rgb(219, 172, 0) solid;
+    margin-bottom: 15px;
+    border-radius: 25px;
+}
+.most-voted-list-item:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
 .tag{
     border-radius: 2em;
 }
