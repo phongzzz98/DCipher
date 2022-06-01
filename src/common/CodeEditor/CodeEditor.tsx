@@ -13,7 +13,7 @@ import "ace-builds/src-noconflict/ext-language_tools"
 import "ace-builds/src-noconflict/ext-beautify"
 import { axiosInstance } from '../../configs/axios';
 import './CodeEditorStyle.css'
-import codeGear from '../../assets/svg/code-gear.svg';
+import { CodeOutlined } from '@ant-design/icons';
 import { Select } from 'antd';
 import { Loading } from '../Loading/Loading';
 
@@ -39,6 +39,12 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
         { value: "java", label: "Java" },
         { value: "javascript", label: "Javascript" },
         { value: "php", label: "PHP" },
+    ];
+
+    const theme = [
+        { value: "monokai", label: "Monokai" },
+        { value: "github", label: "Github" },
+        { value: "merbivore_soft", label: "Merbivore Soft" },
     ];
 
     useEffect(() => {
@@ -86,11 +92,17 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
     return (
         <div className='main'>
             <div className='code-editor-header'>
-                <Select defaultValue="python" style={{ width: 120 }} onChange={(v) => setUserLang(v)}>
+                <Select className='code-editor-select' menuItemSelectedIcon={<CodeOutlined />} defaultValue="python" style={{ width: 120 }} onChange={(v) => setUserLang(v)}>
                     {languages.map((item) => {
                         return <Select.Option value={item.value}>{item.label}</Select.Option>
                     })}
-                </Select></div>
+                </Select>
+                <Select className='code-editor-select' menuItemSelectedIcon={<CodeOutlined />} defaultValue="monokai" style={{ width: 120 }} onChange={(v) => setUserTheme(v)}>
+                    {theme.map((item) => {
+                        return <Select.Option value={item.value}>{item.label}</Select.Option>
+                    })}
+                </Select>
+            </div>
             <div className='code-editor-main'>
                 <div className="left-container">
                     <AceEditor
@@ -127,7 +139,7 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
                     {loading ? (
                         <div className="spinner-box">
                             {/* <img src={codeGear} alt="Loading..." /> */}
-                            <Loading/>
+                            <Loading />
                         </div>
                     ) : (
                         <div className="output-box">

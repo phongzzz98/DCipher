@@ -25,6 +25,7 @@ const initialState = {
         created_at: "",
         updated_at: "",
         votenumber: 0,
+        viewnumber: 0,
       },
     ],
     postcomment: [

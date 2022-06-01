@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { List, Avatar, Space, Tag, Tooltip } from 'antd';
-import { MessageOutlined, HeartOutlined } from '@ant-design/icons';
+import { MessageOutlined, HeartOutlined, EyeOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPostAction, getMostVotedPostAction } from '../../redux/actions/PostAction';
 import { ApplicationDispatch } from '../../store/store';
@@ -73,6 +73,9 @@ export const Home = () => {
                   <div className='action'>
                     <IconText icon={HeartOutlined} text={item.votenumber} key="list-vertical-star" />
                   </div>
+                  <div className='action'>
+                    <IconText icon={EyeOutlined} text={item.viewnumber} key="list-vertical-eye" />
+                  </div>
                 </div>
               </div>
             </List.Item>
@@ -105,6 +108,9 @@ export const Home = () => {
                   </div>
                   <div className='action'>
                     <IconText icon={HeartOutlined} text={item.votenumber} key="list-vertical-star" />
+                  </div>
+                  <div className='action'>
+                    <IconText icon={EyeOutlined} text={item.viewnumber} key="list-vertical-eye" />
                   </div>
                 </div>
               </div>
