@@ -22,6 +22,10 @@
   background-color: var(--markdown-editor-select-text);
 }
 
+.wmde-markdown .wmde-markdown-color .w-md-editor-preview > pre > code {
+  height: 100px;
+}
+
 .ant-list-vertical .ant-list-item-meta{
   margin: 3px;
 }

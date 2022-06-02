@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createPostAPI, getAllPostAPI, getMostVotedPostAPI, getOnePostAPI, searchPostAPI } from "../api/PostAPI";
+import { createPostAPI, getAllPostAPI, getMostVotedPostAPI, getOnePostAPI, searchPostAPI, searchPostByTagAPI } from "../api/PostAPI";
 import { ICreatePost } from "../interface/PostType";
 
 export const getAllPostAction = createAsyncThunk(
@@ -38,6 +38,14 @@ export const searchPostAction = createAsyncThunk(
   "searchPost",
  async (value: string) => {
    const res = await searchPostAPI(value);
+   return res
+ }
+)
+
+export const searchPostByTagAction = createAsyncThunk(
+  "searchPostByTag",
+ async (value: string) => {
+   const res = await searchPostByTagAPI(value);
    return res
  }
 )

@@ -17,6 +17,7 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
     const [voted, setVoted] = useState(false)
     const user = useSelector(userInfoSelector)
     const [commentVoteNumber, setCommentVoteNumber] = useState(comment.commentvotenumber)
+    console.log(commentVoteNumber)
 
     const voteComment = () => {
         axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/vote`, {

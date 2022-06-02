@@ -26,6 +26,10 @@ export const Post = () => {
   
   useEffect(() => {
     dispatch(getOnePostAction(id!))
+    if(selectedPost.postvote.some((userID) => userID === user.id)){
+      setVoted(true)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, id])
 
   const votePost = () => {

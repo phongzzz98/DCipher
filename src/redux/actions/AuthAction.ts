@@ -6,7 +6,6 @@ export const loginAction = createAsyncThunk(
   "auth/login",
   async (data: ILogin) => {
     const res = await loginAPI(data);
-    console.log('RES',res)
     return res;
   }
 );

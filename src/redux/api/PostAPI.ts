@@ -58,3 +58,14 @@ export const searchPostAPI = async (value: string) => {
     return error.res.data;
   }
 };
+
+export const searchPostByTagAPI = async (value: string) => {
+  try {
+    const res = await axiosInstance.post(`/searchpostbytag`, {
+      search: [value]
+    });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};

@@ -33,6 +33,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
     const items = [
         { key: '1', label: 'Home', path: '/' },
         { key: '2', label: 'Playground', path: '/playground' },
+        { key: '3', label: 'Tags', path: '/tags' },
     ]
     const [selectedKey, setSelectedKey] = useState(items.find(item => location.pathname === item.path)?.key)
 

@@ -8,6 +8,7 @@ import {
   getMostVotedPostAction,
   getOnePostAction,
   searchPostAction,
+  searchPostByTagAction,
 } from "../actions/PostAction";
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   mostVotedPosts: [],
   searchedPosts: [],
   singlePost: {
+    postbookmark: [],
     postuser: [
       {
         postusername: "",
@@ -46,6 +48,7 @@ const initialState = {
         tagcolor: "#F3F3F3",
       },
     ],
+    postvote: [],
   },
 };
 
@@ -93,14 +96,23 @@ export const postSlice = createSlice({
         });
       });
     builder
-    .addCase(searchPostAction.fulfilled, (state, action) => {
-      state.searchedPosts = action.payload
-    })
-    .addCase(searchPostAction.rejected, () => {
-      notification.error({
-        message: "Search fail!",
+      .addCase(searchPostAction.fulfilled, (state, action) => {
+        state.searchedPosts = action.payload;
+      })
+      .addCase(searchPostAction.rejected, () => {
+        notification.error({
+          message: "Search fail!",
+        });
       });
-    });
+    builder
+      .addCase(searchPostByTagAction.fulfilled, (state, action) => {
+        state.searchedPosts = action.payload;
+      })
+      .addCase(searchPostByTagAction.rejected, () => {
+        notification.error({
+          message: "Search fail!",
+        });
+      });
   },
 });
 
