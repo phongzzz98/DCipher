@@ -1,0 +1,18 @@
+.tag-page{
+    padding: 50px 70px;
+}
+.tag-list {
+    width: 100%;
+}
+.card-container{
+    background-color: hsl(210, 8%, 95%);
+    border: none;
+}
+.grid-style{
+    width: 31%;
+    text-align: center;
+    margin: 5px;
+    border: 2px rgb(0, 0, 0) solid;
+    border-radius: 10px;
+    height: 220px;
+}

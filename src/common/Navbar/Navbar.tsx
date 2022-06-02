@@ -67,7 +67,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                     </Link>
                 </Menu.Item>
                 <Menu.Item
-                    key="3"
+                    key="4"
                     onClick={handleClickLogOut}
                     icon={<LogoutOutlined />}
                 >
