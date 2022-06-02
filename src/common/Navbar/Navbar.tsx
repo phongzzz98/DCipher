@@ -2,6 +2,7 @@ import {
     HomeOutlined,
     FormOutlined,
     LogoutOutlined,
+    TagsOutlined
 } from "@ant-design/icons";
 import { Avatar, Menu } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -58,6 +59,11 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                 <Menu.Item key="2" icon={<FormOutlined />}>
                     <Link to={'playground'}>
                         <span className="navbar-span">IDE</span>
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="3" icon={<TagsOutlined />}>
+                    <Link to={'tags'}>
+                        <span className="navbar-span">Tags</span>
                     </Link>
                 </Menu.Item>
                 <Menu.Item

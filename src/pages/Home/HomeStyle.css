@@ -27,12 +27,20 @@
     border-radius: 25px;
 }
 .most-voted-list-item:first-child{
+    background: linear-gradient(135deg, rgb(219, 172, 0), hsl(210,8%,95%));
     border: 3px rgb(219, 172, 0) solid;
     margin-bottom: 15px;
     border-radius: 25px;
 }
-.most-voted-list-item:n-child(2) {
-    border: 3px rgb(219, 172, 0) solid;
+.most-voted-list-item:nth-child(2) {
+    background: linear-gradient(135deg, rgb(166, 166, 166), hsl(210,8%,95%));
+    border: 3px rgb(166, 166, 166) solid;
+    margin-bottom: 15px;
+    border-radius: 25px;
+}
+.most-voted-list-item:nth-child(3) {
+    background: linear-gradient(135deg, #B87333, hsl(210,8%,95%));
+    border: 3px #B87333 solid;
     margin-bottom: 15px;
     border-radius: 25px;
 }

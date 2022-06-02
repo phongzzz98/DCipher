@@ -1,14 +1,15 @@
-import { Avatar, Button, Input, Tooltip } from 'antd'
-import { MenuUnfoldOutlined, MenuFoldOutlined, MoreOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Avatar, Button, Input, Popover, Tooltip } from 'antd'
+import { MenuUnfoldOutlined, MenuFoldOutlined, MoreOutlined, PlusCircleOutlined, BellFilled } from '@ant-design/icons';
 import './HeaderStyle.css'
 import codeGear from '../../assets/svg/code-gear.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { accessTokenSelector } from '../../redux/reducers/AuthReducer';
+import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer';
 import { axiosInstance } from '../../configs/axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ApplicationDispatch } from '../../store/store';
 import { searchPostAction } from '../../redux/actions/PostAction';
+import { INotification } from '../../redux/interface/NotificationType';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -20,12 +21,40 @@ export const Header = (props: HeaderProps) => {
     const navigate = useNavigate()
     const dispatch: ApplicationDispatch = useDispatch()
     const accessToken = useSelector(accessTokenSelector)
+    const user = useSelector(userInfoSelector)
+    const [notifications, setNotifications] = useState<INotification[]>([])
+    const [notiNumber, setnotiNumber] = useState(0)
+
+    useEffect(() => {
+        const getNotiNumber = () => {
+            axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/${user.id}`)
+                .then((res) => {
+                    setnotiNumber(res.data.notification);
+                })
+        }
+        getNotiNumber()
+    }, [user.id])
+    
+
+    const content = (
+        notifications.map((item) =>
+            <div>
+                <p>{item.content}</p>
+            </div>)
+    );
 
     const searchPost = (value: string) => {
         dispatch(searchPostAction(value))
             .then((res) => {
                 navigate('/search')
-                console.log(res)
+                console.log(res) //dlete later
+            })
+    }
+
+    const getNotification = () => {
+        axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/notification/${user.id}`)
+            .then((res) => {
+                setNotifications(res.data);
             })
     }
 
@@ -57,9 +86,15 @@ export const Header = (props: HeaderProps) => {
             <div className='header-actions'>
                 {!accessToken ?
                     <Button onClick={() => navigate('/login')} size='middle' type='ghost' className='login-btn'>Đăng nhập/Đăng ký</Button> :
-                    <Tooltip placement="bottom" title={<span>Tạo bài</span>}>
-                        <span className='more-btn' onClick={() => navigate('/create')}><PlusCircleOutlined /></span>
-                    </Tooltip>
+                    <>
+                        <Popover placement="bottomRight" title='Notification' content={content} trigger="click">
+                            <BellFilled onClick={() => getNotification()} className='more-btn' />
+                            <span>{notiNumber}</span>
+                        </Popover>
+                        <Tooltip placement="bottom" title={<span>Tạo bài</span>}>
+                            <span className='more-btn' onClick={() => navigate('/create')}><PlusCircleOutlined /></span>
+                        </Tooltip>
+                    </>
                 }
                 <span className='more-btn'><MoreOutlined /></span>
             </div>

@@ -1,5 +1,5 @@
 import MDEditor from '@uiw/react-md-editor'
-import { Avatar, Tag, Tooltip, Comment, Button, notification, Space } from 'antd'
+import { Avatar, Tag, Button, notification } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -10,18 +10,20 @@ import { ApplicationDispatch } from '../../store/store'
 import './PostStyle.css'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import { axiosInstance } from '../../configs/axios'
-import { userInfoSelector } from '../../redux/reducers/AuthReducer'
-import moment from 'moment'
-import React from 'react'
+import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer'
+import { IComment } from '../../redux/interface/PostType'
+import { CommentItem } from './components/CommentItem/CommentItem'
 
 export const Post = () => {
   const { id } = useParams<{ id: string }>()
   const user = useSelector(userInfoSelector)
   const dispatch: ApplicationDispatch = useDispatch()
   const selectedPost = useSelector(onePostSelector)
-  const [value, setValue] = useState<any>("**Hello world!!!**");
+  const [value, setValue] = useState<any>("");
   const [voted, setVoted] = useState(false)
-
+  const [postVoteNumber, setPostVoteNumber] = useState(selectedPost.postuser[0].votenumber)
+  const accessToken = useSelector(accessTokenSelector)
+  
   useEffect(() => {
     dispatch(getOnePostAction(id!))
   }, [dispatch, id])
@@ -31,7 +33,7 @@ export const Post = () => {
       userid: user.id,
       postid: id,
     }).then(() => {
-      dispatch(getOnePostAction(id!))
+      setPostVoteNumber(selectedPost.postuser[0].votenumber + 1)
     }).then(() => {
       setVoted(true);
     })
@@ -44,13 +46,11 @@ export const Post = () => {
         postid: parseInt(id!),
       }
     }).then(() => {
-      dispatch(getOnePostAction(id!))
+      setPostVoteNumber(selectedPost.postuser[0].votenumber - 1)
     }).then(() => {
       setVoted(false);
     })
   }
-
-
 
   const handleSubmitComment = () => {
     axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/comment`, {
@@ -63,13 +63,6 @@ export const Post = () => {
       })
     })
   }
-
-  const IconText = ({ icon, text }: any) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
 
   return (
     <div>
@@ -85,10 +78,10 @@ export const Post = () => {
           <div className='vote-container'>
             {
               voted ?
-                <HeartFilled className='heart' onClick={() => unvotePost()} /> :
-                <HeartOutlined onClick={() => votePost()} />
+                <HeartFilled disabled={!accessToken} className='heart' onClick={() => unvotePost()} /> :
+                <HeartOutlined disabled={!accessToken} onClick={() => votePost()} />
             }
-            {selectedPost.postuser[0].votenumber}
+            {postVoteNumber <= 0 ? 0 : postVoteNumber}
           </div>
           <MDEditor.Markdown
             className='markdown-section'
@@ -108,32 +101,12 @@ export const Post = () => {
               value={value}
               onChange={setValue}
             />
-            <Button shape='round' size='large' type="primary" htmlType="submit" onClick={handleSubmitComment} >Comment</Button>
+            <div className='comment-btn'>
+              <Button shape='round' size='middle' type="primary" htmlType="submit" onClick={handleSubmitComment} >Đăng bình luận</Button>
+            </div>
           </div>
           {
-            selectedPost.postcomment.map((comment) =>
-              <Comment
-                author={<span className='comment-user'>{comment.commentusername}</span>}
-                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
-                content={
-                  <div className="comment-main" data-color-mode="light">
-                    <MDEditor.Markdown
-                      className='comment-markdown-section'
-                      source={comment.commentcontent}
-                    />
-                  </div>
-                }
-                datetime={
-                  <Tooltip title={moment(comment.created_at).format('DD/MM/YYYY HH:mm:ss')}>
-                    <span>{moment(comment.created_at).fromNow()}</span>
-                  </Tooltip>
-                }
-                actions={[
-                  <div className='comment-action'>
-                    <IconText icon={HeartOutlined} text={comment.commentvotenumber} key="list-vertical-star" />
-                  </div>
-                ]}
-              />)
+            selectedPost.postcomment.map((comment: IComment) => <CommentItem comment={comment} /> )
           }
         </div>
       </div>

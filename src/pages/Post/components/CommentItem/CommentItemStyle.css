@@ -1,0 +1,34 @@
+.comment-btn{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 15px;
+}
+.comment-markdown-section{
+    /* background-color: hsl(210,8%,95%); */
+    padding: 15px;
+    border-radius: 10px;
+}
+.comment-user{
+    font-size: 1.3em;
+    color: black;
+}
+.comment-time{
+    font-family: 'SofiaProRegular';
+    font-size: 1.2em;
+    color: #696969;
+}
+.comment-heart{
+    font-size: 1.3em;
+}
+.comment-filled-heart{
+    font-size: 1.3em;
+    color: crimson;
+}
+.comment-heart:hover{
+    cursor: pointer;
+}
+.comment-vote-number{
+    font-size: 1.3em;
+    margin-left: 5px;
+}

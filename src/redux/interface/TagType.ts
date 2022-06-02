@@ -6,6 +6,7 @@ export interface ITag {
     id: number;
     content: string;
     colorcode: string;
+    description: string;
     created_at: string;
     updated_at: string;
     postusetag: number;

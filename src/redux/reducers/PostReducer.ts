@@ -30,6 +30,7 @@ const initialState = {
     ],
     postcomment: [
       {
+        commentid: 0,
         commentcontent: "",
         commentuserid: 0,
         commentusername: "",

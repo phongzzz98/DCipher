@@ -21,7 +21,7 @@ export const CreatePost = () => {
   const dispatch: ApplicationDispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAllTagAction())
+    dispatch(getAllTagAction()).then((res)=> console.log(res))
   }, [dispatch])
 
   const handleChange = (value: number[]) => {

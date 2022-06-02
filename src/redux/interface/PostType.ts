@@ -68,3 +68,13 @@ export interface ICreatePost {
   tagid: number[];
   userid: number;
 }
+
+export interface IComment {
+  commentid: number;
+  commentcontent: string;
+  commentuserid: number;
+  commentusername: string;
+  commentvotenumber: number;
+  created_at: string;
+  updated_at: string;
+}

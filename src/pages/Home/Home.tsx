@@ -92,6 +92,7 @@ export const Home = () => {
             <List.Item
               key={item.postid}
               className='most-voted-list-item'
+              onClick={() => navigate(`/post/${item.postid}`)}
             >
               <List.Item.Meta
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid

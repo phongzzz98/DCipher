@@ -2,7 +2,6 @@
     margin: 50px 70px;
 }
 .post-heading{
-    border-bottom: 1px #696969 solid;
     padding-bottom: 10px;
 }
 .post-tag-container{
@@ -22,6 +21,7 @@
 .post-main{
     display: flex;
     flex-direction: row;
+    margin-bottom: 30px;
 }
 .vote-container{
     font-size: 1.5em;
@@ -32,13 +32,14 @@
     width: 5%;
 }
 .heart{
-    color: red;
+    color: crimson;
 }
 .markdown-section{
-    background-color: hsl(210,8%,95%);
+    width: 95%;
     padding: 15px;
     font-family: 'SofiaProRegular';
-    min-height: 100px;
+    min-height: 200px;
+    border-radius: 10px;
 }
 .code-section{
     padding: 15px;
@@ -47,6 +48,6 @@
     border-top: 1px var(--black) solid;
     padding: 20px;
 }
-.comment-markdown-section{
-    background-color: hsl(210,8%,95%);;
+.comment-md-editor{
+    margin-top: 20px;
 }
