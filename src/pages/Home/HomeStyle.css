@@ -50,11 +50,13 @@
 }
 .tag{
     border-radius: 2em;
+    margin-bottom: 3px;
 }
 .avatar-and-tags{
     width: 100%;
     display: flex;
     justify-content: space-between;
+    margin-top: 7px;
 }
 .home-avatar{
     width: 400px;

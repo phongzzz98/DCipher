@@ -49,7 +49,7 @@ export const Home = () => {
               <List.Item.Meta
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
                 title={<a onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
-                description={item.content}
+                description={item.content.slice(0, 500)}
               />
               <div className='avatar-and-tags'>
                 <div className='home-avatar'>
@@ -83,7 +83,7 @@ export const Home = () => {
         />
       </div>
       <div className='most-voted-list'>
-        <h1>Bài viết nổi bật</h1>
+        <h1>Bài viết nhiều lượt thích</h1>
         <List
           itemLayout="vertical"
           size="large"

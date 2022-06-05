@@ -24,15 +24,22 @@
     margin-bottom: 30px;
 }
 .vote-container{
-    font-size: 1.5em;
+    font-size: 1.2em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     width: 5%;
+    padding-top: 15px;
 }
 .heart{
-    color: crimson;
+    color: #dc143c;
+}
+.bookmark-action{
+    margin-top: 3px;
+}
+.bookmarked{
+    color: #008C3B;
 }
 .markdown-section{
     width: 95%;
@@ -50,4 +57,16 @@
 }
 .comment-md-editor{
     margin-top: 20px;
+}
+.comment-btn{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 15px;
+}
+.comment-unreg-btn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 10px;
 }

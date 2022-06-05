@@ -8,7 +8,7 @@ import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/Auth
 import { axiosInstance } from '../../configs/axios';
 import { useEffect, useState } from 'react';
 import { ApplicationDispatch } from '../../store/store';
-import { searchPostAction } from '../../redux/actions/PostAction';
+import { searchPostAction, searchPostByTagAction } from '../../redux/actions/PostAction';
 import { INotification } from '../../redux/interface/NotificationType';
 
 interface HeaderProps {
@@ -29,12 +29,11 @@ export const Header = (props: HeaderProps) => {
         const getNotiNumber = () => {
             axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/${user.id}`)
                 .then((res) => {
-                    setnotiNumber(res.data.notification);
+                    setnotiNumber(res.data[0].notification);
                 })
         }
         getNotiNumber()
     }, [user.id])
-    
 
     const content = (
         notifications.map((item) =>
@@ -44,10 +43,9 @@ export const Header = (props: HeaderProps) => {
     );
 
     const searchPost = (value: string) => {
-        dispatch(searchPostAction(value))
-            .then((res) => {
+        dispatch(searchPostByTagAction(value))
+            .then(() => {
                 navigate('/search')
-                console.log(res) //dlete later
             })
     }
 
@@ -88,8 +86,14 @@ export const Header = (props: HeaderProps) => {
                     <Button onClick={() => navigate('/login')} size='middle' type='ghost' className='login-btn'>Đăng nhập/Đăng ký</Button> :
                     <>
                         <Popover placement="bottomRight" title='Notification' content={content} trigger="click">
-                            <BellFilled onClick={() => getNotification()} className='more-btn' />
-                            <span>{notiNumber}</span>
+                            <div className='notification'>
+                                <BellFilled onClick={() => getNotification()} className='more-btn' />
+                                {
+                                  notiNumber !== 0 ?
+                                  <span className='noti-number'>{notiNumber}</span> :
+                                  null
+                                }
+                            </div>
                         </Popover>
                         <Tooltip placement="bottom" title={<span>Tạo bài</span>}>
                             <span className='more-btn' onClick={() => navigate('/create')}><PlusCircleOutlined /></span>

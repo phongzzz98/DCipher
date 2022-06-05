@@ -15,41 +15,41 @@ const initialState = {
   posts: [],
   mostVotedPosts: [],
   searchedPosts: [],
-  singlePost: {
-    postbookmark: [],
-    postuser: [
-      {
-        postusername: "",
-        postid: 0,
-        postcontent: "",
-        post_title: "",
-        post_code: "",
-        created_at: "",
-        updated_at: "",
-        votenumber: 0,
-        viewnumber: 0,
-      },
-    ],
-    postcomment: [
-      {
-        commentid: 0,
-        commentcontent: "",
-        commentuserid: 0,
-        commentusername: "",
-        commentvotenumber: 0,
-        created_at: "",
-        updated_at: "",
-      },
-    ],
-    posttag: [
-      {
-        tagcontent: "____",
-        tagid: 0,
-        tagcolor: "#F3F3F3",
-      },
-    ],
-    postvote: [],
-  },
+  singlePost: [
+    {
+      post_code: "",
+      post_created_at: "",
+      post_language: "",
+      post_title: "",
+      post_updated_at: "",
+      postcomment: [
+        {
+          commentid: 0,
+          commentcontent: "",
+          commentuserid: 0,
+          commentusername: "",
+          commentvotenumber: 0,
+          user_vote_comment: [],
+          created_at: "",
+          updated_at: "",
+        },
+      ],
+      postcontent: "",
+      postid: 0,
+      posttag: [
+        {
+          tagcontent: "____",
+          tagid: 0,
+          tagcolor: "#F3F3F3",
+        },
+      ],
+      postusername: "",
+      user_set_bookmark: [],
+      user_vote_post: [],
+      viewnumber: 0,
+      votenumber: 0,
+    },
+  ],
 };
 
 export const postSlice = createSlice({

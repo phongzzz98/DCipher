@@ -41,7 +41,7 @@ export const Search = () => {
                             <List.Item.Meta
                                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
                                 title={<a onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
-                                description={item.content}
+                                description={item.content.slice(0, 500)}
                             />
                             <div className='avatar-and-tags'>
                                 <div className='home-avatar'>

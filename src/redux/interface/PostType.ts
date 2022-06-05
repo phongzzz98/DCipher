@@ -39,7 +39,7 @@ export interface IPostState {
   posts: IHomePost[];
   mostVotedPosts: IHomePost[];
   searchedPosts: IHomePost[];
-  singlePost: IPost;
+  singlePost: IPost[];
 }
 
 export type IHomePost = {
@@ -71,11 +71,20 @@ export interface ICreatePost {
 }
 
 export interface IPost {
-  postbookmark: number[];
+  post_code: string | null;
+  post_created_at: string;
+  post_language: string | null;
+  post_title: string;
+  post_updated_at: string;
   postcomment: IComment[];
+  postcontent: string;
+  postid: number;
   posttag: IPostTag[];
-  postuser: IPostUser[];
-  postvote: number[];
+  postusername: string;
+  user_set_bookmark: number[];
+  user_vote_post: number[];
+  viewnumber: number;
+  votenumber: number;
 }
 
 export interface IComment {
@@ -84,6 +93,7 @@ export interface IComment {
   commentuserid: number;
   commentusername: string;
   commentvotenumber: number;
+  user_vote_comment: number[];
   created_at: string;
   updated_at: string;
 }

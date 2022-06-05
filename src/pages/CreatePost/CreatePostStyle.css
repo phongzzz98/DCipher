@@ -4,3 +4,7 @@
 .ant-collapse-content>.ant-collapse-content-box{
     padding: 0px;
 }
+
+pre {
+    overflow: visible;
+}

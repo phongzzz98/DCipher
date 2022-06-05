@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AceEditor from "react-ace"
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-python";
@@ -14,12 +14,13 @@ import "ace-builds/src-noconflict/ext-beautify"
 import { axiosInstance } from '../../configs/axios';
 import './CodeEditorStyle.css'
 import { CodeOutlined } from '@ant-design/icons';
-import { Select } from 'antd';
+import { Select, Slider } from 'antd';
 import { Loading } from '../Loading/Loading';
 
 interface CodeEditorProps {
     userCode: string;
     setUserCode: (value: string) => void;
+    setUserCodeLang?: (value: string) => void; 
 }
 
 export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
@@ -30,15 +31,15 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
     const [userInput, setUserInput] = useState("");
     const [userOutput, setUserOutput] = useState("");
     const [loading, setLoading] = useState(false);
-    const [apiLang, setApiLang] = useState('');
+    const [apiLang, setApiLang] = useState('python');
 
     const languages = [
-        { value: "c", label: "C" },
-        { value: "c_cpp", label: "C++" },
-        { value: "python", label: "Python" },
-        { value: "java", label: "Java" },
-        { value: "javascript", label: "Javascript" },
-        { value: "php", label: "PHP" },
+        { value: "c|c", label: "C" },
+        { value: "c_cpp|cpp", label: "C++" },
+        { value: "python|python", label: "Python" },
+        { value: "java|java", label: "Java" },
+        { value: "javascript|nodejs", label: "Javascript" },
+        { value: "php|php", label: "PHP" },
     ];
 
     const theme = [
@@ -47,27 +48,11 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
         { value: "merbivore_soft", label: "Merbivore Soft" },
     ];
 
-    useEffect(() => {
-        switch (userLang) {
-            case 'c':
-                setApiLang('c')
-                break;
-            case 'c_cpp':
-                setApiLang('cpp')
-                break;
-            case 'python':
-                setApiLang('python')
-                break;
-            case 'java':
-                setApiLang('java')
-                break;
-            case 'php':
-                setApiLang('php')
-                break;
-            default:
-                break;
-        }
-    }, [userLang])
+    const onChangeLanguage = (value: string) => {
+        const resultArr = value.split('|');
+        setUserLang(resultArr[0]);
+        setApiLang(resultArr[1]);
+    }
 
     const compileCode = () => {
         setLoading(true);
@@ -92,23 +77,36 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
     return (
         <div className='main'>
             <div className='code-editor-header'>
-                <Select className='code-editor-select' menuItemSelectedIcon={<CodeOutlined />} defaultValue="python" style={{ width: 120 }} onChange={(v) => setUserLang(v)}>
+                <Select
+                    className='code-editor-select'
+                    menuItemSelectedIcon={<CodeOutlined />}
+                    defaultValue="python|python"
+                    style={{ width: 120 }}
+                    onChange={(v) => onChangeLanguage(v)}
+                >
                     {languages.map((item) => {
                         return <Select.Option value={item.value}>{item.label}</Select.Option>
                     })}
                 </Select>
-                <Select className='code-editor-select' menuItemSelectedIcon={<CodeOutlined />} defaultValue="monokai" style={{ width: 120 }} onChange={(v) => setUserTheme(v)}>
+                <Select
+                    className='code-editor-select'
+                    menuItemSelectedIcon={<CodeOutlined />}
+                    defaultValue="monokai"
+                    style={{ width: 150 }}
+                    onChange={(v) => setUserTheme(v)}
+                >
                     {theme.map((item) => {
                         return <Select.Option value={item.value}>{item.label}</Select.Option>
                     })}
                 </Select>
+                <Slider step={1} style={{ width: 100 }} defaultValue={20} min={10} max={60} onChange={(value) => setFontSize(value)} />
             </div>
             <div className='code-editor-main'>
                 <div className="left-container">
                     <AceEditor
                         name='main-editor'
                         fontSize={fontSize}
-                        height="calc(100vh - 50px)"
+                        height="calc(100vh - 145px)"
                         width="100%"
                         wrapEnabled={true}
                         mode={userLang}

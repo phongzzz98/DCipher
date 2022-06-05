@@ -2,7 +2,8 @@ import {
     HomeOutlined,
     FormOutlined,
     LogoutOutlined,
-    TagsOutlined
+    TagsOutlined,
+    UserOutlined
 } from "@ant-design/icons";
 import { Avatar, Menu } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -34,6 +35,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
         { key: '1', label: 'Home', path: '/' },
         { key: '2', label: 'Playground', path: '/playground' },
         { key: '3', label: 'Tags', path: '/tags' },
+        { key: '4', label: 'My Page', path: '/mypage' },
     ]
     const [selectedKey, setSelectedKey] = useState(items.find(item => location.pathname === item.path)?.key)
 
@@ -64,11 +66,16 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                 </Menu.Item>
                 <Menu.Item key="3" icon={<TagsOutlined />}>
                     <Link to={'tags'}>
-                        <span className="navbar-span">Tags</span>
+                        <span className="navbar-span">Thẻ</span>
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="4" icon={<UserOutlined />}>
+                    <Link to={'mypage'}>
+                        <span className="navbar-span">Người dùng</span>
                     </Link>
                 </Menu.Item>
                 <Menu.Item
-                    key="4"
+                    key="5"
                     onClick={handleClickLogOut}
                     icon={<LogoutOutlined />}
                 >

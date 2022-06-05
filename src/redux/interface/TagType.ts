@@ -4,6 +4,7 @@ export interface ITagState {
 
 export interface ITag {
     id: number;
+    icon_class: string;
     content: string;
     colorcode: string;
     description: string;

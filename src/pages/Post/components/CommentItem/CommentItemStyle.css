@@ -1,9 +1,3 @@
-.comment-btn{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 15px;
-}
 .comment-markdown-section{
     /* background-color: hsl(210,8%,95%); */
     padding: 15px;

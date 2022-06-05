@@ -79,6 +79,24 @@
     opacity: 0.7;
     cursor: pointer;
 }
+.notification{
+    position: relative;
+}
+.noti-number{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 1;
+    background-color: crimson;
+    width: min-content;
+    height: min-content;
+    padding: 3px 6px;
+    border-radius: 2em;
+    text-align: start;
+    margin-top: 8px;
+    margin-right: 8px;
+}
 
 .more-btn{
     color: white;

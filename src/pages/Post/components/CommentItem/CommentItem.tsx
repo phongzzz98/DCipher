@@ -4,7 +4,7 @@ import { Avatar, Tooltip, Comment } from 'antd'
 import { IComment } from '../../../../redux/interface/PostType'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import './CommentItemStyle.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { axiosInstance } from '../../../../configs/axios'
 import { userInfoSelector } from '../../../../redux/reducers/AuthReducer'
@@ -16,8 +16,14 @@ interface CommentItemProps {
 export const CommentItem = ({ comment }: CommentItemProps) => {
     const [voted, setVoted] = useState(false)
     const user = useSelector(userInfoSelector)
-    const [commentVoteNumber, setCommentVoteNumber] = useState(comment.commentvotenumber)
-    console.log(commentVoteNumber)
+    const [commentVoteNumber, setCommentVoteNumber] = useState(0)
+
+    useEffect(() => {
+      if (comment.user_vote_comment.some((userID) => userID === user.id)) {
+        setVoted(true)
+      }
+      setCommentVoteNumber(comment.commentvotenumber)
+    }, [comment.commentvotenumber, comment.user_vote_comment, user.id])
 
     const voteComment = () => {
         axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/vote`, {
@@ -66,7 +72,7 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
                         voted ? <HeartFilled className='comment-filled-heart' onClick={() => unvoteComment()} /> :
                             <HeartOutlined onClick={() => voteComment()} className='comment-heart' key="list-vertical-star" />
                     }
-                    <span className='comment-vote-number'>{comment.commentvotenumber}</span>
+                    <span className='comment-vote-number'>{commentVoteNumber}</span>
                 </div>
             ]}
         />

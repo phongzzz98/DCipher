@@ -12,6 +12,7 @@ import { Post } from './pages/Post/Post';
 import { Loading } from './pages/LoadingPage/LoadingPage';
 import { Search } from './pages/Search/Search';
 import { TagPage } from './pages/TagPage/TagPage';
+import { MyPage } from './pages/MyPage/MyPage';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -37,6 +38,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path='/' element={<Home />} />
               <Route path='/tags' element={<TagPage />}/>
+              <Route path='mypage' element={<MyPage />} />
               <Route path='/playground' element={<Playground />} />
               <Route path='/post/:id' element={<Post />} />
               <Route path='/search' element={<Search />} />

@@ -4,15 +4,24 @@
 .tag-list {
     width: 100%;
 }
+/* .tag-title{
+    display: flex;
+    font-size: 1.4em;
+    justify-content: center;
+    line-height: normal;
+} */
 .card-container{
     background-color: hsl(210, 8%, 95%);
     border: none;
+    padding-left: 15px;
 }
 .grid-style{
-    width: 31%;
+    width: 32%;
     text-align: center;
     margin: 5px;
     border: 2px rgb(0, 0, 0) solid;
     border-radius: 10px;
-    height: 220px;
+    height: 240px;
+    cursor: pointer;
+    overflow: hidden;
 }

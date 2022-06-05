@@ -10,16 +10,19 @@ import { userInfoSelector } from '../../redux/reducers/AuthReducer';
 import { allTagSelector } from '../../redux/reducers/TagReducer';
 import { ApplicationDispatch } from '../../store/store';
 import './CreatePostStyle.css'
+import { dynamicSort } from '../../utils/util';
 
 export const CreatePost = () => {
   const user = useSelector(userInfoSelector);
   const tagList = useSelector(allTagSelector);
+  let cloneTagList = [...tagList]
   const [title, setTitle] = useState('');
   const [value, setValue] = useState<any>("**Hello world!!!**");
   const [userCode, setUserCode] = useState(``);
+  const [userCodeLang, setUserCodeLang] = useState('python')
   const [tags, setTags] = useState<number[]>([])
   const dispatch: ApplicationDispatch = useDispatch()
-
+  cloneTagList.sort(dynamicSort('content'))
   useEffect(() => {
     dispatch(getAllTagAction())
   }, [dispatch])
@@ -58,6 +61,7 @@ export const CreatePost = () => {
                 className='create-post-md'
                 value={value}
                 onChange={setValue}
+                height={300}
               />
             </div>
             <QuestionCircleOutlined />
@@ -70,13 +74,13 @@ export const CreatePost = () => {
               placeholder="Chọn các thẻ liên quan đến bài viết"
               onChange={handleChange}
             >
-              {tagList.map((tag) => <Select.Option key={tag.id}>{tag.content}</Select.Option>)}
+              {cloneTagList.map((tag) => <Select.Option key={tag.id}>{tag.content}</Select.Option>)}
             </Select>
           </Form.Item>
           <Form.Item className='create-post-form-item' label="Code" name='createPostCode'>
             <Collapse defaultActiveKey={['1']}>
               <Collapse.Panel header="Thêm code" key="1">
-                <CodeEditor userCode={userCode} setUserCode={setUserCode} />
+                <CodeEditor userCode={userCode} setUserCode={setUserCode} setUserCodeLang={setUserCodeLang} />
               </Collapse.Panel>
             </Collapse>
           </Form.Item>
