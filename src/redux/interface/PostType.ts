@@ -68,6 +68,7 @@ export interface ICreatePost {
   code: string;
   tagid: number[];
   userid: number;
+  language: string;
 }
 
 export interface IPost {

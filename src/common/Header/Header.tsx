@@ -26,13 +26,16 @@ export const Header = (props: HeaderProps) => {
     const [notiNumber, setnotiNumber] = useState(0)
 
     useEffect(() => {
-        const getNotiNumber = () => {
-            axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/${user.id}`)
-                .then((res) => {
-                    setnotiNumber(res.data[0].notification);
-                })
+        if(user.id !== 0){
+            const getNotiNumber = () => {
+                axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/${user.id}`)
+                    .then((res) => {
+                        setnotiNumber(res.data[0].notification);
+                    })
+            }
+            getNotiNumber()
         }
-        getNotiNumber()
+        else return;
     }, [user.id])
 
     const content = (
@@ -43,7 +46,7 @@ export const Header = (props: HeaderProps) => {
     );
 
     const searchPost = (value: string) => {
-        dispatch(searchPostByTagAction(value))
+        dispatch(searchPostAction(value))
             .then(() => {
                 navigate('/search')
             })
@@ -55,7 +58,7 @@ export const Header = (props: HeaderProps) => {
                 setNotifications(res.data);
             })
     }
-
+    console.log(user)
     return (
         <div className="header-app">
             <div className='header-main'>

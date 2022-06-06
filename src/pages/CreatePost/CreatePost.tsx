@@ -40,7 +40,8 @@ export const CreatePost = () => {
         content: value,
         code: userCode,
         tagid: tags,
-        userid: user.id
+        userid: user.id,
+        language: userCodeLang,
       }))
     } catch (error) {
       console.log(error);

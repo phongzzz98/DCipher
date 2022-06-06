@@ -13,6 +13,15 @@ export const loginAPI = async ({ email, password }: ILogin) => {
   }
 };
 
+export const logoutAPI = async (accessToken: string) => {
+  try {
+    const res = await axiosInstance.post(`/logout`, accessToken);
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
 export const signUpAPI = async (data: ISignUp) => {
   try {
     const res = await axiosInstance.post(`/register`, {

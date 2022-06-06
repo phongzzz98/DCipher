@@ -9,28 +9,33 @@ import { Avatar, Menu } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { removeAccessToken, removeUserInfo } from '../../utils/localStorage'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout, userInfoSelector } from '../../redux/reducers/AuthReducer'
+import { accessTokenSelector, logout, userInfoSelector } from '../../redux/reducers/AuthReducer'
 import './NavbarStyle.css'
 import { useEffect, useState } from "react";
 import bigOunce from '../../assets/images/BigOunce.png'
+import { logoutAction } from "../../redux/actions/AuthAction";
+import { ApplicationDispatch } from "../../store/store";
 
 interface NavbarProps {
     isNavbarOpen: boolean;
 }
 
 export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
-    const dispatch = useDispatch();
+    const dispatch: ApplicationDispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const user = useSelector(userInfoSelector)
+    const accessToken = useSelector(accessTokenSelector)
 
-    const handleClickLogOut = () => {
+    const handleClickLogOut = async () => {
+        await dispatch(logoutAction(accessToken!))
         removeAccessToken();
         removeUserInfo();
         dispatch(logout());
         navigate('/');
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const items = [
         { key: '1', label: 'Home', path: '/' },
         { key: '2', label: 'Playground', path: '/playground' },
@@ -41,7 +46,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
 
     useEffect(() => {
         setSelectedKey(items.find(_item => location.pathname === _item.path)?.key)
-    }, [location])
+    }, [items, location])
 
     return (
         <div>

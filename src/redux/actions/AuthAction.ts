@@ -1,11 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getUserLoginInfo, loginAPI, signUpAPI } from "../api/AuthAPI";
+import { getUserLoginInfo, loginAPI, logoutAPI, signUpAPI } from "../api/AuthAPI";
 import { ILogin, ISignUp } from "../interface/AuthType";
 
 export const loginAction = createAsyncThunk(
   "auth/login",
   async (data: ILogin) => {
     const res = await loginAPI(data);
+    return res;
+  }
+);
+
+export const logoutAction = createAsyncThunk(
+  "auth/logout",
+  async (accessToken: string) => {
+    const res = await logoutAPI(accessToken);
     return res;
   }
 );

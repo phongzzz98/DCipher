@@ -13,20 +13,20 @@ import "ace-builds/src-noconflict/ext-language_tools"
 import "ace-builds/src-noconflict/ext-beautify"
 import { axiosInstance } from '../../configs/axios';
 import './CodeEditorStyle.css'
-import { CodeOutlined } from '@ant-design/icons';
-import { Select, Slider } from 'antd';
+import { CodeOutlined, PlayCircleFilled } from '@ant-design/icons';
+import { Select, Slider, Tooltip } from 'antd';
 import { Loading } from '../Loading/Loading';
 
 interface CodeEditorProps {
     userCode: string;
     setUserCode: (value: string) => void;
-    setUserCodeLang?: (value: string) => void; 
+    setUserCodeLang?: (value: string) => void;
 }
 
 export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
     // State variable to set users source code
     const [userLang, setUserLang] = useState("python");
-    const [userTheme, setUserTheme] = useState("monokai");
+    const [userTheme, setUserTheme] = useState("merbivore_soft");
     const [fontSize, setFontSize] = useState(20);
     const [userInput, setUserInput] = useState("");
     const [userOutput, setUserOutput] = useState("");
@@ -77,7 +77,9 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
     return (
         <div className='main'>
             <div className='code-editor-header'>
+                <label className='header-label' htmlFor="select-language">Ngôn ngữ: </label>
                 <Select
+                    id='select-language'
                     className='code-editor-select'
                     menuItemSelectedIcon={<CodeOutlined />}
                     defaultValue="python|python"
@@ -88,10 +90,11 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
                         return <Select.Option value={item.value}>{item.label}</Select.Option>
                     })}
                 </Select>
+                <label className='header-label' htmlFor="select-language">Giao diện: </label>
                 <Select
                     className='code-editor-select'
                     menuItemSelectedIcon={<CodeOutlined />}
-                    defaultValue="monokai"
+                    defaultValue="merbivore_soft"
                     style={{ width: 150 }}
                     onChange={(v) => setUserTheme(v)}
                 >
@@ -99,7 +102,11 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
                         return <Select.Option value={item.value}>{item.label}</Select.Option>
                     })}
                 </Select>
+                <label className='header-label' htmlFor="select-language">Cỡ chữ: </label>
                 <Slider step={1} style={{ width: 100 }} defaultValue={20} min={10} max={60} onChange={(value) => setFontSize(value)} />
+                <Tooltip placement="rightBottom" title='Chạy code'>
+                    <PlayCircleFilled className="run-btn" onClick={() => compileCode()} />
+                </Tooltip>
             </div>
             <div className='code-editor-main'>
                 <div className="left-container">
@@ -119,12 +126,15 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
                             enableSnippets: true,
                             spellcheck: true,
                             behavioursEnabled: true,
+                            cursorStyle: 'smooth',
+                            enableEmmet: true,
+                            tooltipFollowsMouse: true,
+                            highlightSelectedWord: true,
+                            highlightActiveLine: true,
                         }}
                         value={userCode}
+
                     />
-                    <button className="run-btn" onClick={() => compileCode()}>
-                        Run
-                    </button>
                 </div>
                 <div className="right-container">
                     <h4>Input:</h4>

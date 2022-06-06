@@ -3,7 +3,6 @@ import { FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from '../../../redux/actions/AuthAction'
 import { ApplicationDispatch } from '../../../store/store'
-import { toggleLoading } from '../../../redux/reducers/LoadingReducer'
 import { useNavigate } from 'react-router-dom'
 import { accessTokenSelector } from '../../../redux/reducers/AuthReducer'
 
@@ -30,6 +29,7 @@ export const LoginForm = () => {
         }
         else
             return
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accessToken, handleSubmit])
 
 
