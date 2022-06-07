@@ -13,7 +13,7 @@ export const MainLayout = () => {
   if (!isLoading) {
     return (
       <Layout className="main-layout">
-        <Layout.Sider className='sider' width={250} trigger={null} collapsible={true} collapsed={isNavbarOpen}>
+        <Layout.Sider className='sider' width={220} trigger={null} collapsible={true} collapsed={isNavbarOpen}>
           <Navbar isNavbarOpen={isNavbarOpen} />
         </Layout.Sider>
         <Layout className="site-layout">
