@@ -38,7 +38,7 @@ export const Home = () => {
             onChange: page => {
               console.log(page);
             },
-            pageSize: 9,
+            pageSize: 8,
             position: 'bottom',
           }}
           dataSource={postList}

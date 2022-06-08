@@ -1,7 +1,7 @@
 import { Avatar, Button, Input, Popover, Tooltip } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined, MoreOutlined, PlusCircleOutlined, BellFilled } from '@ant-design/icons';
 import './HeaderStyle.css'
-import codeGear from '../../assets/svg/code-gear.svg'
+import logo from '../../assets/svg/dclogo.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer';
@@ -67,9 +67,10 @@ export const Header = (props: HeaderProps) => {
                 <div>
                     <Link to={'/'}>
                         <Avatar
+                        size={40}
                             shape="square"
                             className="header-avatar"
-                            src={codeGear}
+                            src={logo}
                         />
                     </Link>
                 </div>
