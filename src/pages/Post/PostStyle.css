@@ -2,17 +2,28 @@
     margin: 50px 70px;
 }
 .post-heading{
-    padding-bottom: 10px;
+    padding-bottom: 20px;
+}
+.post-time{
+    font-family: 'SofiaProRegular';
+    color: darkslategray;
+    font-size: 0.8em;
 }
 .post-tag-container{
     align-items: center;
     margin-bottom: 15px;
 }
-.post-user-and-time{
+.post-user-container{
     display: flex;
     align-items: center;
+}
+.post-user{
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
     font-family: 'SofiaProRegular';
     color: darkslategray;
+    margin-right: 10px;
 }
 .post-avatar{
     margin-left: 5px;
@@ -49,7 +60,7 @@
     border-radius: 10px;
 }
 .code-section{
-    padding: 15px;
+    margin-bottom: 25px;
 }
 .comment-section{
     border-top: 1px var(--black) solid;

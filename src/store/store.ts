@@ -3,13 +3,15 @@ import authSlice from "../redux/reducers/AuthReducer";
 import loadingSlice from "../redux/reducers/LoadingReducer";
 import postSlice from "../redux/reducers/PostReducer";
 import tagSlice from "../redux/reducers/TagReducer";
+import userSlice from "../redux/reducers/UserReducer";
 
 export const store = configureStore({
   reducer: {
     authSlice,
     loadingSlice,
     postSlice,
-    tagSlice
+    tagSlice,
+    userSlice
   },
 });
 export type ApplicationDispatch = ThunkDispatch<any, void, AnyAction> & Dispatch

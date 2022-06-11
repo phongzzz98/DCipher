@@ -9,10 +9,12 @@ import './HomeStyle.css'
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { IHomePost } from '../../redux/interface/PostType';
+import 'moment/locale/vi'
 
 export const Home = () => {
   const dispatch: ApplicationDispatch = useDispatch()
   const navigate = useNavigate()
+  moment.locale('vi')
   useEffect(() => {
     dispatch(getAllPostAction());
     dispatch(getMostVotedPostAction());
@@ -62,7 +64,7 @@ export const Home = () => {
               </div>
               <div className='actions-and-time'>
                 <div className='home-posttime'>
-                  <Tooltip placement='right' title={moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}>
+                  <Tooltip placement='right' title={moment(item.created_at).format('DD/MM/YYYY --- HH:mm:ss')}>
                     <span className='home-time-text'>{moment(item.created_at).fromNow()}</span>
                   </Tooltip>
                 </div>

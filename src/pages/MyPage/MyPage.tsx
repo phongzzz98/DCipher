@@ -1,4 +1,4 @@
-import { Avatar } from 'antd'
+import { Avatar, Button } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -6,37 +6,55 @@ import { axiosInstance } from '../../configs/axios'
 import { userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { ApplicationDispatch } from '../../store/store'
 import bigOunce from '../../assets/images/BigOunce.png'
+import thumbnail from '../../assets/images/abstract-darkblue.jpg'
 import './MyPageStyle.css'
 import moment from 'moment'
-import { LinkOutlined } from "@ant-design/icons";
+// import { LinkOutlined } from "@ant-design/icons";
+import { ProfileBlock } from './components/ProfileBlock/ProfileBlock'
+import { StatusBlock } from './components/StatusBlock/StatusBlock'
+import { FollowingBlock } from './components/FollowingBlock/FollowingBlock'
+import { getUserDetailsAction, seeUserCommentAction, seeUserPostAction } from '../../redux/actions/UserAction'
+import { userCommentsSelector, userDetailSelector, userPostsSelector } from '../../redux/reducers/UserReducer'
 
 export const MyPage = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const dispatch: ApplicationDispatch = useDispatch()
   const user = useSelector(userInfoSelector)
-  const [userDetails, setUserDetails] = useState()
+  const userDetails = useSelector(userDetailSelector)
+  const userPosts = useSelector(userPostsSelector)
+  const userComments = useSelector(userCommentsSelector)
   useEffect(() => {
+    // axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/seecomment/${user.id}`)
+    //       .then((res) => {
+    //         console.log(res.data)
+    //       })
     if (user.id !== 0) {
-      const getUserDetail = () => {
-        axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/${user.id}`)
-          .then((res) => {
-            setUserDetails(res.data)
-          })
-      }
-      getUserDetail()
+      dispatch(getUserDetailsAction(user.id))
+      dispatch(seeUserPostAction(user.id))
+      dispatch(seeUserCommentAction(user.id))
     }
     else return;
-  }, [user.id])
-
+  }, [dispatch, user.id])
+  console.log(userDetails)
   return (
     <div className='my-page'>
+      <div className='my-page-backdrop'>
+        <img className='thumbnail-img' src={thumbnail} alt="Thumbnail" />
+      </div>
       <div className="basic-user-info">
-        <Avatar size={200} className="" src={bigOunce} />
-        <div>
-          <h1>{user.username}</h1>
-          <h6>{moment(user.created_at).format('DD/MM/YYYY')}</h6>
-          <LinkOutlined /><span>{user.email}</span>
+        <div className='avatar-name-container'>
+          <Avatar size={80} shape={'square'} className="my-avatar" src={!userDetails.avatarImage ? bigOunce : 'https://i.ytimg.com/vi/LFhB0-xRiyM/maxresdefault.jpg'} />
+          <div className='name-and-joindate'>
+            <h3>{user.username}</h3>
+            <h6>tham gia từ {moment(user.created_at).format('DD/MM/YYYY')}</h6>
+          </div>
         </div>
+        <Button size='large'>Theo dõi</Button>
+      </div>
+      <div className='main-info'>
+        <ProfileBlock userDetail={userDetails} />
+        <StatusBlock postNumber={userPosts.length} commentNumber={userComments.length} score={userDetails.score}/>
+        <FollowingBlock />
       </div>
     </div>
   )

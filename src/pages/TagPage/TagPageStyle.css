@@ -11,9 +11,11 @@
     line-height: normal;
 } */
 .card-container{
-    background-color: hsl(210, 8%, 95%);
+    background-color: rgb(232, 232, 232);
     border: none;
     padding-left: 15px;
+    align-items: center;
+    justify-content: center;
 }
 .grid-style{
     width: 32%;

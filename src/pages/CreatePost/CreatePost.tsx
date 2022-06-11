@@ -1,5 +1,5 @@
 import MDEditor from '@uiw/react-md-editor';
-import { Button, Collapse, Form, Input, Select } from 'antd'
+import { Button, Collapse, Form, Input, notification, Select } from 'antd'
 import { FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { QuestionCircleOutlined } from '@ant-design/icons';
@@ -11,6 +11,7 @@ import { allTagSelector } from '../../redux/reducers/TagReducer';
 import { ApplicationDispatch } from '../../store/store';
 import './CreatePostStyle.css'
 import { dynamicSort } from '../../utils/util';
+import { useNavigate } from 'react-router-dom';
 
 export const CreatePost = () => {
   const user = useSelector(userInfoSelector);
@@ -22,6 +23,7 @@ export const CreatePost = () => {
   const [userCodeLang, setUserCodeLang] = useState('python')
   const [tags, setTags] = useState<number[]>([])
   const dispatch: ApplicationDispatch = useDispatch()
+  const navigate = useNavigate()
   cloneTagList.sort(dynamicSort('content'))
   useEffect(() => {
     dispatch(getAllTagAction())
@@ -35,14 +37,23 @@ export const CreatePost = () => {
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
-      await dispatch(createPostAction({
-        title: title,
-        content: value,
-        code: userCode,
-        tagid: tags,
-        userid: user.id,
-        language: userCodeLang,
-      }))
+      if (title === "" || value === "") {
+        notification.error({
+          placement: 'bottomRight',
+          message: "Vui lòng nhập các trường còn thiếu!"
+        })
+      }
+      else {
+        await dispatch(createPostAction({
+          title: title,
+          content: value,
+          code: userCode,
+          tagid: tags,
+          userid: user.id,
+          language: userCodeLang,
+        }))
+        navigate('/')
+      }
     } catch (error) {
       console.log(error);
     }
@@ -53,10 +64,10 @@ export const CreatePost = () => {
       <div className='create-post-container'>
         <h1>Tạo bài viết</h1>
         <Form labelCol={{ span: 2 }} wrapperCol={{ span: 25 }} initialValues={{ remember: true }} >
-          <Form.Item className='create-post-form-item' label="Tiêu đề" name='createPostTitle' rules={[{ required: true, message: 'Please input your title!', }]}>
+          <Form.Item className='create-post-form-item' label="Tiêu đề" name='createPostTitle' rules={[{ required: true, message: 'Hãy nhập tiêu đề!', }]}>
             <Input size="large" onChange={e => setTitle(e.target.value)} />
           </Form.Item>
-          <Form.Item className='create-post-form-item' label="Nội dung" name='createPostContent' rules={[{ required: true, message: 'Please input your content!', }]}>
+          <Form.Item className='create-post-form-item' label="Nội dung" name='createPostContent' rules={[{ required: true, message: 'Hãy nhập nội dung!', }]}>
             <div className="container" data-color-mode="light">
               <MDEditor
                 className='create-post-md'
@@ -86,7 +97,7 @@ export const CreatePost = () => {
             </Collapse>
           </Form.Item>
           <Form.Item className='create-post-form-item' id='createPostButton' valuePropName="checked" wrapperCol={{ offset: 9, span: 20 }}>
-            <Button style={{ width: '50%' }} shape='round' size='large' type="primary" htmlType="submit" onClick={handleSubmit} >Tạo bài viết</Button>
+            <Button style={{ width: '50%' }} shape='round' size='large' type="primary" htmlType="submit" onClick={handleSubmit}>Tạo bài viết</Button>
           </Form.Item>
         </Form>
       </div>

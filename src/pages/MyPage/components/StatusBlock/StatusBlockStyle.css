@@ -1,0 +1,6 @@
+.status-block{
+    background-color: white;
+    flex: 0.32;
+    border-radius: 20px;
+    padding: 15px;
+}

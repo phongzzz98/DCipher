@@ -151,7 +151,9 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
                         </div>
                     ) : (
                         <div className="output-box">
-                            <pre>{userOutput}</pre>
+                            <div>
+                                <pre>{userOutput}</pre>
+                            </div>
                             <button onClick={() => { clearOutput() }}
                                 className="clear-btn">
                                 Clear

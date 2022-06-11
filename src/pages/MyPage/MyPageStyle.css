@@ -1,9 +1,57 @@
-.my-page{
-    padding: 50px 50px;
+.my-page {
+    padding: 0px 50px 50px 50px;
+    display: flex;
+    flex-direction: column;
 }
 
-.basic-user-info{
+.my-page-backdrop {
+    width: 100%;
+}
+.thumbnail-img {
+    width: 100%;
+    max-height: 200px;
+    background-image: url('../../assets/images/abstract-darkblue.jpg');
+    background-size: contain;
+    background-position: top;
+    transform: scaleX(-1) scaleY(-1);
+    border-radius: 20px 20px 0 0;
+}
+
+.basic-user-info {
+    width: 95%;
+    background-color: rgb(255, 255, 255);
     display: flex;
     flex-direction: row;
-    justify-content: baseline;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -55px;
+    border-radius: 20px;
+    align-self: center;
+    padding: 15px 15px 15px 15px;
+    z-index: 1;
+    margin-bottom: 15px;
+}
+
+.avatar-name-container{
+    display: flex;
+}
+
+.my-avatar{
+    border-radius: 15px;
+}
+
+.name-and-joindate{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.name-and-joindate > h3,h6 {
+    margin: 0
+}
+
+.main-info{
+    display: flex;
+    justify-content: space-between;
 }

@@ -25,7 +25,7 @@ const initialState: IAuthState = {
     id: 0,
     role: 0,
     updated_at: "",
-    username: "Anonymous",
+    username: "",
   },
 };
 

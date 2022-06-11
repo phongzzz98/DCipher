@@ -78,13 +78,17 @@
     padding: 10px;
 }
 
+.output-box::-webkit-scrollbar{
+    display: none;
+}
+
 .clear-btn {
-    position: absolute;
+    position: fixed;
     bottom: 14px;
-    right: 14px;
-    width: 80px;
-    height: 40px;
-    font-size: 22px;
+    right: 28px;
+    width: 60px;
+    height: 35px;
+    font-size: 18px;
     font-weight: bold;
     color: white;
     background-color: crimson;

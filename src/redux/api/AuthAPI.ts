@@ -36,7 +36,7 @@ export const signUpAPI = async (data: ISignUp) => {
   }
 };
 
-export const getUserLoginInfo = async (id: number) => {
+export const getUserLoginInfoAPI = async (id: number) => {
   try {
     const res = await axiosInstance.get(`/api/users/${id}`);
     return res.data;

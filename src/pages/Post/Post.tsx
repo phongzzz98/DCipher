@@ -1,5 +1,5 @@
 import MDEditor from '@uiw/react-md-editor'
-import { Avatar, Tag, Button, notification } from 'antd'
+import { Avatar, Tag, Button, notification, Tooltip } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -8,11 +8,12 @@ import { getOnePostAction } from '../../redux/actions/PostAction'
 import { onePostSelector } from '../../redux/reducers/PostReducer'
 import { ApplicationDispatch } from '../../store/store'
 import './PostStyle.css'
-import { HeartOutlined, HeartFilled, BookOutlined, BookFilled } from '@ant-design/icons'
+import { HeartOutlined, HeartFilled, FlagOutlined, FlagFilled } from '@ant-design/icons'
 import { axiosInstance } from '../../configs/axios'
 import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { IComment } from '../../redux/interface/PostType'
 import { CommentItem } from './components/CommentItem/CommentItem'
+import moment from 'moment'
 
 export const Post = () => {
   const { id } = useParams<{ id: string }>()
@@ -24,6 +25,7 @@ export const Post = () => {
   const [voted, setVoted] = useState(false)
   const [bookmarked, setBookmarked] = useState(false)
   const [postVoteNumber, setPostVoteNumber] = useState(0)
+  const [loadingComment, setLoadingComment] = useState(false)
   const accessToken = useSelector(accessTokenSelector)
   useEffect(() => {
     dispatch(getOnePostAction(id!))
@@ -35,7 +37,7 @@ export const Post = () => {
     else
       setVoted(false)
 
-    if(selectedPost[0].user_set_bookmark.some((userID) => userID === user.id))
+    if (selectedPost[0].user_set_bookmark.some((userID) => userID === user.id))
       setBookmarked(true)
     else
       setBookmarked(false)
@@ -68,16 +70,26 @@ export const Post = () => {
     })
   }
 
-  const handleSubmitComment = () => {
-    axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/comment`, {
-      userid: user.id,
-      postid: parseInt(id!),
-      content: value
-    }).then(() => {
-      notification.success({
-        message: 'Commented!'
+  const handleSubmitComment = async () => {
+    if (value === "") {
+      notification.error({
+        placement: 'bottomRight',
+        message: "Vui lòng nhập bình luận!"
       })
-    })
+    }
+    else {
+      setLoadingComment(true)
+      await axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/comment`, {
+        userid: user.id,
+        postid: parseInt(id!),
+        content: value
+      }).then(() => {
+        setLoadingComment(false)
+        notification.success({
+          message: 'Commented!'
+        })
+      })
+    }
   }
 
   const onSetBookmark = () => {
@@ -111,10 +123,16 @@ export const Post = () => {
       <div className='post-container'>
         <div className='post-heading'>
           <h1>{selectedPost[0].post_title}</h1>
+          <Tooltip placement='right' title={moment(selectedPost[0].post_created_at).format('DD/MM/YYYY --- HH:mm:ss')}>
+            <span className='post-time'>{moment(selectedPost[0].post_created_at).fromNow()}</span>
+          </Tooltip>
           <div className='post-tag-container'>
             {selectedPost[0].posttag.map((tag) => <Tag className='tag' color={tag.tagcolor}>{tag.tagcontent}</Tag>)}
           </div>
-          <h5 className='post-user-and-time'>bởi <Avatar className='post-avatar' src={'https://joeschmoe.io/api/v1/random'} />{selectedPost[0].postusername} vào {selectedPost[0].post_created_at}</h5>
+          <div className='post-user-container'>
+            <span className='post-user'>bởi <Avatar className='post-avatar' src={'https://joeschmoe.io/api/v1/random'} />{selectedPost[0].postusername}</span>
+            <Button size='small' type='default' >Theo dõi</Button>
+          </div>
         </div>
         <div className="post-main" data-color-mode="light">
           {
@@ -127,9 +145,11 @@ export const Post = () => {
                 }
                 {postVoteNumber}
                 {
-                  bookmarked ? 
-                  <BookFilled onClick={() => onRemoveBookmark()} className='bookmark-action bookmarked' /> :
-                  <BookOutlined onClick={() => onSetBookmark()} className='bookmark-action' /> 
+                  bookmarked ?
+                    <FlagFilled onClick={() => onRemoveBookmark()} className='bookmark-action bookmarked' /> :
+                    <Tooltip title='Lưu bài viết' placement='bottom'>
+                      <FlagOutlined onClick={() => onSetBookmark()} className='bookmark-action' />
+                    </Tooltip>
                 }
               </div> : null
           }
@@ -139,9 +159,10 @@ export const Post = () => {
           />
         </div>
         {
-          !selectedPost[0].post_code ? null : <div className='code-section'>
-            <CodeEditor userCode={selectedPost[0].post_code} setUserCode={() => { }} />
-          </div>
+          !selectedPost[0].post_code ? null :
+            <div className='code-section'>
+              <CodeEditor userCode={selectedPost[0].post_code} setUserCode={() => { }} />
+            </div>
         }
         <div className='comment-section'>
           <h4>Bình luận</h4>
@@ -154,7 +175,7 @@ export const Post = () => {
                   onChange={setValue}
                 />
                 <div className='comment-btn'>
-                  <Button shape='round' size='middle' type="primary" htmlType="submit" onClick={handleSubmitComment} >Đăng bình luận</Button>
+                  <Button loading={loadingComment} shape='round' size='middle' type="primary" htmlType="submit" onClick={handleSubmitComment} >Đăng bình luận</Button>
                 </div>
               </div> :
               <div className="comment-input">

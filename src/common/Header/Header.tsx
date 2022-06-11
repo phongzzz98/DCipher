@@ -9,7 +9,9 @@ import { axiosInstance } from '../../configs/axios';
 import { useEffect, useState } from 'react';
 import { ApplicationDispatch } from '../../store/store';
 import { searchPostAction, searchPostByTagAction } from '../../redux/actions/PostAction';
-import { INotification } from '../../redux/interface/NotificationType';
+import { INotification } from '../../redux/interface/UserType';
+import { getNotificationAction } from '../../redux/actions/UserAction';
+import { notificationSelector } from '../../redux/reducers/UserReducer';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -22,7 +24,7 @@ export const Header = (props: HeaderProps) => {
     const dispatch: ApplicationDispatch = useDispatch()
     const accessToken = useSelector(accessTokenSelector)
     const user = useSelector(userInfoSelector)
-    const [notifications, setNotifications] = useState<INotification[]>([])
+    const notifications = useSelector(notificationSelector)
     const [notiNumber, setnotiNumber] = useState(0)
 
     useEffect(() => {
@@ -52,11 +54,8 @@ export const Header = (props: HeaderProps) => {
             })
     }
 
-    const getNotification = () => {
-        axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/notification/${user.id}`)
-            .then((res) => {
-                setNotifications(res.data);
-            })
+    const getNotification = (id: number) => {
+        dispatch(getNotificationAction(id))
     }
     console.log(user)
     return (
@@ -91,7 +90,7 @@ export const Header = (props: HeaderProps) => {
                     <>
                         <Popover placement="bottomRight" title='Notification' content={content} trigger="click">
                             <div className='notification'>
-                                <BellFilled onClick={() => getNotification()} className='more-btn' />
+                                <BellFilled onClick={() => getNotification(user.id)} className='more-btn' />
                                 {
                                   notiNumber !== 0 ?
                                   <span className='noti-number'>{notiNumber}</span> :

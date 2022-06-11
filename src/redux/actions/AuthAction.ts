@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getUserLoginInfo, loginAPI, logoutAPI, signUpAPI } from "../api/AuthAPI";
+import { getUserLoginInfoAPI, loginAPI, logoutAPI, signUpAPI } from "../api/AuthAPI";
 import { ILogin, ISignUp } from "../interface/AuthType";
 
 export const loginAction = createAsyncThunk(
@@ -29,7 +29,7 @@ export const signUpAction = createAsyncThunk(
 export const getUserLoginInfoAction = createAsyncThunk(
   "auth/getUserLoginInfo",
   async (id: number) => {
-    const res = await getUserLoginInfo(id);
+    const res = await getUserLoginInfoAPI(id);
     return res;
   }
 );
