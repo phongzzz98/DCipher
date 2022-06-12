@@ -9,7 +9,7 @@ import bigOunce from '../../assets/images/BigOunce.png'
 import thumbnail from '../../assets/images/abstract-darkblue.jpg'
 import './MyPageStyle.css'
 import moment from 'moment'
-// import { LinkOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import { ProfileBlock } from './components/ProfileBlock/ProfileBlock'
 import { StatusBlock } from './components/StatusBlock/StatusBlock'
 import { FollowingBlock } from './components/FollowingBlock/FollowingBlock'
@@ -49,12 +49,12 @@ export const MyPage = () => {
             <h6>tham gia từ {moment(user.created_at).format('DD/MM/YYYY')}</h6>
           </div>
         </div>
-        <Button size='large'>Theo dõi</Button>
+        <Button icon={<EditOutlined />} size='middle'>Sửa thông tin cá nhân</Button>
       </div>
       <div className='main-info'>
         <ProfileBlock userDetail={userDetails} />
-        <StatusBlock postNumber={userPosts.length} commentNumber={userComments.length} score={userDetails.score}/>
-        <FollowingBlock />
+        <StatusBlock userPosts={userPosts} commentNumber={userComments.length} score={userDetails.score}/>
+        <FollowingBlock userFollowing={userDetails.user_following}/>
       </div>
     </div>
   )

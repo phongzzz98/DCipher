@@ -17,10 +17,31 @@ const initialState: IUserState = {
     birth: "",
     displayname: "",
     fullName: "",
-    linkSNS: "",
+    linkSNS: [
+      {
+        facebook_account: "",
+        linkedin_account: "",
+        twitter_account: "",
+      },
+    ],
     notification: 0,
     score: 0,
-    user_follow: [],
+    user_follow: [
+      {
+        userid: 0,
+        displayname: "",
+        avatarImage: "",
+        score: 0,
+      },
+    ],
+    user_following: [
+      {
+        userid: 0,
+        displayname: "",
+        avatarImage: "",
+        score: 0,
+      },
+    ],
     userid: 0,
   },
   userPosts: [],

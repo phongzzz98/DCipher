@@ -4,3 +4,8 @@
     border-radius: 20px;
     padding: 15px;
 }
+
+.pie-chart{
+    min-height: 220px;
+    width: 100%;
+}

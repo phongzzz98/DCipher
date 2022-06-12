@@ -21,10 +21,11 @@ export interface IUserDetails {
   birth: string;
   displayname: string;
   fullName: string;
-  linkSNS: string;
+  linkSNS: ISocial[];
   notification: number;
   score: number;
-  user_follow: number[];
+  user_follow: IUserFollow[];
+  user_following: IUserFollow[];
   userid: number;
 }
 
@@ -46,4 +47,17 @@ export interface IUserComment {
   updated_at: string;
   userid: number;
   votenumber: number;
+}
+
+export interface ISocial {
+  facebook_account: string;
+  linkedin_account: string;
+  twitter_account: string;
+}
+
+export interface IUserFollow {
+  userid: number;
+  displayname: string;
+  avatarImage: string;
+  score: number
 }
