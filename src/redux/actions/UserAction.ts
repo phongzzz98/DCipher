@@ -1,10 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  getAllUserAPI,
   getNotificationAPI,
   getUserDetailsAPI,
+  seeUserBookmarkAPI,
   seeUserCommentAPI,
   seeUserPostAPI,
 } from "../api/UserAPI";
+
+export const getAllUsersAction = createAsyncThunk(
+  "getAllUsers",
+  async () => {
+    const res = await getAllUserAPI();
+    return res;
+  }
+);
 
 export const getUserDetailsAction = createAsyncThunk(
   "getUserDetails",
@@ -37,3 +47,12 @@ export const seeUserCommentAction = createAsyncThunk(
     return res;
   }
 );
+
+export const seeUserBookmarkAction = createAsyncThunk(
+  "seeUserBookmark",
+  async (id: number) => {
+    const res = await seeUserBookmarkAPI(id);
+    return res;
+  }
+);
+

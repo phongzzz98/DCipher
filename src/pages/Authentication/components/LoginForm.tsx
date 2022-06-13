@@ -35,10 +35,10 @@ export const LoginForm = () => {
 
     return (
         <Form className='log-form' labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ remember: true }} onSubmitCapture={handleSubmit} >
-            <Form.Item className='login-form-item' label="Username" name='loginUsername' rules={[{ required: true, message: 'Please input your username!', }]}>
+            <Form.Item className='login-form-item' label="Email" name='loginUsername' rules={[{ required: true, message: 'Please input your username!', }]}>
                 <Input size="large" onChange={e => setUserName(e.target.value)} />
             </Form.Item>
-            <Form.Item className='login-form-item' label="Password" name='loginPassword' rules={[{ required: true, message: 'Please input your password!' }]}>
+            <Form.Item className='login-form-item' label="Mật khẩu" name='loginPassword' rules={[{ required: true, message: 'Please input your password!' }]}>
                 <Input.Password size="large" onChange={e => setPassword(e.target.value)} />
             </Form.Item>
             <Form.Item className='login-form-item' id='loginButtons' valuePropName="checked" wrapperCol={{ offset: 6, span: 16 }}>

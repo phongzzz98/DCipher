@@ -1,0 +1,17 @@
+.user-bookmark-item{
+    display: flex;
+    flex-direction: column;
+}
+.user-bookmark-time-and-name{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.user-bookmark-tag-and-info{
+    display: flex;
+    width: 100%;
+}
+.user-bookmark-info-container{
+    display: flex;
+    font-size: 0.9em;
+}

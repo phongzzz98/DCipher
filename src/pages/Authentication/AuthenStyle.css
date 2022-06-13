@@ -63,6 +63,10 @@
     width: 60%;
 }
 
+.login-container > h1 {
+    text-align: center;
+}
+
 .login-text {
     cursor: pointer;
     color: black;

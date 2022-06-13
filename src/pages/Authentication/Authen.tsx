@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './AuthenStyle.css'
 import { LoginForm } from './components/LoginForm'
 import { SignUpForm } from './components/SignUpForm'

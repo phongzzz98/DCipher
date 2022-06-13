@@ -5,16 +5,7 @@ import { createTagAction, getAllTagAction } from "../actions/TagAction";
 import { ITagState } from "../interface/TagType";
 
 const initialState: ITagState = {
-  tags: [{
-    id: 0,
-    icon_class: '',
-    content: '',
-    colorcode: '',
-    description: '',
-    created_at: '',
-    updated_at: '',
-    postusetag: 0,
-  }],
+  tags: [],
 };
 
 export const tagSlice = createSlice({

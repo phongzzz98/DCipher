@@ -3,13 +3,16 @@ import { RootState } from "../../store/store";
 import { notification } from "antd";
 import { IUserState } from "../interface/UserType";
 import {
+  getAllUsersAction,
   getNotificationAction,
   getUserDetailsAction,
+  seeUserBookmarkAction,
   seeUserCommentAction,
   seeUserPostAction,
 } from "../actions/UserAction";
 
 const initialState: IUserState = {
+  users: [],
   notification: [],
   userDetail: {
     about: "",
@@ -17,6 +20,7 @@ const initialState: IUserState = {
     birth: "",
     displayname: "",
     fullName: "",
+    created_at: "",
     linkSNS: [
       {
         facebook_account: "",
@@ -46,6 +50,7 @@ const initialState: IUserState = {
   },
   userPosts: [],
   userComments: [],
+  userBookmarks: [],
 };
 
 export const userSlice = createSlice({
@@ -53,6 +58,15 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder
+      .addCase(getAllUsersAction.fulfilled, (state, action) => {
+        state.users = action.payload;
+      })
+      .addCase(getAllUsersAction.rejected, () => {
+        notification.error({
+          message: "Get users failed!",
+        });
+      });
     builder
       .addCase(getUserDetailsAction.fulfilled, (state, action) => {
         state.userDetail = action.payload[0];
@@ -89,6 +103,15 @@ export const userSlice = createSlice({
           message: "Get user comments failed!",
         });
       });
+    builder
+      .addCase(seeUserBookmarkAction.fulfilled, (state, action) => {
+        state.userBookmarks = action.payload;
+      })
+      .addCase(seeUserBookmarkAction.rejected, () => {
+        notification.error({
+          message: "Get user bookmark failed!",
+        });
+      });
   },
 });
 
@@ -110,6 +133,14 @@ export const userPostsSelector = createSelector(
 export const userCommentsSelector = createSelector(
   selectSelf,
   (state) => state.userComments
+);
+export const userBookmarksSelector = createSelector(
+  selectSelf,
+  (state) => state.userBookmarks
+);
+export const allUsersSelector = createSelector(
+  selectSelf,
+  (state) => state.users
 );
 
 export default userSlice.reducer;

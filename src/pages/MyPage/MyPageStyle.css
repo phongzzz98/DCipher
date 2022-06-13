@@ -7,6 +7,7 @@
 .my-page-backdrop {
     width: 100%;
 }
+
 .thumbnail-img {
     width: 100%;
     max-height: 200px;
@@ -32,33 +33,48 @@
     margin-bottom: 15px;
 }
 
-.avatar-name-container{
+.avatar-name-container {
     display: flex;
 }
 
-.my-avatar{
+.my-avatar {
     border-radius: 15px;
 }
 
-.name-and-joindate{
+.name-and-joindate {
     margin-left: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.name-and-joindate > h3,h6 {
+.name-and-joindate>h3,
+h6 {
     margin: 0
 }
 
-.main-info{
+.main-info {
     display: flex;
     justify-content: space-between;
 }
 
-.user-posts-block{
+.user-posts-block {
     background-color: white;
     padding: 0px 15px 15px 15px;
     border-radius: 15px;
-    margin-top: 15px;
+    margin-top: 30px;
+}
+
+.user-comments-block {
+    background-color: white;
+    padding: 0px 15px 15px 15px;
+    border-radius: 15px;
+    margin-top: 30px;
+}
+
+.user-bookmarks-block {
+    background-color: white;
+    padding: 0px 15px 15px 15px;
+    border-radius: 15px;
+    margin-top: 30px;
 }
