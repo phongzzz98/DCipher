@@ -13,6 +13,7 @@ import { Loading } from './pages/LoadingPage/LoadingPage';
 import { Search } from './pages/Search/Search';
 import { TagPage } from './pages/TagPage/TagPage';
 import { MyPage } from './pages/MyPage/MyPage';
+import { EditProfile } from './pages/EditProfile/EditProfile';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -38,12 +39,13 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path='/' element={<Home />} />
               <Route path='/tags' element={<TagPage />}/>
-              <Route path='mypage' element={<MyPage />} />
+              <Route path='/mypage' element={<MyPage />} />
               <Route path='/playground' element={<Playground />} />
               <Route path='/post/:id' element={<Post />} />
               <Route path='/search' element={<Search />} />
               <Route element={<PrivateRoute />}>
                 <Route path='/create' element={<CreatePost />} />
+                <Route path='/editProfile' element={<EditProfile />} />
               </Route>
             </Route>
             <Route path='/login' element={<Authen />} />

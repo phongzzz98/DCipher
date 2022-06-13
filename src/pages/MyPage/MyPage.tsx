@@ -15,8 +15,10 @@ import { FollowingBlock } from './components/FollowingBlock/FollowingBlock'
 import { getUserDetailsAction, seeUserCommentAction, seeUserPostAction } from '../../redux/actions/UserAction'
 import { userCommentsSelector, userDetailSelector, userPostsSelector } from '../../redux/reducers/UserReducer'
 import { PostsBlock } from './components/PostsBlock/PostsBlock'
+import { useNavigate } from 'react-router-dom'
 
 export const MyPage = () => {
+  const navigate = useNavigate()
   const dispatch: ApplicationDispatch = useDispatch()
   const user = useSelector(userInfoSelector)
   const userDetails = useSelector(userDetailSelector)
@@ -48,12 +50,12 @@ export const MyPage = () => {
             <h6>tham gia từ {moment(user.created_at).format('DD/MM/YYYY')}</h6>
           </div>
         </div>
-        <Button icon={<EditOutlined />} size='middle'>Sửa thông tin cá nhân</Button>
+        <Button onClick={() => navigate('/editProfile')} icon={<EditOutlined />} size='middle'>Sửa thông tin cá nhân</Button>
       </div>
       <div className='main-info'>
         <ProfileBlock userDetail={userDetails} />
-        <StatusBlock userPosts={userPosts} commentNumber={userComments.length} score={userDetails.score}/>
-        <FollowingBlock userFollowing={userDetails.user_following}/>
+        <StatusBlock userPosts={userPosts} commentNumber={userComments.length} score={userDetails.score} />
+        <FollowingBlock userFollowing={userDetails.user_following} />
       </div>
       <div className='user-posts-block'>
         <PostsBlock userPosts={userPosts} />

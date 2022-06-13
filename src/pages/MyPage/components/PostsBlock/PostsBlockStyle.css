@@ -1,0 +1,21 @@
+.user-post-item{
+    display: flex;
+    flex-direction: column;
+}
+.user-post-time-and-name{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.user-post-tag-and-info{
+    display: flex;
+    width: 100%;
+}
+.user-post-tag{
+    border-radius: 2em;
+    font-size: 0.7em;
+}
+.user-post-info-container{
+    display: flex;
+    font-size: 0.9em;
+}
