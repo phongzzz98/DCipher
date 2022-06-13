@@ -1,7 +1,6 @@
 import { Avatar, Button } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../configs/axios'
 import { userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { ApplicationDispatch } from '../../store/store'
@@ -15,9 +14,9 @@ import { StatusBlock } from './components/StatusBlock/StatusBlock'
 import { FollowingBlock } from './components/FollowingBlock/FollowingBlock'
 import { getUserDetailsAction, seeUserCommentAction, seeUserPostAction } from '../../redux/actions/UserAction'
 import { userCommentsSelector, userDetailSelector, userPostsSelector } from '../../redux/reducers/UserReducer'
+import { PostsBlock } from './components/PostsBlock/PostsBlock'
 
 export const MyPage = () => {
-  // const navigate = useNavigate()
   const dispatch: ApplicationDispatch = useDispatch()
   const user = useSelector(userInfoSelector)
   const userDetails = useSelector(userDetailSelector)
@@ -35,7 +34,7 @@ export const MyPage = () => {
     }
     else return;
   }, [dispatch, user.id])
-  console.log(userDetails)
+  console.log('Details',userDetails)
   return (
     <div className='my-page'>
       <div className='my-page-backdrop'>
@@ -55,6 +54,9 @@ export const MyPage = () => {
         <ProfileBlock userDetail={userDetails} />
         <StatusBlock userPosts={userPosts} commentNumber={userComments.length} score={userDetails.score}/>
         <FollowingBlock userFollowing={userDetails.user_following}/>
+      </div>
+      <div className='user-posts-block'>
+        <PostsBlock userPosts={userPosts} />
       </div>
     </div>
   )
