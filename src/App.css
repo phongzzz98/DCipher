@@ -26,6 +26,10 @@
   margin: 3px;
 }
 
+.ant-image-preview-operations{
+  justify-content: center;
+}
+
 /* 
 .App-logo {
   height: 40vmin;

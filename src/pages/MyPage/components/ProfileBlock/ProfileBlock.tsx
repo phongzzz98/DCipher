@@ -19,13 +19,13 @@ export const ProfileBlock = ({ userDetail }: IProfileBlockProps) => {
                 <Descriptions.Item label="Sinh nhật">{userDetail.birth}</Descriptions.Item>
                 <Descriptions.Item label="Liên kết">
                     {userDetail.linkSNS[0].facebook_account !== "null"
-                        ? <a style={{color: '#4267B2'}} className='social-link' href={`https://${userDetail.linkSNS[0].facebook_account}`}><FacebookFilled /></a>
+                        ? <a style={{color: '#4267B2'}} className='social-link' href={`${userDetail.linkSNS[0].facebook_account}`}><FacebookFilled /></a>
                         : null}
                     {userDetail.linkSNS[0].linkedin_account !== "null"
-                        ? <a style={{color: '#0077B5'}} className='social-link' href={`https://${userDetail.linkSNS[0].linkedin_account}`}><LinkedinFilled /></a>
+                        ? <a style={{color: '#0077B5'}} className='social-link' href={`${userDetail.linkSNS[0].linkedin_account}`}><LinkedinFilled /></a>
                         : null}
                     {userDetail.linkSNS[0].twitter_account !== "null"
-                        ? <a style={{color: '#1DA1F2'}} className='social-link' href={`https://${userDetail.linkSNS[0].twitter_account}`}><TwitterSquareFilled /></a>
+                        ? <a style={{color: '#1DA1F2'}} className='social-link' href={`${userDetail.linkSNS[0].twitter_account}`}><TwitterSquareFilled /></a>
                         : null}
                 </Descriptions.Item>
             </Descriptions>

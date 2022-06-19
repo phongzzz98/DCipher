@@ -2,6 +2,7 @@ import { IHomeTag } from "./PostType";
 
 export interface IUserState {
   users: IUser[];
+  oneUserInfo: IOneUserInfo;
   notification: INotification[];
   userDetail: IUserDetails;
   userPosts: IUserPost[];
@@ -15,6 +16,7 @@ export interface IUser {
   displayname: string;
   score: number;
   number_of_followers: number;
+  number_of_post: number;
 }
 
 export interface INotification {
@@ -81,4 +83,33 @@ export interface IUserBookmark {
   viewnumber: number;
   created_at: string;
   updated_at: string;
+}
+
+export interface IUserDetailsToSave {
+  avatarImage: string;
+  userid: number;
+  displayname: string;
+  about: string;
+  fullname: string;
+  birth: string;
+  linkSNS: string[];
+}
+
+export interface IFollowData {
+  user_id: number;
+  user_follow_id: number;
+}
+
+export interface IOneUserInfo {
+  userid: number;
+  displayname: string;
+  about: string;
+  avatarImage: string;
+  linkSNS: ISocial[];
+  score: number;
+  number_of_post: number;
+  number_of_comment: number;
+  post_created: IUserPost[];
+  user_follow: IUserFollow[];
+  number_of_followers: number;
 }

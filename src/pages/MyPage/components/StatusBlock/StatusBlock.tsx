@@ -35,13 +35,15 @@ export const StatusBlock = ({ userPosts, commentNumber, score }: IStatusBlockPro
     cloneTagList.forEach((tag) => {
         const tagName = tag.content;
         const valueNumber = cloneUserPosts.filter((post) => post.posttag.some((tagPost) => tagPost.tagcontent === tag.content)).length
-        data.push({
-            type: tagName,
-            value: valueNumber
-        })
-        colorCodes.push(tag.colorcode)
+        if (valueNumber !== 0) {
+            data.push({
+                type: tagName,
+                value: valueNumber
+            })
+            colorCodes.push(tag.colorcode)
+        }
     })
-    
+
     const config = {
         appendPadding: 12,
         data,

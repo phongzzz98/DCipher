@@ -15,6 +15,7 @@ import { TagPage } from './pages/TagPage/TagPage';
 import { MyPage } from './pages/MyPage/MyPage';
 import { EditProfile } from './pages/EditProfile/EditProfile';
 import { Users } from './pages/Users/Users';
+import { UserPage } from './pages/UserPage/UserPage';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -40,6 +41,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path='/' element={<Home />} />
               <Route path='/users' element={<Users />} />
+              <Route path='/user/:id' element={<UserPage />} />
               <Route path='/tags' element={<TagPage />}/>
               <Route path='/mypage' element={<MyPage />} />
               <Route path='/playground' element={<Playground />} />
