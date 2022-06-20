@@ -6,7 +6,7 @@ import {
     UserOutlined,
     TeamOutlined
 } from "@ant-design/icons";
-import { Avatar, Menu } from 'antd'
+import { Avatar, Menu, Popover } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { removeAccessToken, removeUserInfo } from '../../utils/localStorage'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,6 +27,15 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
     const location = useLocation();
     const user = useSelector(userInfoSelector)
     const accessToken = useSelector(accessTokenSelector)
+    const [visible, setVisible] = useState(false);
+
+    const hide = () => {
+        setVisible(false);
+    };
+
+    const handleVisibleChange = (newVisible: boolean) => {
+        setVisible(newVisible);
+    };
 
     const handleClickLogOut = async () => {
         await dispatch(logoutAction(accessToken!))
@@ -52,10 +61,18 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
 
     return (
         <div>
-            <div className="avatar-container">
-                <Avatar className="avatar" src={bigOunce} />
-                {!isNavbarOpen ? <span className="user-name">{user.username}</span> : null}
-            </div>
+            <Popover
+                content={<a onClick={hide}>Close</a>}
+                title="Title"
+                trigger="click"
+                visible={visible}
+                onVisibleChange={handleVisibleChange}
+            >
+                <div className="avatar-container">
+                    <Avatar className="avatar" src={bigOunce} />
+                    {!isNavbarOpen ? <span className="user-name">{user.username}</span> : null}
+                </div>
+            </Popover>
             <Menu
                 theme="dark"
                 mode="inline"
