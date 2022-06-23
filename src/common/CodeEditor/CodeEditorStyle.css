@@ -29,12 +29,12 @@
 
 .left-container {
     position: relative;
-    flex: 65%;
+    flex: 70%;
     height: calc(100vh - 145px);
 }
 
 .right-container {
-    flex: 35%;
+    flex: 30%;
     height: calc(100vh - 145px);
     display: flex;
     flex-direction: column;
@@ -44,14 +44,26 @@
 }
 .right-container h4 {
     color: azure;
+    font-size: smaller;
 }
-
-.input-box {
+.input-container {
+    display: flex;
+    flex-direction: column;
     flex: 30%;
+}
+.input-box {
+    flex: 0.9;
 }
 
 .input-box textarea {
     font-size: 16px;
+}
+
+.output-container {
+    flex: 70%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .spinner-box {
@@ -68,11 +80,10 @@
 }
 
 .output-box {
-    flex: 70%;
+    height: 320px;
     background-color: #242424;
     overflow-y: auto;
     color: whitesmoke;
-    position: relative;
     border: 1px rgb(133, 133, 133) solid;
     border-radius: 6px;
     padding: 10px;
@@ -83,9 +94,9 @@
 }
 
 .clear-btn {
-    position: fixed;
-    bottom: 14px;
-    right: 28px;
+    position: absolute;
+    bottom: 5px;
+    right: 1.2%;
     width: 60px;
     height: 35px;
     font-size: 18px;

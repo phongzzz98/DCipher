@@ -28,10 +28,6 @@ export const MyPage = () => {
   const userBookmarks = useSelector(userBookmarksSelector)
 
   useEffect(() => {
-    // axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/seecomment/${user.id}`)
-    //       .then((res) => {
-    //         console.log(res.data)
-    //       })
     if (user.id !== 0) {
       dispatch(getUserDetailsAction(user.id))
       dispatch(seeUserPostAction(user.id))

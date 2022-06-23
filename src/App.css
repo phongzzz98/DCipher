@@ -30,6 +30,10 @@
   justify-content: center;
 }
 
+.ant-popover-inner-content{
+  padding: 0px;
+}
+
 /* 
 .App-logo {
   height: 40vmin;
