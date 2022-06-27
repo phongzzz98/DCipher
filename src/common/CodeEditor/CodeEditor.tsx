@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AceEditor from "react-ace"
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-python";
@@ -20,10 +20,11 @@ import { Loading } from '../Loading/Loading';
 interface CodeEditorProps {
     userCode: string;
     setUserCode: (value: string) => void;
-    setUserCodeLang?: (value: string) => void;
+    userCodeLang?: string;
+    setUserCodeLang?: Function;
 }
 
-export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
+export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLang }: CodeEditorProps) => {
     // State variable to set users source code
     const [userLang, setUserLang] = useState("python");
     const [userTheme, setUserTheme] = useState("merbivore_soft");
@@ -32,7 +33,9 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
     const [userOutput, setUserOutput] = useState("");
     const [loading, setLoading] = useState(false);
     const [apiLang, setApiLang] = useState('python');
+    const [defaultOption, setDefaultOption] = useState('python|python')
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const languages = [
         { value: "c|c", label: "C" },
         { value: "c_cpp|cpp", label: "C++" },
@@ -48,10 +51,24 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
         { value: "merbivore_soft", label: "Merbivore Soft" },
     ];
 
+    useEffect(() => {
+        let option: {
+            value: string;
+            label: string;
+        } | undefined
+        if (userCodeLang !== undefined) {
+            option = languages.find((lang) => lang.value.split('|')[0] === userCodeLang)
+            option !== undefined ?
+                setDefaultOption(option?.value) : setDefaultOption('python|python')
+        }
+    }, [languages, userCodeLang])
+
+
     const onChangeLanguage = (value: string) => {
         const resultArr = value.split('|');
         setUserLang(resultArr[0]);
         setApiLang(resultArr[1]);
+        setUserCodeLang!(resultArr[0])
     }
 
     const compileCode = () => {
@@ -82,7 +99,7 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
                     id='select-language'
                     className='code-editor-select'
                     menuItemSelectedIcon={<CodeOutlined />}
-                    defaultValue="python|python"
+                    defaultValue={defaultOption}
                     style={{ width: 120 }}
                     onChange={(v) => onChangeLanguage(v)}
                 >

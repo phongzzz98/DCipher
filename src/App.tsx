@@ -51,7 +51,7 @@ function App() {
               <Route element={<PrivateRoute />}>
                 <Route path='/create' element={<CreatePost />} />
                 <Route path='/editProfile' element={<EditProfile />} />
-                <Route path='/editPost' element={<EditPost />} />
+                <Route path='/editPost/:id' element={<EditPost />} />
               </Route>
             </Route>
             <Route path='/login' element={<Authen />} />

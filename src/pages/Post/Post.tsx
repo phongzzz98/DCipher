@@ -157,7 +157,7 @@ export const Post = () => {
               <Popover
                 content={
                   <div>
-                    <div className="user-popover-item" onClick={() => navigate('/editPost')}>
+                    <div className="user-popover-item" onClick={() => navigate(`/editPost/${id}`)}>
                       <EditOutlined style={{ marginRight: 7 }} />
                       <span className="navbar-span">Sửa bài viết</span>
                     </div>

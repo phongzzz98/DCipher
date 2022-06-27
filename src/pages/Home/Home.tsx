@@ -85,7 +85,7 @@ export const Home = () => {
         />
       </div>
       <div className='most-voted-list'>
-        <h1>Bài viết nhiều lượt thích</h1>
+        <h1>Bài viết nổi bật</h1>
         <List
           itemLayout="vertical"
           size="large"
