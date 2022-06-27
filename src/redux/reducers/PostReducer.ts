@@ -10,8 +10,9 @@ import {
   searchPostAction,
   searchPostByTagAction,
 } from "../actions/PostAction";
+import { IPostState } from "../interface/PostType";
 
-const initialState = {
+const initialState: IPostState = {
   posts: [],
   mostVotedPosts: [],
   searchedPosts: [],
@@ -44,8 +45,10 @@ const initialState = {
         },
       ],
       postusername: "",
+      user_follow_creator: [],
       user_set_bookmark: [],
       user_vote_post: [],
+      userid: 0,
       viewnumber: 0,
       votenumber: 0,
     },

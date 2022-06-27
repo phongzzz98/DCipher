@@ -82,6 +82,8 @@ export interface IPost {
   postid: number;
   posttag: IPostTag[];
   postusername: string;
+  userid: number;
+  user_follow_creator: number[];
   user_set_bookmark: number[];
   user_vote_post: number[];
   viewnumber: number;

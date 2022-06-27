@@ -1,5 +1,5 @@
 import MDEditor from '@uiw/react-md-editor'
-import { Avatar, Tag, Button, notification, Tooltip } from 'antd'
+import { Avatar, Tag, Button, notification, Tooltip, Popover } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -8,12 +8,14 @@ import { getOnePostAction } from '../../redux/actions/PostAction'
 import { onePostSelector } from '../../redux/reducers/PostReducer'
 import { ApplicationDispatch } from '../../store/store'
 import './PostStyle.css'
-import { HeartOutlined, HeartFilled, FlagOutlined, FlagFilled } from '@ant-design/icons'
+import { HeartOutlined, HeartFilled, FlagOutlined, FlagFilled, PlusSquareOutlined, CheckOutlined, MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { axiosInstance } from '../../configs/axios'
 import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { IComment } from '../../redux/interface/PostType'
 import { CommentItem } from './components/CommentItem/CommentItem'
 import moment from 'moment'
+import { IFollowData } from '../../redux/interface/UserType'
+import { followUserAction, unfollowUserAction } from '../../redux/actions/UserAction'
 
 export const Post = () => {
   const { id } = useParams<{ id: string }>()
@@ -23,15 +25,23 @@ export const Post = () => {
   const selectedPost = useSelector(onePostSelector)
   const [value, setValue] = useState<any>("");
   const [voted, setVoted] = useState(false)
+  const [followed, setFollowed] = useState(false)
   const [bookmarked, setBookmarked] = useState(false)
   const [postVoteNumber, setPostVoteNumber] = useState(0)
   const [loadingComment, setLoadingComment] = useState(false)
+  const [followData, setFollowData] = useState<IFollowData>()
+  const [visible, setVisible] = useState(false);
+
   const accessToken = useSelector(accessTokenSelector)
   useEffect(() => {
     dispatch(getOnePostAction(id!))
   }, [dispatch, id])
 
   useEffect(() => {
+    setFollowData({
+      user_id: user.id,
+      user_follow_id: selectedPost[0].userid
+    })
     if (selectedPost[0].user_vote_post.some((userID) => userID === user.id))
       setVoted(true)
     else
@@ -42,9 +52,18 @@ export const Post = () => {
     else
       setBookmarked(false)
 
+    if (selectedPost[0].user_follow_creator.some((userID) => userID === user.id))
+      setFollowed(true)
+    else
+      setFollowed(false)
+
     setPostVoteNumber(selectedPost[0].votenumber)
   }, [selectedPost, user.id])
+  console.log(selectedPost);
 
+  const handleVisibleChange = (newVisible: boolean) => {
+    setVisible(newVisible);
+  };
 
   const votePost = () => {
     axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/vote`, {
@@ -99,7 +118,7 @@ export const Post = () => {
     }).then(() => {
       setBookmarked(true)
       notification.success({
-        message: 'Bookmarked!'
+        message: 'Đã lưu bài viết!'
       })
     })
   }
@@ -118,11 +137,48 @@ export const Post = () => {
     })
   }
 
+  const onFollow = async () => {
+    await dispatch(followUserAction(followData!))
+    setFollowed(true)
+  }
+
+  const onUnfollow = async () => {
+    await dispatch(unfollowUserAction(followData!))
+    setFollowed(false)
+  }
+
   return (
     <div>
       <div className='post-container'>
         <div className='post-heading'>
-          <h1>{selectedPost[0].post_title}</h1>
+          <div className='post-title'>
+            <h1>{selectedPost[0].post_title}</h1>
+            {selectedPost[0].userid === user.id ?
+              <Popover
+                content={
+                  <div>
+                    <div className="user-popover-item" onClick={() => navigate('/editPost')}>
+                      <EditOutlined style={{ marginRight: 7 }} />
+                      <span className="navbar-span">Sửa bài viết</span>
+                    </div>
+                    <div
+                      className="user-popover-item"
+                    // onClick={handleClickLogOut}
+                    >
+                      <DeleteOutlined style={{ marginRight: 7, color: 'crimson' }} />
+                      <span className="navbar-span" style={{color: 'crimson'}}>Xóa bài viết</span>
+                    </div>
+                  </div>}
+                trigger="click"
+                visible={visible}
+                onVisibleChange={handleVisibleChange}
+                placement='bottomRight'
+                className="user-popover"
+              >
+                <Button className='post-more-btn' shape='circle'><MoreOutlined /></Button>
+              </Popover>
+              : null}
+          </div>
           <Tooltip placement='right' title={moment(selectedPost[0].post_created_at).format('DD/MM/YYYY --- HH:mm:ss')}>
             <span className='post-time'>{moment(selectedPost[0].post_created_at).fromNow()}</span>
           </Tooltip>
@@ -131,7 +187,12 @@ export const Post = () => {
           </div>
           <div className='post-user-container'>
             <span className='post-user'>bởi <Avatar className='post-avatar' src={'https://joeschmoe.io/api/v1/random'} />{selectedPost[0].postusername}</span>
-            <Button size='small' type='default' >Theo dõi</Button>
+            {selectedPost[0].userid !== user.id ?
+              followed ?
+                <Button icon={<CheckOutlined />} size='small' type='default' onClick={() => onUnfollow()} >Đã theo dõi</Button>
+                :
+                <Button icon={<PlusSquareOutlined />} size='small' type='primary' onClick={() => onFollow()} >Theo dõi</Button>
+              : null}
           </div>
         </div>
         <div className="post-main" data-color-mode="light">

@@ -1,7 +1,6 @@
 import { Avatar, Button } from 'antd'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { axiosInstance } from '../../configs/axios'
 import { userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { ApplicationDispatch } from '../../store/store'
 import bigOunce from '../../assets/images/BigOunce.png'
@@ -29,10 +28,6 @@ export const MyPage = () => {
   const userBookmarks = useSelector(userBookmarksSelector)
 
   useEffect(() => {
-    // axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/seecomment/${user.id}`)
-    //       .then((res) => {
-    //         console.log(res.data)
-    //       })
     if (user.id !== 0) {
       dispatch(getUserDetailsAction(user.id))
       dispatch(seeUserPostAction(user.id))
@@ -59,7 +54,7 @@ export const MyPage = () => {
       <div className='main-info'>
         <ProfileBlock userDetail={userDetails} />
         <StatusBlock userPosts={userPosts} commentNumber={userComments.length} score={userDetails.score} />
-        <FollowingBlock userFollowing={userDetails.user_following} />
+        <FollowingBlock userFollowing={userDetails.user_following} userFollow={userDetails.user_follow} />
       </div>
       <div className='user-posts-block'>
         <PostsBlock userPosts={userPosts} />

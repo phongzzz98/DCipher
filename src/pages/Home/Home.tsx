@@ -50,8 +50,8 @@ export const Home = () => {
             >
               <List.Item.Meta
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                title={<a onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
-                description={item.content.slice(0, 500)}
+                title={<a style={{wordBreak: 'break-all'}} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
+                description={item.content.slice(0, 500).concat('...')}
               />
               <div className='avatar-and-tags'>
                 <div className='home-avatar'>
@@ -98,7 +98,7 @@ export const Home = () => {
             >
               <List.Item.Meta
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                title={<a onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
+                title={<a style={{wordBreak: 'break-all'}} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
               />
               <div className='avatar-and-tags'>
                 <div className='home-avatar'>

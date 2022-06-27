@@ -7,17 +7,25 @@
     background-position: left;
     border-radius: 2em;
     animation: avatarContainerGradient 8s infinite alternate;
+    cursor: pointer;
 }
-
+.user-popover-item{
+    min-width: 100px;
+    padding: 7px 14px;
+    cursor: pointer;
+}
+.user-popover-item:hover{
+    background-color: rgba(0, 0, 0, 0.05);
+}
 .avatar{
     min-height: 38px;
     min-width: 38px;
 }
 
 .user-name{
-    color: #000000;
+    color: #001529;
     margin-left: 10px;
-    font-size: 1.1em;
+    font-size: 0.95em;
 }
 
 @keyframes avatarContainerGradient {

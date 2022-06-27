@@ -85,6 +85,7 @@ export const CreatePost = () => {
               style={{ width: '100%' }}
               placeholder="Chọn các thẻ liên quan đến bài viết"
               onChange={handleChange}
+              getPopupContainer={trigger => trigger.parentNode}
             >
               {cloneTagList.map((tag) => <Select.Option key={tag.id}>{tag.content}</Select.Option>)}
             </Select>

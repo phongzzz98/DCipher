@@ -137,29 +137,32 @@ export const CodeEditor = ({ userCode, setUserCode }: CodeEditorProps) => {
                     />
                 </div>
                 <div className="right-container">
-                    <h4>Input:</h4>
-                    <div className="input-box">
-                        <textarea id="code-inp" onChange=
-                            {(e) => setUserInput(e.target.value)}>
-                        </textarea>
+                    <div className='input-container'>
+                        <h4>Input:</h4>
+                        <div className="input-box">
+                            <textarea id="code-inp" onChange=
+                                {(e) => setUserInput(e.target.value)}>
+                            </textarea>
+                        </div>
                     </div>
-                    <h4>Output:</h4>
-                    {loading ? (
-                        <div className="spinner-box">
-                            {/* <img src={codeGear} alt="Loading..." /> */}
-                            <Loading />
-                        </div>
-                    ) : (
-                        <div className="output-box">
-                            <div>
-                                <pre>{userOutput}</pre>
+                    <div className='output-container'>
+                        <h4>Output:</h4>
+                        {loading ? (
+                            <div className="spinner-box">
+                                <Loading />
                             </div>
-                            <button onClick={() => { clearOutput() }}
-                                className="clear-btn">
-                                Clear
-                            </button>
-                        </div>
-                    )}
+                        ) : (
+                            <div className="output-box">
+                                <div>
+                                    <pre>{userOutput}</pre>
+                                </div>
+                                <button onClick={() => { clearOutput() }}
+                                    className="clear-btn">
+                                    Clear
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

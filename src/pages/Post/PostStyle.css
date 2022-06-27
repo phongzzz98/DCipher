@@ -1,23 +1,41 @@
-.post-container{
+.post-container {
     margin: 50px 70px;
 }
-.post-heading{
+
+.post-heading {
     padding-bottom: 20px;
 }
-.post-time{
+
+.post-title {
+    display: flex;
+    align-items: baseline;
+    word-break: break-all;
+    hyphens: auto;
+}
+
+.post-more-btn {
+    display: block;
+    margin-left: auto;
+    margin-left: 8px;
+}
+
+.post-time {
     font-family: 'SofiaProRegular';
     color: darkslategray;
     font-size: 0.8em;
 }
-.post-tag-container{
+
+.post-tag-container {
     align-items: center;
     margin-bottom: 15px;
 }
-.post-user-container{
+
+.post-user-container {
     display: flex;
     align-items: center;
 }
-.post-user{
+
+.post-user {
     display: flex;
     align-items: center;
     font-size: 0.8em;
@@ -25,16 +43,19 @@
     color: darkslategray;
     margin-right: 10px;
 }
-.post-avatar{
+
+.post-avatar {
     margin-left: 5px;
     margin-right: 5px;
 }
-.post-main{
+
+.post-main {
     display: flex;
     flex-direction: row;
     margin-bottom: 30px;
 }
-.vote-container{
+
+.vote-container {
     font-size: 1.2em;
     display: flex;
     flex-direction: column;
@@ -43,38 +64,47 @@
     width: 5%;
     padding-top: 15px;
 }
-.heart{
+
+.heart {
     color: #dc143c;
 }
-.bookmark-action{
+
+.bookmark-action {
     margin-top: 3px;
 }
-.bookmarked{
+
+.bookmarked {
     color: #008C3B;
 }
-.markdown-section{
+
+.markdown-section {
     width: 95%;
     padding: 15px;
     font-family: 'SofiaProRegular';
     min-height: 200px;
     border-radius: 10px;
 }
-.code-section{
+
+.code-section {
     margin-bottom: 25px;
 }
-.comment-section{
+
+.comment-section {
     border-top: 1px var(--black) solid;
     padding: 20px;
 }
-.comment-md-editor{
+
+.comment-md-editor {
     margin-top: 20px;
 }
-.comment-btn{
+
+.comment-btn {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     padding-top: 15px;
 }
+
 .comment-unreg-btn {
     width: 100%;
     display: flex;

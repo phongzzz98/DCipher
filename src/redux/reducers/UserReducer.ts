@@ -3,16 +3,39 @@ import { RootState } from "../../store/store";
 import { notification } from "antd";
 import { IUserState } from "../interface/UserType";
 import {
+  editUserDetailAction,
+  followUserAction,
   getAllUsersAction,
   getNotificationAction,
+  getOneUsersAction,
   getUserDetailsAction,
   seeUserBookmarkAction,
   seeUserCommentAction,
   seeUserPostAction,
+  unfollowUserAction,
 } from "../actions/UserAction";
 
 const initialState: IUserState = {
   users: [],
+  oneUserInfo: {
+    userid: 0,
+    displayname: "",
+    about: "",
+    avatarImage: "",
+    linkSNS: [
+      {
+        facebook_account: "",
+        twitter_account: "",
+        linkedin_account: ""
+      }
+    ],
+    score: 0,
+    number_of_post: 0,
+    number_of_comment: 0,
+    post_created: [],
+    user_follow: [],
+    number_of_followers: 0,
+  },
   notification: [],
   userDetail: {
     about: "",
@@ -68,6 +91,15 @@ export const userSlice = createSlice({
         });
       });
     builder
+      .addCase(getOneUsersAction.fulfilled, (state, action) => {
+        state.oneUserInfo = action.payload[0];
+      })
+      .addCase(getOneUsersAction.rejected, () => {
+        notification.error({
+          message: "Get user failed!",
+        });
+      });
+    builder
       .addCase(getUserDetailsAction.fulfilled, (state, action) => {
         state.userDetail = action.payload[0];
       })
@@ -112,6 +144,39 @@ export const userSlice = createSlice({
           message: "Get user bookmark failed!",
         });
       });
+    builder
+      .addCase(editUserDetailAction.fulfilled, () => {
+        notification.success({
+          message: "Edit success!",
+        });
+      })
+      .addCase(editUserDetailAction.rejected, () => {
+        notification.error({
+          message: "Get user bookmark failed!",
+        });
+      });
+    builder
+      .addCase(followUserAction.fulfilled, () => {
+        notification.success({
+          message: "Đã theo dõi!",
+        });
+      })
+      .addCase(followUserAction.rejected, () => {
+        notification.error({
+          message: "Follow failed!",
+        });
+      });
+    builder
+      .addCase(unfollowUserAction.fulfilled, () => {
+        notification.success({
+          message: "Đã bỏ theo dõi!",
+        });
+      })
+      .addCase(unfollowUserAction.rejected, () => {
+        notification.error({
+          message: "Unfollow failed!",
+        });
+      });
   },
 });
 
@@ -141,6 +206,10 @@ export const userBookmarksSelector = createSelector(
 export const allUsersSelector = createSelector(
   selectSelf,
   (state) => state.users
+);
+export const oneUserSelector = createSelector(
+  selectSelf,
+  (state) => state.oneUserInfo
 );
 
 export default userSlice.reducer;
