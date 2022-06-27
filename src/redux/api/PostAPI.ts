@@ -41,6 +41,7 @@ export const createPostAPI = async (data: ICreatePost) => {
       code: data.code,
       tagid: data.tagid,
       userid: data.userid,
+      language: data.language,
     });
     return res.data;
   } catch (error: any) {
