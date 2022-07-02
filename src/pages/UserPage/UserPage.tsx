@@ -14,6 +14,7 @@ import { PublicProfileBlock } from './components/PublicProfileBlock/PublicProfil
 import { PublicFollowingBlock } from './components/PublicFollowingBlock/PublicFollowingBlock'
 import { IFollowData } from '../../redux/interface/UserType'
 import { userInfoSelector } from '../../redux/reducers/AuthReducer'
+import moment from 'moment'
 
 export const UserPage = () => {
     const user = useSelector(oneUserSelector)
@@ -58,7 +59,7 @@ export const UserPage = () => {
                     <Avatar size={80} shape={'square'} className="my-avatar" src={!user.avatarImage ? bigOunce : user.avatarImage} />
                     <div className='name-and-joindate'>
                         <h3>{user.displayname}</h3>
-                        {/* <h6>tham gia từ {moment(user.created_at).format('DD/MM/YYYY')}</h6> */}
+                        <h6>tham gia từ {moment(user.created_at).format('DD/MM/YYYY')}</h6>
                     </div>
                 </div>
                 {user.userid !== userInfo.id ?

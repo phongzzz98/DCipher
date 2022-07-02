@@ -54,12 +54,12 @@ export const authSlice = createSlice({
         setAccessToken(action.payload.token);
         setUserInfo(action.payload.user);
         notification.success({
-          message: "Login Success!",
+          message: "Đăng nhập thành công!",
         });
       })
       .addCase(loginAction.rejected, () => {
         notification.error({
-          message: "You shall not pass!",
+          message: "Đăng nhập thất bại!",
         });
       });
     // builder.addCase(getUserLoginInfoAction.fulfilled, (state, action) => {
@@ -69,12 +69,12 @@ export const authSlice = createSlice({
     builder
       .addCase(signUpAction.fulfilled, () => {
         notification.success({
-          message: "Sign Up Success!",
+          message: "Đăng ký thành công!",
         });
       })
       .addCase(signUpAction.rejected, () => {
         notification.error({
-          message: "Sign up failed!",
+          message: "Lỗi khi đăng ký!",
         });
       });
   },

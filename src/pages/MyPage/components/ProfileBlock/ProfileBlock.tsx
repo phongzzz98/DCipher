@@ -16,7 +16,7 @@ export const ProfileBlock = ({ userDetail }: IProfileBlockProps) => {
             <Descriptions size='middle' contentStyle={{ fontFamily: 'SofiaProRegular' }} labelStyle={{ color: '#8c8c8c', fontFamily: 'SofiaProRegular' }} column={1} title="Thông tin">
                 <Descriptions.Item label="Tên hiển thị">{userDetail.displayname}</Descriptions.Item>
                 <Descriptions.Item label="Họ tên">{userDetail.fullName}</Descriptions.Item>
-                <Descriptions.Item label="Sinh nhật">{userDetail.birth}</Descriptions.Item>
+                <Descriptions.Item label="Sinh nhật">{userDetail.birth != null ? userDetail.birth.replaceAll('-','/') : null}</Descriptions.Item>
                 <Descriptions.Item label="Liên kết">
                     {userDetail.linkSNS[0].facebook_account !== "null"
                         ? <a style={{color: '#4267B2'}} className='social-link' href={`${userDetail.linkSNS[0].facebook_account}`}><FacebookFilled /></a>

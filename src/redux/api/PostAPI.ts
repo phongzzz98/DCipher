@@ -1,5 +1,5 @@
 import { axiosInstance } from "../../configs/axios";
-import { ICreatePost } from "../interface/PostType";
+import { ICreatePost, IEditPost } from "../interface/PostType";
 
 export const getAllPostAPI = async () => {
   try {
@@ -48,6 +48,32 @@ export const createPostAPI = async (data: ICreatePost) => {
     return error.res.data;
   }
 };
+
+export const deletePostAPI = async (id: number) => {
+  try {
+    const res = await axiosInstance.delete(`/post/${id}`);
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const editPostAPI = async (data: IEditPost) => {
+  try {
+    const res = await axiosInstance.put(`/post/${data.id}`, {
+      title: data.title,
+      content: data.content,
+      code: data.code,
+      tagid: data.tagid,
+      userid: data.userid,
+      language: data.language,
+    });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
 
 export const searchPostAPI = async (value: string) => {
   try {

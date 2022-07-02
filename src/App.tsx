@@ -17,6 +17,8 @@ import { EditProfile } from './pages/EditProfile/EditProfile';
 import { Users } from './pages/Users/Users';
 import { UserPage } from './pages/UserPage/UserPage';
 import { EditPost } from './pages/EditPost/EditPost';
+import AdminRoute from './routes/AdminRoute';
+import { TagManager } from './pages/TagManager/TagManager';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -52,6 +54,9 @@ function App() {
                 <Route path='/create' element={<CreatePost />} />
                 <Route path='/editProfile' element={<EditProfile />} />
                 <Route path='/editPost/:id' element={<EditPost />} />
+              </Route>
+              <Route element={<AdminRoute/>}>
+                <Route path='/tagMng' element={<TagManager />} />
               </Route>
             </Route>
             <Route path='/login' element={<Authen />} />

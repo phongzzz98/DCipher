@@ -1,14 +1,13 @@
 import MDEditor from '@uiw/react-md-editor'
-import { Avatar, Tag, Button, notification, Tooltip, Popover } from 'antd'
+import { Avatar, Tag, Button, notification, Tooltip, Popover, Modal } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { CodeEditor } from '../../common/CodeEditor/CodeEditor'
-import { getOnePostAction } from '../../redux/actions/PostAction'
+import { deletePostAction, getOnePostAction } from '../../redux/actions/PostAction'
 import { onePostSelector } from '../../redux/reducers/PostReducer'
 import { ApplicationDispatch } from '../../store/store'
 import './PostStyle.css'
-import { HeartOutlined, HeartFilled, FlagOutlined, FlagFilled, PlusSquareOutlined, CheckOutlined, MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { HeartOutlined, ExclamationCircleOutlined, HeartFilled, FlagOutlined, FlagFilled, PlusSquareOutlined, CheckOutlined, MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { axiosInstance } from '../../configs/axios'
 import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { IComment } from '../../redux/interface/PostType'
@@ -16,6 +15,7 @@ import { CommentItem } from './components/CommentItem/CommentItem'
 import moment from 'moment'
 import { IFollowData } from '../../redux/interface/UserType'
 import { followUserAction, unfollowUserAction } from '../../redux/actions/UserAction'
+import { CodeReader } from '../../common/CodeReader/CodeReader'
 
 export const Post = () => {
   const { id } = useParams<{ id: string }>()
@@ -23,6 +23,7 @@ export const Post = () => {
   const navigate = useNavigate()
   const dispatch: ApplicationDispatch = useDispatch()
   const selectedPost = useSelector(onePostSelector)
+  const [commentList, setCommentList] = useState<IComment[]>([])
   const [value, setValue] = useState<any>("");
   const [voted, setVoted] = useState(false)
   const [followed, setFollowed] = useState(false)
@@ -42,6 +43,7 @@ export const Post = () => {
       user_id: user.id,
       user_follow_id: selectedPost[0].userid
     })
+    setCommentList(selectedPost[0].postcomment)
     if (selectedPost[0].user_vote_post.some((userID) => userID === user.id))
       setVoted(true)
     else
@@ -98,12 +100,23 @@ export const Post = () => {
     }
     else {
       setLoadingComment(true)
+      const newComment: IComment = {
+        commentid: 0,
+        commentcontent: value,
+        commentuserid: user.id,
+        commentusername: user.username,
+        commentvotenumber: 0,
+        user_vote_comment: [],
+        created_at: moment().toString(),
+        updated_at: moment().toString(),
+      }
       await axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/comment`, {
         userid: user.id,
         postid: parseInt(id!),
         content: value
       }).then(() => {
         setLoadingComment(false)
+        setCommentList([...commentList, newComment])
         notification.success({
           message: 'Commented!'
         })
@@ -132,7 +145,7 @@ export const Post = () => {
     }).then(() => {
       setBookmarked(false)
       notification.success({
-        message: 'Removed Bookmark!'
+        message: 'Đã bỏ lưu!'
       })
     })
   }
@@ -146,6 +159,24 @@ export const Post = () => {
     await dispatch(unfollowUserAction(followData!))
     setFollowed(false)
   }
+
+  const showDeleteConfirm = () => {
+    setVisible(false)
+    Modal.confirm({
+      centered: true,
+      closable: true,
+      title: 'Bạn chắc chắn muốn xóa bài viết?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Bài viết cũng sẽ bị xóa khỏi bài viết đã lưu của mọi người dùng!',
+      okText: 'Xóa',
+      okType: 'danger',
+      cancelText: 'Hủy',
+      async onOk() {
+        await dispatch(deletePostAction(parseInt(id!)))
+        navigate('/')
+      },
+    });
+  };
 
   return (
     <div>
@@ -163,10 +194,10 @@ export const Post = () => {
                     </div>
                     <div
                       className="user-popover-item"
-                    // onClick={handleClickLogOut}
+                    onClick={showDeleteConfirm}
                     >
                       <DeleteOutlined style={{ marginRight: 7, color: 'crimson' }} />
-                      <span className="navbar-span" style={{color: 'crimson'}}>Xóa bài viết</span>
+                      <span className="navbar-span" style={{ color: 'crimson' }}>Xóa bài viết</span>
                     </div>
                   </div>}
                 trigger="click"
@@ -187,12 +218,12 @@ export const Post = () => {
           </div>
           <div className='post-user-container'>
             <span className='post-user'>bởi <Avatar className='post-avatar' src={'https://joeschmoe.io/api/v1/random'} />{selectedPost[0].postusername}</span>
-            {selectedPost[0].userid !== user.id ?
+            {accessToken ? selectedPost[0].userid !== user.id ?
               followed ?
                 <Button icon={<CheckOutlined />} size='small' type='default' onClick={() => onUnfollow()} >Đã theo dõi</Button>
                 :
                 <Button icon={<PlusSquareOutlined />} size='small' type='primary' onClick={() => onFollow()} >Theo dõi</Button>
-              : null}
+              : null : null}
           </div>
         </div>
         <div className="post-main" data-color-mode="light">
@@ -222,7 +253,7 @@ export const Post = () => {
         {
           !selectedPost[0].post_code ? null :
             <div className='code-section'>
-              <CodeEditor userCode={selectedPost[0].post_code} setUserCode={() => { }} />
+              <CodeReader userCode={selectedPost[0].post_code} userCodeLang={selectedPost[0].post_language !== null ? selectedPost[0].post_language : 'python'} />
             </div>
         }
         <div className='comment-section'>
@@ -246,7 +277,7 @@ export const Post = () => {
               </div>
           }
           {
-            selectedPost[0].postcomment.map((comment: IComment) => <CommentItem comment={comment} />)
+            commentList.map((comment: IComment) => <CommentItem comment={comment} />).reverse()
           }
         </div>
       </div>

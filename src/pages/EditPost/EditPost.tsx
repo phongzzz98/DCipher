@@ -1,5 +1,5 @@
 import MDEditor from '@uiw/react-md-editor'
-import { Button, Collapse, Form, Input, Select, Tag } from 'antd'
+import { Button, Collapse, Form, Input, notification, Select } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -10,10 +10,10 @@ import { userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { allTagSelector } from '../../redux/reducers/TagReducer'
 import { ApplicationDispatch } from '../../store/store'
 import { dynamicSort } from '../../utils/util'
-import { getOnePostAction } from '../../redux/actions/PostAction';
+import { editPostAction, getOnePostAction } from '../../redux/actions/PostAction';
 import { onePostSelector } from '../../redux/reducers/PostReducer';
 import { useForm } from 'antd/lib/form/Form';
-import type { CustomTagProps } from 'rc-select/lib/BaseSelect';
+import { IEditPost } from '../../redux/interface/PostType';
 
 export const EditPost = () => {
   const user = useSelector(userInfoSelector);
@@ -28,10 +28,10 @@ export const EditPost = () => {
   const [value, setValue] = useState<any>("**Hello world!!!**");
   const [userCode, setUserCode] = useState(``);
   const [userCodeLang, setUserCodeLang] = useState('python')
-  const [tags, setTags] = useState<number[]>([])
   const dispatch: ApplicationDispatch = useDispatch()
   const navigate = useNavigate()
   const [currentField, setCurrentField] = useState<{ name: string, value: any }[]>()
+
   useEffect(() => {
     dispatch(getAllTagAction())
   }, [dispatch])
@@ -59,54 +59,79 @@ export const EditPost = () => {
       setUserCodeLang(selectedPost[0].post_language)
   }, [selectedPost])
 
-  const handleChange = (value: number[]) => {
-    console.log(`selected ${value}`);
-    setTags(value)
+  const handleEdit = async () => {
+    form.validateFields().then(async values => {
+      try {
+        if (values.editPostTitle === "" || value === "") {
+          notification.error({
+            placement: 'bottomRight',
+            message: "Vui lòng nhập các trường còn thiếu!"
+          })
+        }
+        else {
+          const editedPost: IEditPost = {
+            title: values.editPostTitle,
+            code: userCode,
+            content: value,
+            id: parseInt(id!),
+            language: userCodeLang,
+            tagid: values.editPostTag,
+            userid: user.id
+          }
+          console.log(editedPost);
+          await dispatch(editPostAction(editedPost))
+          navigate('/')
+        }
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+    )
   }
 
-  return (
-    <div>
-      <div className='create-post-container'>
-        <h1>Sửa bài viết</h1>
-        <Form form={form} fields={currentField} labelCol={{ span: 2 }} wrapperCol={{ span: 25 }} initialValues={{ remember: true }} >
-          <Form.Item className='create-post-form-item' label="Tiêu đề" name='editPostTitle' rules={[{ required: true, message: 'Hãy nhập tiêu đề!', }]}>
-            <Input size="large" />
-          </Form.Item>
-          <Form.Item className='create-post-form-item' label="Nội dung" name='editPostContent' rules={[{ required: true, message: 'Hãy nhập nội dung!', }]}>
-            <div className="container" data-color-mode="light">
-              <MDEditor
-                className='create-post-md'
-                value={value}
-                onChange={setValue}
-                height={300}
-              />
-            </div>
-            <QuestionCircleOutlined />
-          </Form.Item>
-          <Form.Item className='create-post-form-item' label="Gán thẻ" name='editPostTag'>
-            <Select
-              mode="multiple"
-              allowClear
-              style={{ width: '100%' }}
-              placeholder="Chọn các thẻ liên quan đến bài viết"
-              onChange={handleChange}
-              getPopupContainer={trigger => trigger.parentNode}
-              options={options}
-            >
-            </Select>
-          </Form.Item>
-          <Form.Item className='create-post-form-item' label="Code" name='editPostCode'>
-            <Collapse defaultActiveKey={['1']}>
-              <Collapse.Panel header="Thêm code" key="1">
-                <CodeEditor userCode={userCode} setUserCode={setUserCode} userCodeLang={userCodeLang} setUserCodeLang={setUserCodeLang} />
-              </Collapse.Panel>
-            </Collapse>
-          </Form.Item>
-          <Form.Item className='create-post-form-item' id='editPostButton' valuePropName="checked" wrapperCol={{ offset: 9, span: 20 }}>
-            <Button style={{ width: '50%' }} shape='round' size='large' type="primary" htmlType="submit" >Tạo bài viết</Button>
-          </Form.Item>
-        </Form>
-      </div>
+return (
+  <div>
+    <div className='create-post-container'>
+      <h1>Sửa bài viết</h1>
+      <Form form={form} fields={currentField} labelCol={{ span: 2 }} wrapperCol={{ span: 25 }} initialValues={{ remember: true }} >
+        <Form.Item className='create-post-form-item' label="Tiêu đề" name='editPostTitle' rules={[{ required: true, message: 'Hãy nhập tiêu đề!', }]}>
+          <Input size="large" />
+        </Form.Item>
+        <Form.Item className='create-post-form-item' label="Nội dung" name='editPostContent'>
+          <div className="container" data-color-mode="light">
+            <MDEditor
+              className='create-post-md'
+              value={value}
+              onChange={setValue}
+              height={300}
+            />
+          </div>
+          <QuestionCircleOutlined />
+        </Form.Item>
+        <Form.Item className='create-post-form-item' label="Gán thẻ" name='editPostTag'>
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: '100%' }}
+            placeholder="Chọn các thẻ liên quan đến bài viết"
+            getPopupContainer={trigger => trigger.parentNode}
+            options={options}
+          >
+          </Select>
+        </Form.Item>
+        <Form.Item className='create-post-form-item' label="Code" name='editPostCode'>
+          <Collapse defaultActiveKey={['1']}>
+            <Collapse.Panel header="Thêm code" key="1">
+              <CodeEditor userCode={userCode} setUserCode={setUserCode} userCodeLang={userCodeLang} setUserCodeLang={setUserCodeLang} />
+            </Collapse.Panel>
+          </Collapse>
+        </Form.Item>
+        <Form.Item className='create-post-form-item' id='editPostButton' valuePropName="checked" wrapperCol={{ offset: 9, span: 20 }}>
+          <Button style={{ width: '50%' }} shape='round' size='large' type="primary" htmlType="submit" onClick={handleEdit} >Sửa bài viết</Button>
+        </Form.Item>
+      </Form>
     </div>
-  )
+  </div>
+)
 }

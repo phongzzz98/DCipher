@@ -20,6 +20,7 @@ const initialState: IUserState = {
   oneUserInfo: {
     userid: 0,
     displayname: "",
+    created_at: "",
     about: "",
     avatarImage: "",
     linkSNS: [
@@ -147,12 +148,12 @@ export const userSlice = createSlice({
     builder
       .addCase(editUserDetailAction.fulfilled, () => {
         notification.success({
-          message: "Edit success!",
+          message: "Chỉnh sửa thành công!",
         });
       })
       .addCase(editUserDetailAction.rejected, () => {
         notification.error({
-          message: "Get user bookmark failed!",
+          message: "Lỗi khi chỉnh sửa thông tin cá nhân!",
         });
       });
     builder

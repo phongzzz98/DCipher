@@ -1,7 +1,8 @@
 import { Pie } from '@ant-design/plots';
-import { Descriptions, Tag } from 'antd'
+import { Button, Descriptions, Empty, Tag } from 'antd'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { getAllTagAction } from '../../../../redux/actions/TagAction';
 import { IUserPost } from '../../../../redux/interface/UserType';
 import { allTagSelector } from '../../../../redux/reducers/TagReducer';
@@ -22,6 +23,7 @@ interface IDataList {
 
 export const StatusBlock = ({ userPosts, commentNumber, score }: IStatusBlockProps) => {
     const dispatch: ApplicationDispatch = useDispatch()
+    const navigate = useNavigate()
     const tagList = useSelector(allTagSelector);
     const cloneTagList = [...tagList]
     const cloneUserPosts = [...userPosts]
@@ -43,7 +45,7 @@ export const StatusBlock = ({ userPosts, commentNumber, score }: IStatusBlockPro
             colorCodes.push(tag.colorcode)
         }
     })
-
+    console.log(data)
     const config = {
         appendPadding: 12,
         data,
@@ -86,7 +88,24 @@ export const StatusBlock = ({ userPosts, commentNumber, score }: IStatusBlockPro
                 <Descriptions.Item label="Điểm">{score}</Descriptions.Item>
                 <Descriptions.Item label="Hạng">{renderRank(score)}</Descriptions.Item>
             </Descriptions>
-            <Pie className='pie-chart' {...config} />
+            {
+                data.length !== 0 ?
+                    <Pie className='pie-chart' {...config} /> :
+                    <Empty
+                        style={{paddingTop: 20}}
+                        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                        imageStyle={{
+                            height: 60,
+                        }}
+                        description={
+                            <span>
+                                Chưa có bài viết chứa thẻ để thống kê!
+                            </span>
+                        }
+                    >
+                        <Button onClick={() => navigate('/create')} shape='round' type="primary">Tạo bài viết</Button>
+                    </Empty>
+            }
         </div>
     )
 }

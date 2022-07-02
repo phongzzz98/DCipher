@@ -12,20 +12,18 @@ import "ace-builds/src-noconflict/theme-merbivore_soft";
 import "ace-builds/src-noconflict/ext-language_tools"
 import "ace-builds/src-noconflict/ext-beautify"
 import { axiosInstance } from '../../configs/axios';
-import './CodeEditorStyle.css'
 import { CodeOutlined, PlayCircleFilled } from '@ant-design/icons';
 import { Form, Select, Slider, Tooltip } from 'antd';
 import { Loading } from '../Loading/Loading';
+import './CodeReaderStyle.css'
+import { capitalizeFirstLetter } from '../../utils/util';
 
-interface CodeEditorProps {
+interface CodeReaderProps {
     userCode: string;
-    setUserCode: (value: string) => void;
-    userCodeLang?: string;
-    setUserCodeLang: (value: string) => void;
+    userCodeLang: string;
 }
 
-export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLang }: CodeEditorProps) => {
-    // State variable to set users source code
+export const CodeReader = ({ userCode, userCodeLang }: CodeReaderProps) => {
     const [userLang, setUserLang] = useState("python");
     const [userTheme, setUserTheme] = useState("merbivore_soft");
     const [fontSize, setFontSize] = useState(16);
@@ -33,7 +31,6 @@ export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLan
     const [userOutput, setUserOutput] = useState("");
     const [loading, setLoading] = useState(false);
     const [apiLang, setApiLang] = useState('python');
-    const [defaultOption, setDefaultOption] = useState('python|python')
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const languages = [
@@ -59,25 +56,15 @@ export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLan
         if (userCodeLang !== undefined) {
             option = languages.find((lang) => lang.value.split('|')[0] === userCodeLang)
             if (option !== undefined) {
-                setDefaultOption(option?.value)
                 setUserLang(option.value.split('|')[0])
                 setApiLang(option.value.split('|')[1])
             } else {
-                setDefaultOption('python|python')
                 setUserLang('python')
                 setApiLang('python')
             }
         }
     }, [languages, userCodeLang])
 
-    const onChangeLanguage = (value: string) => {
-        const resultArr = value.split('|');
-        console.log(resultArr);
-        setUserLang(resultArr[0]);
-        setApiLang(resultArr[1]);
-        setUserCodeLang(resultArr[0]);
-        setDefaultOption(value);
-    }
     const compileCode = () => {
         setLoading(true);
         if (userCode === ``) {
@@ -98,27 +85,17 @@ export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLan
     const clearOutput = () => {
         setUserOutput("");
     }
-    return (
-        <div className='main'>
+  return (
+    <div className='main'>
             <div className='code-editor-header'>
                 <Form className='code-editor-header-form'>
                     <Form.Item name='language-select' className='code-editor-form-item'>
                         <div>
                             <label className='header-label' htmlFor="select-language">Ngôn ngữ: </label>
                         </div>
-                        <Select
-                            id='select-language'
-                            menuItemSelectedIcon={<CodeOutlined />}
-                            value={defaultOption ? defaultOption : 'python|python'}
-                            style={{ width: 120 }}
-                            onChange={(v) => onChangeLanguage(v)}
-                            size={'small'}
-                        >
-                            {languages.map((item) => {
-                                return <Select.Option value={item.value}>{item.label}</Select.Option>
-                            })}
-                        </Select>
-
+                        <div>
+                            <span className='user-code-lang'>{capitalizeFirstLetter(userCodeLang)}</span>
+                        </div>
                     </Form.Item>
                     <Form.Item name='theme-select' className='code-editor-form-item'>
                         <div>
@@ -153,6 +130,7 @@ export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLan
             <div className='code-editor-main'>
                 <div className="left-container">
                     <AceEditor
+                        readOnly={true}
                         name='main-editor'
                         fontSize={fontSize}
                         height="calc(100vh - 145px)"
@@ -160,7 +138,6 @@ export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLan
                         wrapEnabled={true}
                         mode={userLang}
                         theme={userTheme}
-                        onChange={(value) => { setUserCode(value) }}
                         editorProps={{ $blockScrolling: true }}
                         setOptions={{
                             enableBasicAutocompletion: true,
@@ -208,6 +185,5 @@ export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLan
                 </div>
             </div>
         </div>
-
-    )
+  )
 }

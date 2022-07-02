@@ -10,6 +10,7 @@ import { ApplicationDispatch } from '../../store/store'
 import { IUserDetailsToSave } from '../../redux/interface/UserType'
 import { userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { editUserDetailAction, getUserDetailsAction } from '../../redux/actions/UserAction'
+import { useNavigate } from 'react-router-dom'
 
 const initialField = [
   { name: 'editDisplayname', value: '' },
@@ -22,9 +23,9 @@ const initialField = [
 
 export const EditProfile = () => {
   const dispatch: ApplicationDispatch = useDispatch()
+  const navigate = useNavigate()
   const user = useSelector(userInfoSelector)
   const userDetails = useSelector(userDetailSelector)
-  console.log(userDetails);
   const [form] = useForm();
   const [currentImage, setCurrentImage] = useState('')
   const [currentField, setCurrentField] = useState<{ name: string, value: any }[]>(initialField)
@@ -32,7 +33,7 @@ export const EditProfile = () => {
   useEffect(() => {
     dispatch(getUserDetailsAction(user.id))
   }, [dispatch, user.id])
-  
+
 
   useEffect(() => {
     const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
@@ -41,7 +42,7 @@ export const EditProfile = () => {
       { name: 'editDisplayname', value: userDetails.displayname },
       { name: 'editFullname', value: userDetails.fullName },
       { name: 'editAvatar', value: userDetails.avatarImage },
-      { name: 'editBirthday', value: userDetails.birth !== null ? moment(userDetails.birth, dateFormatList[0]) : moment('1/1/2000', dateFormatList[0])},
+      { name: 'editBirthday', value: userDetails.birth !== null ? moment(userDetails.birth, dateFormatList[0]) : moment('1/1/2000', dateFormatList[0]) },
       { name: 'editLinkFB', value: userDetails.linkSNS[0].facebook_account },
       { name: 'editLinkLK', value: userDetails.linkSNS[0].linkedin_account },
       { name: 'editLinkTW', value: userDetails.linkSNS[0].twitter_account },
@@ -59,7 +60,7 @@ export const EditProfile = () => {
   }
 
   const onSave = () => {
-    form.validateFields().then(values => {
+    form.validateFields().then(async values => {
       const newDetail: IUserDetailsToSave = {
         avatarImage: values.editAvatar,
         userid: user.id,
@@ -69,8 +70,8 @@ export const EditProfile = () => {
         birth: values.editBirthday.format('DD-MM-YYYY'),
         linkSNS: [values.editLinkFB, values.editLinkTW, values.editLinkLK]
       }
-      console.log(newDetail);
-      dispatch(editUserDetailAction(newDetail))
+      await dispatch(editUserDetailAction(newDetail))
+      navigate('/mypage')
     })
   }
 
@@ -97,7 +98,7 @@ export const EditProfile = () => {
           <Input size="middle" />
         </Form.Item>
         <Form.Item className='edit-profile-form-item' label="Ảnh đại diện" name='editAvatar'>
-          <Input size="middle" onChange={(e)=> setCurrentImage(e.target.value)}/>
+          <Input size="middle" onChange={(e) => setCurrentImage(e.target.value)} />
         </Form.Item>
         {renderImage()}
         <Form.Item className='edit-profile-form-item' label="Ngày sinh" name='editBirthday'>

@@ -5,6 +5,6 @@ import './PlaygroundStyle.css'
 export const Playground = () => {
   const [userCode, setUserCode] = useState(``);
   return (
-    <div className='playground-container'><CodeEditor userCode={userCode} setUserCode={setUserCode}/></div>
+    <div className='playground-container'><CodeEditor userCode={userCode} setUserCode={setUserCode} setUserCodeLang={()=>{}}/></div>
   )
 }

@@ -7,6 +7,6 @@
 }
 
 .pie-chart{
-    min-height: 220px;
+    max-height: 220px;
     width: 100%;
 }

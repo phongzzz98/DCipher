@@ -1,0 +1,36 @@
+.tag-manager-page{
+    padding: 50px 70px;
+}
+.popular-tags {
+    flex: 0.8;
+    padding-top: 5px;
+}
+.tag-table-container{
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+}
+.table-header-container{
+    display: flex;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+.tag-mng-action{
+    text-align: center;
+}
+.icon-edit{
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+.icon-edit:hover{
+    color: var(--ant-primary-color);
+    cursor: pointer;
+}
+.icon-remove{
+    font-size: 1.5em;
+    color: crimson;
+}
+.icon-remove:hover{
+    filter: brightness(85%);
+    cursor: pointer;
+}

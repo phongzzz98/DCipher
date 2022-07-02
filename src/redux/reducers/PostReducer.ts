@@ -4,6 +4,8 @@ import { notification } from "antd";
 
 import {
   createPostAction,
+  deletePostAction,
+  editPostAction,
   getAllPostAction,
   getMostVotedPostAction,
   getOnePostAction,
@@ -72,12 +74,34 @@ export const postSlice = createSlice({
     builder
       .addCase(createPostAction.fulfilled, () => {
         notification.success({
-          message: "Create Post Success!",
+          message: "Tạo bài viết thành công!",
         });
       })
       .addCase(createPostAction.rejected, () => {
         notification.error({
           message: "Create post fail!",
+        });
+      });
+    builder
+      .addCase(editPostAction.fulfilled, () => {
+        notification.success({
+          message: "Sửa bài viết thành công!",
+        });
+      })
+      .addCase(editPostAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi sửa bài viết!",
+        });
+      });
+    builder
+      .addCase(deletePostAction.fulfilled, () => {
+        notification.success({
+          message: "Xóa bài viết thành công!",
+        });
+      })
+      .addCase(deletePostAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi xóa bài viết!",
         });
       });
     builder

@@ -104,6 +104,7 @@ export interface IOneUserInfo {
   userid: number;
   displayname: string;
   about: string;
+  created_at: string;
   avatarImage: string;
   linkSNS: ISocial[];
   score: number;

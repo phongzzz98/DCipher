@@ -71,6 +71,16 @@ export interface ICreatePost {
   language: string;
 }
 
+export interface IEditPost {
+  id: number;
+  title: string;
+  content: string;
+  code: string;
+  tagid: number[];
+  userid: number;
+  language: string;
+}
+
 export interface IPost {
   post_code: string | null;
   post_created_at: string;
