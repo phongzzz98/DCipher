@@ -16,4 +16,7 @@ export interface ITag {
 export interface ICreateTag {
     content: string;
     colorcode: string;
+    description: string;
+    icon_class: string;
+    status: number
 }

@@ -15,6 +15,9 @@ export const createTagAPI = async (data: ICreateTag) => {
     const res = await axiosInstance.post(`/tag`, {
       content: data.content,
       colorcode: data.colorcode,
+      description: data.description,
+      icon_class: data.icon_class,
+      status: data.status,
     });
     return res.data;
   } catch (error: any) {

@@ -25,12 +25,12 @@ export const tagSlice = createSlice({
     builder
       .addCase(createTagAction.fulfilled, () => {
         notification.success({
-          message: "Create Tag Success!",
+          message: "Tạo thẻ thành công!",
         });
       })
       .addCase(createTagAction.rejected, () => {
         notification.error({
-          message: "Create tag fail!",
+          message: "Lỗi khi tạo thẻ!",
         });
       });
   },

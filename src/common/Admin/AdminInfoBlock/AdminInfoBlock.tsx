@@ -4,10 +4,11 @@ interface AdminInfoBlockProps {
     description: string;
     quantity?: string;
     icon: React.ReactNode;
+    iconBlockColor: string;
     componentInfo?: React.ReactNode;
 }
 
-export const AdminInfoBlock = ({ icon, quantity, description, componentInfo }: AdminInfoBlockProps) => {
+export const AdminInfoBlock = ({ icon, quantity, description, componentInfo, iconBlockColor }: AdminInfoBlockProps) => {
     const renderInfo = () => {
         if (quantity) {
             return <span className='quantity-info'>{quantity}</span>
@@ -24,7 +25,7 @@ export const AdminInfoBlock = ({ icon, quantity, description, componentInfo }: A
                 <span className='description-info'>{description}</span>
                 {renderInfo()}
             </div>
-            <div className='admin-info-icon'>
+            <div style={{backgroundColor: `${iconBlockColor}`}} className='admin-info-icon'>
                 {icon}
             </div>
         </div>

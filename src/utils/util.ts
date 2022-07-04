@@ -17,3 +17,7 @@ export const dynamicSort = (property: any) => {
 export const capitalizeFirstLetter = (s: string) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
+
+export const validateHexString = (s: string) => {
+  return /^#[0-9A-F]{6}$/i.test(s)
+}

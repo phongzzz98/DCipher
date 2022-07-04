@@ -1,0 +1,28 @@
+.tip-modal-content{
+    display: flex;
+    padding: 10px;
+}
+
+.tip-modal-icon{
+    font-size: 2em;
+    margin-right: 15px;
+}
+
+.tip-modal-info{
+    font-size: 1.1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.tip-modal-info > img {
+    background-size: contain;
+    width: 100%;
+    max-height: 100px;
+    border-radius: 5px;
+}
+
+.tip-modal-info > a {
+    margin-top: 15px;
+    text-decoration: underline;
+    width: fit-content;
+}
