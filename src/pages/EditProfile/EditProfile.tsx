@@ -49,7 +49,6 @@ export const EditProfile = () => {
     ])
     setCurrentImage(userDetails.avatarImage)
   }, [user.id, userDetails])
-  console.log(currentField);
 
   const renderImage = () => {
     return (

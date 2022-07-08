@@ -32,8 +32,8 @@ export const Post = () => {
   const [loadingComment, setLoadingComment] = useState(false)
   const [followData, setFollowData] = useState<IFollowData>()
   const [visible, setVisible] = useState(false);
-
   const accessToken = useSelector(accessTokenSelector)
+  
   useEffect(() => {
     dispatch(getOnePostAction(id!))
   }, [dispatch, id])

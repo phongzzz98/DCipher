@@ -1,4 +1,4 @@
-import { Avatar, Modal } from 'antd'
+import { Modal } from 'antd'
 import { InfoCircleTwoTone } from '@ant-design/icons';
 import tipImg from '../../../../assets/images/tipTagIcon.jpg'
 import './IconTipModalStyle.css'

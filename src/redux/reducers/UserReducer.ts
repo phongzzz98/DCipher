@@ -3,10 +3,17 @@ import { RootState } from "../../store/store";
 import { notification } from "antd";
 import { IUserState } from "../interface/UserType";
 import {
+  createUsersAction,
+  deleteUsersAction,
+  editPasswordAdminAction,
+  editPasswordUserAction,
+  editUserAdminAction,
   editUserDetailAction,
   followUserAction,
   getAllUsersAction,
+  getAllUsersAdminAction,
   getNotificationAction,
+  getOneUserAdminAction,
   getOneUsersAction,
   getUserDetailsAction,
   seeUserBookmarkAction,
@@ -17,6 +24,7 @@ import {
 
 const initialState: IUserState = {
   users: [],
+  usersAdmin: [],
   oneUserInfo: {
     userid: 0,
     displayname: "",
@@ -27,8 +35,8 @@ const initialState: IUserState = {
       {
         facebook_account: "",
         twitter_account: "",
-        linkedin_account: ""
-      }
+        linkedin_account: "",
+      },
     ],
     score: 0,
     number_of_post: 0,
@@ -36,6 +44,25 @@ const initialState: IUserState = {
     post_created: [],
     user_follow: [],
     number_of_followers: 0,
+  },
+  oneUserAdmin: {
+    about: "",
+    avatarImage: "",
+    birth: "",
+    created_at: "",
+    displayname: "",
+    email: "",
+    facebook_account: "",
+    fullName: "",
+    linkedin_account: "",
+    notification: 0,
+    role: 1,
+    score: 0,
+    twitter_account: "",
+    updated_at: "",
+    user_id: 0,
+    username: "",
+    verify_email: false,
   },
   notification: [],
   userDetail: {
@@ -92,10 +119,83 @@ export const userSlice = createSlice({
         });
       });
     builder
+      .addCase(createUsersAction.fulfilled, () => {
+        notification.success({
+          message: "Tạo người dùng thành công!",
+        });
+      })
+      .addCase(createUsersAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi tạo người dùng! Có thể email bị trùng lặp!",
+        });
+      });
+    builder
+      .addCase(editUserAdminAction.fulfilled, () => {
+        notification.success({
+          message: "Sửa thông tin thành công!",
+        });
+      })
+      .addCase(editUserAdminAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi sửa người dùng!",
+        });
+      });
+    builder
+      .addCase(editPasswordAdminAction.fulfilled, () => {
+        notification.success({
+          message: "Đổi mật khẩu thành công!",
+        });
+      })
+      .addCase(editPasswordAdminAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi đổi mật khẩu!",
+        });
+      });
+    builder
+      .addCase(editPasswordUserAction.fulfilled, () => {
+        notification.success({
+          message: "Đổi mật khẩu thành công!",
+        });
+      })
+      .addCase(editPasswordUserAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi đổi mật khẩu! Hãy kiểm tra lại mật khẩu cũ",
+        });
+      });
+    builder
+      .addCase(deleteUsersAction.fulfilled, () => {
+        notification.success({
+          message: "Xóa người dùng thành công!",
+        });
+      })
+      .addCase(deleteUsersAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi xóa người dùng!",
+        });
+      });
+    builder
+      .addCase(getAllUsersAdminAction.fulfilled, (state, action) => {
+        state.usersAdmin = action.payload;
+      })
+      .addCase(getAllUsersAdminAction.rejected, () => {
+        notification.error({
+          message: "Get users failed!",
+        });
+      });
+    builder
       .addCase(getOneUsersAction.fulfilled, (state, action) => {
         state.oneUserInfo = action.payload[0];
       })
       .addCase(getOneUsersAction.rejected, () => {
+        notification.error({
+          message: "Get user failed!",
+        });
+      });
+    builder
+      .addCase(getOneUserAdminAction.fulfilled, (state, action) => {
+        state.oneUserAdmin = action.payload[0];
+      })
+      .addCase(getOneUserAdminAction.rejected, () => {
         notification.error({
           message: "Get user failed!",
         });
@@ -208,9 +308,17 @@ export const allUsersSelector = createSelector(
   selectSelf,
   (state) => state.users
 );
+export const allUsersAdminSelector = createSelector(
+  selectSelf,
+  (state) => state.usersAdmin
+);
 export const oneUserSelector = createSelector(
   selectSelf,
   (state) => state.oneUserInfo
+);
+export const oneUserAdminSelector = createSelector(
+  selectSelf,
+  (state) => state.oneUserAdmin
 );
 
 export default userSlice.reducer;

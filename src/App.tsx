@@ -19,6 +19,8 @@ import { UserPage } from './pages/UserPage/UserPage';
 import { EditPost } from './pages/EditPost/EditPost';
 import AdminRoute from './routes/AdminRoute';
 import { TagManager } from './pages/TagManager/TagManager';
+import { UserManager } from './pages/UserManager/UserManager';
+import { PostManager } from './pages/PostManager/PostManager';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -57,6 +59,8 @@ function App() {
               </Route>
               <Route element={<AdminRoute/>}>
                 <Route path='/tagMng' element={<TagManager />} />
+                <Route path='/userMng' element={<UserManager />} />
+                <Route path='/postMng' element={<PostManager />}/>
               </Route>
             </Route>
             <Route path='/login' element={<Authen />} />

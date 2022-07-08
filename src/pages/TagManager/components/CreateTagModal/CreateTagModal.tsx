@@ -1,13 +1,14 @@
-import { Button, Form, Input, Modal, Popover, Tag } from 'antd'
+import { Button, Form, Input, Modal, notification, Popover, Tag } from 'antd'
 import React, { useState } from 'react'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import './CreateTagModalStyle.css'
 import { ChromePicker } from 'react-color';
 import { ApplicationDispatch } from '../../../../store/store';
 import { useDispatch } from 'react-redux';
-import { createTagAction } from '../../../../redux/actions/TagAction';
+import { createTagAction, getAllTagAction } from '../../../../redux/actions/TagAction';
 import { ICreateTag } from '../../../../redux/interface/TagType';
 import { IconTipModal } from '../IconTipModal/IconTipModal';
+import { validateHexString } from '../../../../utils/util';
 
 interface CreateTagModalProps {
   createModalVisible: boolean;
@@ -23,19 +24,34 @@ export const CreateTagModal = ({ createModalVisible, setCreateModalVisible }: Cr
   const [iconClass, setIconClass] = useState('')
   const [colorPicker, setColorPicker] = useState('#ffffff')
   const handleOk = () => {
-    setConfirmLoading(true);
-    setTimeout(async () => {
-      const newTag: ICreateTag = {
-        colorcode: colorPicker,
-        content: tagName,
-        description: description,
-        icon_class: iconClass,
-        status: 1,
-      }
-      await dispatch(createTagAction(newTag))
-      setConfirmLoading(false);
-      setCreateModalVisible(false)
-    }, 500);
+    if (tagName === "" || description === "") {
+      notification.error({
+        placement: 'bottomRight',
+        message: "Vui lòng nhập các trường còn thiếu!"
+      })
+    }
+    else if(!validateHexString(colorPicker)){
+      notification.error({
+        placement: 'bottomRight',
+        message: "Mã màu sai quy định, vui nhập mã HEX!"
+      })
+    }
+    else{
+      setConfirmLoading(true);
+      setTimeout(async () => {
+        const newTag: ICreateTag = {
+          colorcode: colorPicker,
+          content: tagName,
+          description: description,
+          icon_class: iconClass,
+          status: 1,
+        }
+        await dispatch(createTagAction(newTag))
+        setConfirmLoading(false);
+        dispatch(getAllTagAction())
+        setCreateModalVisible(false)
+      }, 500);
+    }
   };
 
   const pickerPopover = (

@@ -1,9 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  createUserAPI,
+  deleteUserAPI,
+  editUserAdminAPI,
   editUserDetailAPI,
+  editUserPasswordAPI,
+  editUserPasswordUserAPI,
   followUserAPI,
+  getAllUserAdminAPI,
   getAllUserAPI,
   getNotificationAPI,
+  getOneUserAdminAPI,
   getOneUserAPI,
   getUserDetailsAPI,
   seeUserBookmarkAPI,
@@ -11,12 +18,64 @@ import {
   seeUserPostAPI,
   unfollowUserAPI,
 } from "../api/UserAPI";
-import { IFollowData, IUserDetailsToSave } from "../interface/UserType";
+import {
+  ICreateUser,
+  IEditPasswordAdmin,
+  IEditPasswordUser,
+  IEditUser,
+  IFollowData,
+  IUserDetailsToSave,
+} from "../interface/UserType";
 
-export const getAllUsersAction = createAsyncThunk(
-  "getAllUsers",
+export const getAllUsersAction = createAsyncThunk("getAllUsers", async () => {
+  const res = await getAllUserAPI();
+  return res;
+});
+
+export const getAllUsersAdminAction = createAsyncThunk(
+  "getAllUsersAdmin",
   async () => {
-    const res = await getAllUserAPI();
+    const res = await getAllUserAdminAPI();
+    return res;
+  }
+);
+
+export const createUsersAction = createAsyncThunk(
+  "createUser",
+  async (data: ICreateUser) => {
+    const res = await createUserAPI(data);
+    return res;
+  }
+);
+
+export const editUserAdminAction = createAsyncThunk(
+  "editUserAdmin",
+  async (data: IEditUser) => {
+    const res = await editUserAdminAPI(data);
+    return res;
+  }
+);
+
+export const editPasswordAdminAction = createAsyncThunk(
+  "editPasswordAdmin",
+  async (data: IEditPasswordAdmin) => {
+    const res = await editUserPasswordAPI(data);
+    return res;
+  }
+);
+
+export const editPasswordUserAction = createAsyncThunk(
+  "editPasswordUser",
+  async (data: IEditPasswordUser) => {
+    const res = await editUserPasswordUserAPI(data);
+    return res;
+  }
+);
+
+export const deleteUsersAction = createAsyncThunk(
+  "deleteUser",
+  async (id: number) => {
+    const res = await deleteUserAPI(id);
     return res;
   }
 );
@@ -25,6 +84,15 @@ export const getOneUsersAction = createAsyncThunk(
   "getOneUser",
   async (id: number) => {
     const res = await getOneUserAPI(id);
+    return res;
+  }
+);
+
+export const getOneUserAdminAction = createAsyncThunk(
+  "getOneUserAdmin",
+  async (id: number) => {
+    const res = await getOneUserAdminAPI(id);
+    console.log(res)
     return res;
   }
 );
@@ -92,4 +160,3 @@ export const unfollowUserAction = createAsyncThunk(
     return res;
   }
 );
-

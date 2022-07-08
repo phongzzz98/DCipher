@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { ApplicationDispatch } from '../../store/store'
-import bigOunce from '../../assets/images/BigOunce.png'
+import defaultImg from '../../assets/images/BlankAvatar.jpg'
 import thumbnail from '../../assets/images/abstract-darkblue.jpg'
 import './MyPageStyle.css'
 import moment from 'moment'
@@ -44,7 +44,7 @@ export const MyPage = () => {
       </div>
       <div className="basic-user-info">
         <div className='avatar-name-container'>
-          <Avatar size={80} shape={'square'} className="my-avatar" src={!userDetails.avatarImage ? bigOunce : userDetails.avatarImage} />
+          <Avatar size={80} shape={'square'} className="my-avatar" src={!userDetails.avatarImage ? defaultImg : userDetails.avatarImage} />
           <div className='name-and-joindate'>
             <h3>{user.username}</h3>
             <h6>tham gia từ {moment(userDetails.created_at).format('DD/MM/YYYY')}</h6>

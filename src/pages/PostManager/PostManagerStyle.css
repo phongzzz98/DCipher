@@ -1,18 +1,15 @@
-.tag-manager-page {
+.post-manager-page {
     padding: 50px 70px;
 }
 
-.popular-tags {
-    flex: 0.8;
-    padding-top: 5px;
-}
-.tag-mng-chart{
+.post-mng-chart {
     padding: 15px;
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
 }
-.tag-table-container {
+
+.post-table-container {
     padding: 15px;
     background-color: white;
     border-radius: 10px;
@@ -24,21 +21,31 @@
     gap: 15px;
 }
 
-.tag-table table th {
+.post-table table th {
     text-align: center;
     border: 1px solid #ddd;
 }
 
-.tag-table table td {
+.post-table table td {
     border: 1px solid #ddd;
+}
+
+.post-mng-action {
+    text-align: center;
 }
 
 .icon-col {
     text-align: center;
 }
 
-.tag-mng-action {
-    text-align: center;
+.icon-view {
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+
+.icon-view:hover {
+    color: var(--ant-primary-color);
+    cursor: pointer;
 }
 
 .icon-edit {

@@ -8,7 +8,8 @@ import {
     AppstoreOutlined,
     TagOutlined,
     FileTextOutlined,
-    SmileOutlined
+    SmileOutlined,
+    LockOutlined
 } from "@ant-design/icons";
 import { Avatar, Menu, Popover } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -22,6 +23,7 @@ import { logoutAction } from "../../redux/actions/AuthAction";
 import { ApplicationDispatch } from "../../store/store";
 import { userDetailSelector } from "../../redux/reducers/UserReducer";
 import { getUserDetailsAction } from "../../redux/actions/UserAction";
+import { PasswordModal } from "../PasswordModal/PasswordModal";
 
 interface NavbarProps {
     isNavbarOpen: boolean;
@@ -29,6 +31,7 @@ interface NavbarProps {
 
 export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
     const dispatch: ApplicationDispatch = useDispatch();
+    const [changePwdVisible, setChangePwdVisible] = useState(false)
     const navigate = useNavigate();
     const location = useLocation();
     const user = useSelector(userInfoSelector)
@@ -41,6 +44,11 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
 
     const handleClickMyPage = () => {
         navigate('/mypage');
+        setVisible(false)
+    }
+
+    const handleClickChangePwd = () => {
+        setChangePwdVisible(true)
         setVisible(false)
     }
 
@@ -60,6 +68,9 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
         { key: '3', label: 'Tags', path: '/tags' },
         { key: '4', label: 'My Page', path: '/mypage' },
         { key: '5', label: 'Users', path: '/users' },
+        { key: '7', label: 'UserManager', path: '/userMng' },
+        { key: '8', label: 'PostManager', path: '/postMng' },
+        { key: '9', label: 'TagManager', path: '/tagMng' },
     ]
     const [selectedKey, setSelectedKey] = useState(items.find(item => location.pathname === item.path)?.key)
 
@@ -83,6 +94,10 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                                 <div className="user-popover-item" onClick={handleClickMyPage}>
                                     <UserOutlined style={{ marginRight: 7 }} />
                                     <span className="navbar-span">Trang cá nhân</span>
+                                </div>
+                                <div className="user-popover-item" onClick={handleClickChangePwd}>
+                                    <LockOutlined style={{ marginRight: 7 }} />
+                                    <span className="navbar-span">Đổi mật khẩu</span>
                                 </div>
                                 <div
                                     className="user-popover-item"
@@ -125,12 +140,12 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                             onTitleClick={() => navigate('/')}
                         >
                             <Menu.Item key="7" icon={<SmileOutlined />}>
-                                <Link to={'/'}>
+                                <Link to={'/userMng'}>
                                     <span className="navbar-span">Quản lý người dùng</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="8" icon={<FileTextOutlined />}>
-                                <Link to={'/'}>
+                                <Link to={'/postMng'}>
                                     <span className="navbar-span">Quản lý bài viết</span>
                                 </Link>
                             </Menu.Item>
@@ -162,6 +177,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                     </Link>
                 </Menu.Item>
             </Menu>
+            <PasswordModal visible={changePwdVisible} setVisible={setChangePwdVisible}/>
         </div>
     )
 }
