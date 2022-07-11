@@ -9,7 +9,9 @@ import {
     TagOutlined,
     FileTextOutlined,
     SmileOutlined,
-    LockOutlined
+    LockOutlined,
+    TrophyOutlined,
+    LaptopOutlined
 } from "@ant-design/icons";
 import { Avatar, Menu, Popover } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -71,6 +73,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
         { key: '7', label: 'UserManager', path: '/userMng' },
         { key: '8', label: 'PostManager', path: '/postMng' },
         { key: '9', label: 'TagManager', path: '/tagMng' },
+        { key: '10', label: 'ScoreManager', path: '/scoreMng' },
     ]
     const [selectedKey, setSelectedKey] = useState(items.find(item => location.pathname === item.path)?.key)
 
@@ -137,7 +140,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                             title={
                                 <span className="navbar-span">Admin</span>
                             }
-                            onTitleClick={() => navigate('/')}
+                            // onTitleClick={() => navigate('/')}
                         >
                             <Menu.Item key="7" icon={<SmileOutlined />}>
                                 <Link to={'/userMng'}>
@@ -152,6 +155,11 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                             <Menu.Item key="9" icon={<TagOutlined />}>
                                 <Link to={'/tagMng'}>
                                     <span className="navbar-span">Quản lý thẻ</span>
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="10" icon={<TrophyOutlined />}>
+                                <Link to={'/scoreMng'}>
+                                    <span className="navbar-span">Quản lý điểm</span>
                                 </Link>
                             </Menu.Item>
                         </Menu.SubMenu> : null
@@ -169,6 +177,11 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                 <Menu.Item key="3" icon={<TagsOutlined />}>
                     <Link to={'tags'}>
                         <span className="navbar-span">Thẻ</span>
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key="4" icon={<LaptopOutlined />}>
+                    <Link to={'contest'}>
+                        <span className="navbar-span">Hackathon</span>
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="5" icon={<TeamOutlined />}>

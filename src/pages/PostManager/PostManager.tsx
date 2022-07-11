@@ -1,14 +1,14 @@
-import { Row, Col, Table, Input, Button, Modal } from 'antd'
-import { TeamOutlined, DeleteFilled, UserAddOutlined, UsergroupAddOutlined, MessageFilled, HeartFilled, EyeOutlined, EyeFilled, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { Row, Col, Table, Input, Button, Modal, Tooltip } from 'antd'
+import { TeamOutlined, CheckCircleOutlined, DeleteFilled, CloseCircleOutlined, UserAddOutlined, UsergroupAddOutlined, MessageFilled, HeartFilled, EyeOutlined, EyeFilled, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { AdminInfoBlock } from '../../common/Admin/AdminInfoBlock/AdminInfoBlock'
 import './PostManagerStyle.css'
 import { ApplicationDispatch } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { deletePostAction, getAllPostAction } from '../../redux/actions/PostAction';
+import { approvePostAction, deletePostAction, getAllPostAction, unapprovePostAction } from '../../redux/actions/PostAction';
 import { allPostSelector } from '../../redux/reducers/PostReducer';
 import { useNavigate } from 'react-router-dom';
-import { IHomePost } from '../../redux/interface/PostType';
+import { IApprovePost, IHomePost } from '../../redux/interface/PostType';
 import moment from 'moment';
 
 export const PostManager = () => {
@@ -16,6 +16,9 @@ export const PostManager = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const postList = useSelector(allPostSelector)
+    const clonePostList2 = [...postList]
+    const postByMonth = clonePostList2.filter((post) => moment(post.created_at).month() === moment().month()).length
+    const postByYear = clonePostList2.filter((post) => moment(post.created_at).year() === moment().year()).length
     const [clonePostList, setclonePostList] = useState([...postList])
     const [searchPost, setSearchPost] = useState('')
 
@@ -57,15 +60,58 @@ export const PostManager = () => {
         });
     };
 
+    const showApproveConfirm = (id: number) => {
+        const approvedPost: IApprovePost = {
+            id: id,
+            status: 1
+        }
+        Modal.confirm({
+            centered: true,
+            closable: true,
+            title: 'Xác nhận duyệt bài viết này?',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Duyệt',
+            okType: 'danger',
+            cancelText: 'Hủy',
+            async onOk() {
+                await dispatch(approvePostAction(approvedPost))
+                await dispatch(getAllPostAction())
+                navigate('/postMng')
+            },
+        });
+    };
+
+    const showUnapproveConfirm = (id: number) => {
+        const unapprovedPost: IApprovePost = {
+            id: id,
+            status: 0
+        }
+        Modal.confirm({
+            centered: true,
+            closable: true,
+            title: 'Bạn chắc chắn muốn bỏ duyệt bài viết này?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Bài viết sẽ không hiển thị với người dùng cho đến khi được duyệt lại!',
+            okText: 'Bỏ duyệt',
+            okType: 'danger',
+            cancelText: 'Hủy',
+            async onOk() {
+                await dispatch(unapprovePostAction(unapprovedPost))
+                await dispatch(getAllPostAction())
+                navigate('/postMng')
+            },
+        });
+    };
+
     return (
         <div className='post-manager-page'>
             <h1>Quản lý bài viết</h1>
             <Row gutter={[16, 16]}>
                 <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số bài viết' quantity={`${postList.length}`} icon={<TeamOutlined />} iconBlockColor='#29d1aa' /></Col>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Người dùng mới theo tháng' quantity={`+1`} icon={<UserAddOutlined />} iconBlockColor='#6584FE' /></Col>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Người dùng mới theo năm' quantity={`+1`} icon={<UsergroupAddOutlined />} iconBlockColor='#DF6B31' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong tháng' quantity={`+${postByMonth}`} icon={<UserAddOutlined />} iconBlockColor='#6584FE' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong năm' quantity={`+${postByYear}`} icon={<UsergroupAddOutlined />} iconBlockColor='#DF6B31' /></Col>
             </Row>
-            <h5 style={{ marginTop: 15 }}>Thống kê</h5>
+            <h5 style={{ marginTop: 15 }}>Danh sách bài viết</h5>
             <div className="user-table-container">
                 <div className='table-header-container'>
                     <Input.Search
@@ -88,16 +134,25 @@ export const PostManager = () => {
                     footer={defaultUserMngFooter}
                 >
                     <Table.Column title="Tiêu đề" render={(post: IHomePost) => <span>{post.title}</span>} width="20%" />
-                    <Table.Column title="Nội dung" render={(post: IHomePost) => <span>{post.content.length <= 300 ? post.content : post.content.slice(0, 300).concat('...')}</span>} width="25%" />
                     <Table.Column title="Người tạo" className='icon-col' render={(post: IHomePost) => <span>{post.username}</span>} width="15%" />
                     <Table.Column title="Ngày tạo" className='icon-col' render={(post: IHomePost) => <span>{moment(post.created_at).format('DD/MM/YYYY')}</span>} width="15%" />
-                    <Table.Column title={<EyeFilled style={{fontSize: '1.4em'}}/>} className='icon-col' render={(post: IHomePost) => <span>{post.viewnumber}</span>} width="5%" />
-                    <Table.Column title={<HeartFilled style={{fontSize: '1.4em'}} />} className='icon-col' render={(post: IHomePost) => <span>{post.votenumber}</span>} width="5%" />
-                    <Table.Column title={<MessageFilled style={{fontSize: '1.4em'}}/>} className='icon-col' render={(post: IHomePost) => <span>{post.commentnumber}</span>} width="5%" />
-                    <Table.Column className="user-mng-action" title="Hành động" width="10%"
+                    <Table.Column title="Trạng thái" className='icon-col' render={(post: IHomePost) => post.poststatus === 1 ? <span style={{ color: '#38c565' }}>Đã duyệt</span> : <span style={{ color: '#ff3448' }}>Chưa duyệt</span>} width="15%" />
+                    <Table.Column title={<Tooltip placement='bottom' title='Lượt xem'><EyeFilled style={{ fontSize: '1.4em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.viewnumber}</span>} width="5%" />
+                    <Table.Column title={<Tooltip placement='bottom' title='Lượt thích'><HeartFilled style={{ fontSize: '1.4em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.votenumber}</span>} width="5%" />
+                    <Table.Column title={<Tooltip placement='bottom' title='Số bình luận'><MessageFilled style={{ fontSize: '1.3em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.commentnumber}</span>} width="5%" />
+                    <Table.Column className="user-mng-action" title="Hành động" width="20%"
                         render={(post: IHomePost) => (
                             <>
-                                <EyeOutlined className='icon-view' onClick={() => navigate(`/post/${post.postid}`)}/>
+                                {
+                                    post.poststatus === 0 ?
+                                        <Tooltip placement='bottom' title='Duyệt bài viết'>
+                                            <CheckCircleOutlined onClick={() => showApproveConfirm(post.postid)} style={{ color: '#38c565' }} className='icon-view' />
+                                        </Tooltip> :
+                                        <Tooltip placement='bottom' title='Bỏ duyệt bài viết'>
+                                            <CloseCircleOutlined onClick={() => showUnapproveConfirm(post.postid)} style={{ color: '#ff3448' }} className='icon-view' />
+                                        </Tooltip>
+                                }
+                                <EyeOutlined className='icon-view' onClick={() => navigate(`/post/${post.postid}`)} />
                                 <DeleteFilled twoToneColor="#eb2f3f" className="icon-remove" onClick={() => showDeleteConfirm(post.postid)} />
                             </>
                         )}

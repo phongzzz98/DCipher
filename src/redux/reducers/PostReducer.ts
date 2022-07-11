@@ -3,6 +3,7 @@ import { RootState } from "../../store/store";
 import { notification } from "antd";
 
 import {
+  approvePostAction,
   createPostAction,
   deletePostAction,
   editPostAction,
@@ -11,6 +12,7 @@ import {
   getOnePostAction,
   searchPostAction,
   searchPostByTagAction,
+  unapprovePostAction,
 } from "../actions/PostAction";
 import { IPostState } from "../interface/PostType";
 
@@ -20,6 +22,7 @@ const initialState: IPostState = {
   searchedPosts: [],
   singlePost: [
     {
+      avatarImage: "",
       post_code: "",
       post_created_at: "",
       post_language: "",
@@ -138,6 +141,28 @@ export const postSlice = createSlice({
       .addCase(searchPostByTagAction.rejected, () => {
         notification.error({
           message: "Search fail!",
+        });
+      });
+    builder
+      .addCase(approvePostAction.fulfilled, () => {
+        notification.success({
+          message: "Đã duyệt bài viết!",
+        });
+      })
+      .addCase(approvePostAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi duyệt!",
+        });
+      });
+    builder
+      .addCase(unapprovePostAction.fulfilled, () => {
+        notification.success({
+          message: "Bỏ duyệt thành công!",
+        });
+      })
+      .addCase(unapprovePostAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi bỏ duyệt!",
         });
       });
   },

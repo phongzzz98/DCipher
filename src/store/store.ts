@@ -1,4 +1,5 @@
 import { AnyAction, configureStore, Dispatch, ThunkDispatch } from "@reduxjs/toolkit";
+import achievementSlice from "../redux/reducers/AchievementReducer";
 import authSlice from "../redux/reducers/AuthReducer";
 import loadingSlice from "../redux/reducers/LoadingReducer";
 import postSlice from "../redux/reducers/PostReducer";
@@ -11,7 +12,8 @@ export const store = configureStore({
     loadingSlice,
     postSlice,
     tagSlice,
-    userSlice
+    userSlice,
+    achievementSlice,
   },
 });
 export type ApplicationDispatch = ThunkDispatch<any, void, AnyAction> & Dispatch

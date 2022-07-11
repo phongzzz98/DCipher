@@ -1,17 +1,13 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import {
-  getRole,
   getUserInfo,
   setAccessToken,
-  setRole,
   setUserInfo,
 } from "../../utils/localStorage";
 import { IAuthState } from "../interface/AuthType";
 import { RootState } from "../../store/store";
-// import { getUserLoginInfoAction, loginAction } from "../actions/LoginAction";
 import { notification } from "antd";
 import {
-  getUserLoginInfoAction,
   loginAction,
   signUpAction,
 } from "../actions/AuthAction";
@@ -62,10 +58,6 @@ export const authSlice = createSlice({
           message: "Đăng nhập thất bại!",
         });
       });
-    // builder.addCase(getUserLoginInfoAction.fulfilled, (state, action) => {
-    //   state.userInfo = action.payload.data[0]
-    //   setUserInfo(action.payload.data[0])
-    // });
     builder
       .addCase(signUpAction.fulfilled, () => {
         notification.success({

@@ -43,7 +43,7 @@ export const UserManager = () => {
             if (startMonth < 1) return [];
             for (let i = startMonth; i !== endMonth; i++) {
                 if (i > 12) i = 1;
-                const usersInMonth = filterdYearUsers.filter((user) => moment(user.created_at).month() === i-1).length
+                const usersInMonth = filterdYearUsers.filter((user) => moment(user.created_at).month() === i - 1).length
                 const months = moment(i, "M").format("MM") + '/' + startDate.split('-')[2];
                 dataGrid.push({ date: months, amount: usersInMonth })
             }
@@ -66,7 +66,7 @@ export const UserManager = () => {
 
     const config: LineConfig = {
         data,
-        padding: 'auto',
+        padding: 25,
         xField: 'date',
         yField: 'amount',
         xAxis: {
@@ -78,6 +78,32 @@ export const UserManager = () => {
                 return { name: `Số người dùng`, value: datum.amount };
             },
         },
+        label: {
+            offsetY: -5
+        },
+        point: {
+            size: 2,
+            shape: 'dot',
+            style: {
+                fill: 'white',
+                stroke: colorTest,
+                lineWidth: 2,
+            },
+        },
+        state: {
+            active: {
+                style: {
+                    shadowBlur: 4,
+                    stroke: '#000',
+                    fill: 'red',
+                },
+            },
+        },
+        interactions: [
+            {
+                type: 'marker-active',
+            },
+        ],
         color: colorTest
     };
 

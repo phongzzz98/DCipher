@@ -1,5 +1,5 @@
 import { axiosInstance } from "../../configs/axios";
-import { ICreatePost, IEditPost } from "../interface/PostType";
+import { IApprovePost, ICreatePost, IEditPost } from "../interface/PostType";
 
 export const getAllPostAPI = async () => {
   try {
@@ -67,6 +67,30 @@ export const editPostAPI = async (data: IEditPost) => {
       tagid: data.tagid,
       userid: data.userid,
       language: data.language,
+    });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const approvePostAPI = async (data: IApprovePost) => {
+  try {
+    const res = await axiosInstance.put(`post/status/${data.id}`, {
+      status: data.status,
+      id: data.id, 
+    });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const unapprovePostAPI = async (data: IApprovePost) => {
+  try {
+    const res = await axiosInstance.put(`post/status/${data.id}`, {
+      status: data.status,
+      id: data.id, 
     });
     return res.data;
   } catch (error: any) {

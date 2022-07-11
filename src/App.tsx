@@ -21,6 +21,8 @@ import AdminRoute from './routes/AdminRoute';
 import { TagManager } from './pages/TagManager/TagManager';
 import { UserManager } from './pages/UserManager/UserManager';
 import { PostManager } from './pages/PostManager/PostManager';
+import { ScoreManager } from './pages/ScoreManager/ScoreManager';
+import { Contest } from './pages/Contest/Contest';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -52,6 +54,7 @@ function App() {
               <Route path='/playground' element={<Playground />} />
               <Route path='/post/:id' element={<Post />} />
               <Route path='/search' element={<Search />} />
+              <Route path='/contest' element={<Contest />} />
               <Route element={<PrivateRoute />}>
                 <Route path='/create' element={<CreatePost />} />
                 <Route path='/editProfile' element={<EditProfile />} />
@@ -61,6 +64,7 @@ function App() {
                 <Route path='/tagMng' element={<TagManager />} />
                 <Route path='/userMng' element={<UserManager />} />
                 <Route path='/postMng' element={<PostManager />}/>
+                <Route path='/scoreMng' element={<ScoreManager />}/>
               </Route>
             </Route>
             <Route path='/login' element={<Authen />} />

@@ -62,11 +62,9 @@
 .home-avatar{
     width: 400px;
 }
-.home-avatar > span{
-    padding-left: 10px;
-}
 .post-username{
     font-family: 'SofiaProRegular';
+    padding-left: 10px;
 }
 .actions-and-time{
     display: flex;

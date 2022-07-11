@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import defaultAvatar from '../../assets/images/BlankAvatar.jpg'
 import { List, Avatar, Space, Tag, Tooltip } from 'antd';
 import { MessageOutlined, HeartOutlined, EyeOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +21,8 @@ export const Home = () => {
     dispatch(getMostVotedPostAction());
   }, [dispatch])
   const postList: IHomePost[] = useSelector(allPostSelector);
+  const clonePostList = [...postList]
+  const tempList = clonePostList.filter((post)=> post.poststatus === 1)
   const mostVotePostList: IHomePost[] = useSelector(mostVotedPostsSelector);
 
   const IconText = ({ icon, text }: any) => (
@@ -43,7 +46,7 @@ export const Home = () => {
             pageSize: 8,
             position: 'bottom',
           }}
-          dataSource={postList}
+          dataSource={tempList}
           renderItem={item => (
             <List.Item
               key={item.postid}
@@ -55,7 +58,7 @@ export const Home = () => {
               />
               <div className='avatar-and-tags'>
                 <div className='home-avatar'>
-                  <Avatar src={'https://joeschmoe.io/api/v1/random'} />
+                  <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar } />
                   <span className='post-username'>{item.username}</span>
                 </div>
                 <div className='home-tags'>
@@ -102,7 +105,7 @@ export const Home = () => {
               />
               <div className='avatar-and-tags'>
                 <div className='home-avatar'>
-                  <Avatar src={'https://joeschmoe.io/api/v1/random'} />
+                  <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar } />
                   <span className='post-username'>{item.username}</span>
                 </div>
                 <div className='home-actions'>

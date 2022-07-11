@@ -61,7 +61,6 @@ export const Post = () => {
 
     setPostVoteNumber(selectedPost[0].votenumber)
   }, [selectedPost, user.id])
-  console.log(selectedPost);
 
   const handleVisibleChange = (newVisible: boolean) => {
     setVisible(newVisible);
@@ -118,7 +117,7 @@ export const Post = () => {
         setLoadingComment(false)
         setCommentList([...commentList, newComment])
         notification.success({
-          message: 'Commented!'
+          message: 'Đã đăng bình luận!'
         })
       })
     }
@@ -217,7 +216,7 @@ export const Post = () => {
             {selectedPost[0].posttag.map((tag) => <Tag className='tag' color={tag.tagcolor}>{tag.tagcontent}</Tag>)}
           </div>
           <div className='post-user-container'>
-            <span className='post-user'>bởi <Avatar className='post-avatar' src={'https://joeschmoe.io/api/v1/random'} />{selectedPost[0].postusername}</span>
+            <span className='post-user'>bởi <Avatar className='post-avatar' src={selectedPost[0].avatarImage} />{selectedPost[0].postusername}</span>
             {accessToken ? selectedPost[0].userid !== user.id ?
               followed ?
                 <Button icon={<CheckOutlined />} size='small' type='default' onClick={() => onUnfollow()} >Đã theo dõi</Button>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createPostAPI, deletePostAPI, editPostAPI, getAllPostAPI, getMostVotedPostAPI, getOnePostAPI, searchPostAPI, searchPostByTagAPI } from "../api/PostAPI";
-import { ICreatePost, IEditPost } from "../interface/PostType";
+import { approvePostAPI, createPostAPI, deletePostAPI, editPostAPI, getAllPostAPI, getMostVotedPostAPI, getOnePostAPI, searchPostAPI, searchPostByTagAPI } from "../api/PostAPI";
+import { IApprovePost, ICreatePost, IEditPost } from "../interface/PostType";
 
 export const getAllPostAction = createAsyncThunk(
   "getAllPost",
@@ -38,6 +38,22 @@ export const editPostAction = createAsyncThunk(
   "editPost",
  async (data:IEditPost) => {
    const res = await editPostAPI(data);
+   return res
+ }
+)
+
+export const approvePostAction = createAsyncThunk(
+  "approvePost",
+ async (data:IApprovePost) => {
+   const res = await approvePostAPI(data);
+   return res
+ }
+)
+
+export const unapprovePostAction = createAsyncThunk(
+  "unapprovePost",
+ async (data:IApprovePost) => {
+   const res = await approvePostAPI(data);
    return res
  }
 )

@@ -1,0 +1,9 @@
+.score-manager-page{
+    padding: 50px 70px;
+}
+
+.rank-progress-bar{
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+}

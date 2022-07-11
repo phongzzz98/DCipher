@@ -50,10 +50,12 @@ export type IHomePost = {
   created_at: string;
   updated_at: string;
   votenumber: number;
+  poststatus: number;
   commentnumber: number;
   content: string;
   posttag: IHomeTag[];
   viewnumber: number;
+  avatarImage: string;
 };
 
 export type IHomeTag = {
@@ -82,6 +84,7 @@ export interface IEditPost {
 }
 
 export interface IPost {
+  avatarImage: string;
   post_code: string | null;
   post_created_at: string;
   post_language: string | null;
@@ -127,4 +130,9 @@ export interface IPostTag {
   tagcolor: string;
   tagcontent: string;
   tagid: number;
+}
+
+export interface IApprovePost {
+  status: number;
+  id: number;
 }
