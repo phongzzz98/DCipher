@@ -1,0 +1,77 @@
+.problem-page {
+    padding: 50px 70px;
+}
+
+.problem-question {
+    color: #a1a1a1;
+    font-family: 'SofiaProRegular';
+    font-size: 0.8em;
+}
+
+.problem-main {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.input-output-table{
+    margin-bottom: 50px;
+}
+
+#IO {
+    font-family: 'SofiaProMedium';
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#IO td {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#IO th {
+    border: 1px solid #ddd;
+    font-size: 1.1em;
+    padding: 10px 8px;
+    text-align: left;
+    background-color: #fafafa;
+}
+
+.problem-markdown-section {
+    width: 100%;
+    /* padding: 15px; */
+    font-family: 'SofiaProRegular';
+}
+
+.problem-markdown-section>div>div {
+    font-family: 'SofiaProRegular';
+}
+
+.problem-markdown-section h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-fg-default)
+}
+
+.submit-btn-container {
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.stat-table table th {
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.stat-table table td {
+    border: 1px solid #ddd;
+}
+
+.stat-align {
+    text-align: center;
+}

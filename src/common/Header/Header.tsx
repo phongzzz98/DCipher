@@ -41,8 +41,8 @@ export const Header = (props: HeaderProps) => {
     }, [user.id])
 
     const content = (
-        notifications.map((item) =>
-            <div>
+        notifications.map((item, index) =>
+            <div key={index}>
                 <p>{item.content}</p>
             </div>)
     );

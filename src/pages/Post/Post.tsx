@@ -99,23 +99,13 @@ export const Post = () => {
     }
     else {
       setLoadingComment(true)
-      const newComment: IComment = {
-        commentid: 0,
-        commentcontent: value,
-        commentuserid: user.id,
-        commentusername: user.username,
-        commentvotenumber: 0,
-        user_vote_comment: [],
-        created_at: moment().toString(),
-        updated_at: moment().toString(),
-      }
       await axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/comment`, {
         userid: user.id,
         postid: parseInt(id!),
         content: value
-      }).then(() => {
+      }).then(async () => {
+        await dispatch(getOnePostAction(id!))
         setLoadingComment(false)
-        setCommentList([...commentList, newComment])
         notification.success({
           message: 'Đã đăng bình luận!'
         })
@@ -276,7 +266,7 @@ export const Post = () => {
               </div>
           }
           {
-            commentList.map((comment: IComment) => <CommentItem comment={comment} />).reverse()
+            commentList.map((comment: IComment) => <CommentItem postID={selectedPost[0].postid} comment={comment} />).reverse()
           }
         </div>
       </div>

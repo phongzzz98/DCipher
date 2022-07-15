@@ -19,5 +19,12 @@ export const capitalizeFirstLetter = (s: string) => {
 };
 
 export const validateHexString = (s: string) => {
-  return /^#[0-9A-F]{6}$/i.test(s)
-}
+  return /^#[0-9A-F]{6}$/i.test(s);
+};
+
+export const groupBy = (xs: any, key: any) => {
+  return xs.reduce((rv: any, x: any) => {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};

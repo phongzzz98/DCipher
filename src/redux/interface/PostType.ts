@@ -104,6 +104,7 @@ export interface IPost {
 }
 
 export interface IComment {
+  avatarImage: string;
   commentid: number;
   commentcontent: string;
   commentuserid: number;
@@ -112,6 +113,12 @@ export interface IComment {
   user_vote_comment: number[];
   created_at: string;
   updated_at: string;
+}
+
+export interface IEditComment {
+  id: number;
+  content: string;
+  votenumber: number;
 }
 
 export interface IPostUser {

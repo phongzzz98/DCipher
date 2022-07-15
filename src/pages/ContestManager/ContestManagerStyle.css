@@ -1,0 +1,27 @@
+.contest-manager-page{
+    padding: 50px 70px;
+}
+.contest-table-container {
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.table-header-container {
+    display: flex;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+.contest-table table th {
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.contest-table table td {
+    border: 1px solid #ddd;
+}
+
+.contest-mng-action {
+    text-align: center;
+}

@@ -5,7 +5,9 @@ import { notification } from "antd";
 import {
   approvePostAction,
   createPostAction,
+  deleteCommentAction,
   deletePostAction,
+  editCommentAction,
   editPostAction,
   getAllPostAction,
   getMostVotedPostAction,
@@ -30,6 +32,7 @@ const initialState: IPostState = {
       post_updated_at: "",
       postcomment: [
         {
+          avatarImage: "",
           commentid: 0,
           commentcontent: "",
           commentuserid: 0,
@@ -163,6 +166,28 @@ export const postSlice = createSlice({
       .addCase(unapprovePostAction.rejected, () => {
         notification.error({
           message: "Lỗi khi bỏ duyệt!",
+        });
+      });
+    builder
+      .addCase(editCommentAction.fulfilled, () => {
+        notification.success({
+          message: "Sửa bình luận thành công!",
+        });
+      })
+      .addCase(editCommentAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi sửa!",
+        });
+      });
+    builder
+      .addCase(deleteCommentAction.fulfilled, () => {
+        notification.success({
+          message: "Đã xóa bình luận!",
+        });
+      })
+      .addCase(deleteCommentAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi xóa bình luận!",
         });
       });
   },

@@ -1,5 +1,5 @@
 import { Row, Col, Table, Input, Button, Modal, Tooltip } from 'antd'
-import { TeamOutlined, CheckCircleOutlined, DeleteFilled, CloseCircleOutlined, UserAddOutlined, UsergroupAddOutlined, MessageFilled, HeartFilled, EyeOutlined, EyeFilled, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { FileTextOutlined, CheckCircleOutlined, DeleteFilled, CloseCircleOutlined, FileMarkdownOutlined, ProjectOutlined, MessageFilled, HeartFilled, EyeOutlined, EyeFilled, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { AdminInfoBlock } from '../../common/Admin/AdminInfoBlock/AdminInfoBlock'
 import './PostManagerStyle.css'
 import { ApplicationDispatch } from '../../store/store';
@@ -40,7 +40,7 @@ export const PostManager = () => {
             setclonePostList(postList)
     }, [postList, searchPost])
 
-    const defaultUserMngFooter = () => <Button style={{ width: '100%' }} icon={<PlusOutlined />} type='dashed' onClick={() => { navigate('/create') }}>Tạo người dùng mới</Button>;
+    const defaultUserMngFooter = () => <Button style={{ width: '100%' }} icon={<PlusOutlined />} type='dashed' onClick={() => { navigate('/create') }}>Tạo bài viết mới</Button>;
 
     const showDeleteConfirm = (id: number) => {
         Modal.confirm({
@@ -107,15 +107,15 @@ export const PostManager = () => {
         <div className='post-manager-page'>
             <h1>Quản lý bài viết</h1>
             <Row gutter={[16, 16]}>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số bài viết' quantity={`${postList.length}`} icon={<TeamOutlined />} iconBlockColor='#29d1aa' /></Col>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong tháng' quantity={`+${postByMonth}`} icon={<UserAddOutlined />} iconBlockColor='#6584FE' /></Col>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong năm' quantity={`+${postByYear}`} icon={<UsergroupAddOutlined />} iconBlockColor='#DF6B31' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số bài viết' quantity={`${postList.length}`} icon={<FileTextOutlined />} iconBlockColor='#29d1aa' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong tháng' quantity={`+${postByMonth}`} icon={<FileMarkdownOutlined />} iconBlockColor='#6584FE' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong năm' quantity={`+${postByYear}`} icon={<ProjectOutlined rotate={180} />} iconBlockColor='#DF6B31' /></Col>
             </Row>
             <h5 style={{ marginTop: 15 }}>Danh sách bài viết</h5>
             <div className="user-table-container">
                 <div className='table-header-container'>
                     <Input.Search
-                        placeholder="Tìm người dùng"
+                        placeholder="Tìm bài viết"
                         allowClear
                         onChange={(e) => { setSearchPost(e.target.value) }}
                     />
@@ -133,14 +133,14 @@ export const PostManager = () => {
                     sticky={true}
                     footer={defaultUserMngFooter}
                 >
-                    <Table.Column title="Tiêu đề" render={(post: IHomePost) => <span>{post.title}</span>} width="20%" />
-                    <Table.Column title="Người tạo" className='icon-col' render={(post: IHomePost) => <span>{post.username}</span>} width="15%" />
+                    <Table.Column title="Tiêu đề" render={(post: IHomePost) => <span>{post.title}</span>} width="19%" />
+                    <Table.Column title="Người tạo" className='icon-col' render={(post: IHomePost) => <span>{post.username}</span>} width="13%" />
                     <Table.Column title="Ngày tạo" className='icon-col' render={(post: IHomePost) => <span>{moment(post.created_at).format('DD/MM/YYYY')}</span>} width="15%" />
                     <Table.Column title="Trạng thái" className='icon-col' render={(post: IHomePost) => post.poststatus === 1 ? <span style={{ color: '#38c565' }}>Đã duyệt</span> : <span style={{ color: '#ff3448' }}>Chưa duyệt</span>} width="15%" />
-                    <Table.Column title={<Tooltip placement='bottom' title='Lượt xem'><EyeFilled style={{ fontSize: '1.4em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.viewnumber}</span>} width="5%" />
-                    <Table.Column title={<Tooltip placement='bottom' title='Lượt thích'><HeartFilled style={{ fontSize: '1.4em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.votenumber}</span>} width="5%" />
-                    <Table.Column title={<Tooltip placement='bottom' title='Số bình luận'><MessageFilled style={{ fontSize: '1.3em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.commentnumber}</span>} width="5%" />
-                    <Table.Column className="user-mng-action" title="Hành động" width="20%"
+                    <Table.Column title={<Tooltip placement='bottom' title='Lượt xem'><EyeFilled style={{ fontSize: '1.4em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.viewnumber}</span>} width="7%" />
+                    <Table.Column title={<Tooltip placement='bottom' title='Lượt thích'><HeartFilled style={{ fontSize: '1.4em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.votenumber}</span>} width="7%" />
+                    <Table.Column title={<Tooltip placement='bottom' title='Số bình luận'><MessageFilled style={{ fontSize: '1.3em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.commentnumber}</span>} width="7%" />
+                    <Table.Column className="user-mng-action" title="Hành động" width="17%"
                         render={(post: IHomePost) => (
                             <>
                                 {

@@ -1,5 +1,5 @@
 import { axiosInstance } from "../../configs/axios";
-import { IApprovePost, ICreatePost, IEditPost } from "../interface/PostType";
+import { IApprovePost, ICreatePost, IEditComment, IEditPost } from "../interface/PostType";
 
 export const getAllPostAPI = async () => {
   try {
@@ -115,6 +115,27 @@ export const searchPostByTagAPI = async (value: string) => {
     const res = await axiosInstance.post(`/searchpostbytag`, {
       search: [value]
     });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const editCommentAPI = async (data: IEditComment) => {
+  try {
+    const res = await axiosInstance.put(`/comment/${data.id}`, {
+      content: data.content,
+      votenumber: data.votenumber
+    });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const deleteCommentAPI = async (id: number) => {
+  try {
+    const res = await axiosInstance.delete(`/comment/${id}`);
     return res.data;
   } catch (error: any) {
     return error.res.data;

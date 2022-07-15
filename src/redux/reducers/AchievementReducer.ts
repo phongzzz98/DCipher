@@ -23,7 +23,7 @@ const initialState: IAchievementState = {
 };
 
 export const achievementSlice = createSlice({
-  name: "achievement",
+  name: "achievementReducer",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

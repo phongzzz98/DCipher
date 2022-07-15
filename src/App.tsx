@@ -23,6 +23,9 @@ import { UserManager } from './pages/UserManager/UserManager';
 import { PostManager } from './pages/PostManager/PostManager';
 import { ScoreManager } from './pages/ScoreManager/ScoreManager';
 import { Contest } from './pages/Contest/Contest';
+import { Problem } from './pages/Problem/Problem';
+import { ProblemDetail } from './pages/ProblemDetail/ProblemDetail';
+import { ContestManager } from './pages/ContestManager/ContestManager';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -43,28 +46,31 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Suspense fallback={<Loading/>} >
+        <Suspense fallback={<Loading />} >
           <Routes>
             <Route element={<MainLayout />}>
               <Route path='/' element={<Home />} />
               <Route path='/users' element={<Users />} />
               <Route path='/user/:id' element={<UserPage />} />
-              <Route path='/tags' element={<TagPage />}/>
-              <Route path='/mypage' element={<MyPage />} />
+              <Route path='/tags' element={<TagPage />} />
               <Route path='/playground' element={<Playground />} />
               <Route path='/post/:id' element={<Post />} />
               <Route path='/search' element={<Search />} />
               <Route path='/contest' element={<Contest />} />
+              <Route path='/problem/:id' element={<Problem />} />
               <Route element={<PrivateRoute />}>
+                <Route path='/mypage' element={<MyPage />} />
                 <Route path='/create' element={<CreatePost />} />
                 <Route path='/editProfile' element={<EditProfile />} />
                 <Route path='/editPost/:id' element={<EditPost />} />
+                <Route path='/statDetail/:uid/:cid' element={<ProblemDetail />} />
               </Route>
-              <Route element={<AdminRoute/>}>
+              <Route element={<AdminRoute />}>
                 <Route path='/tagMng' element={<TagManager />} />
                 <Route path='/userMng' element={<UserManager />} />
-                <Route path='/postMng' element={<PostManager />}/>
-                <Route path='/scoreMng' element={<ScoreManager />}/>
+                <Route path='/postMng' element={<PostManager />} />
+                <Route path='/scoreMng' element={<ScoreManager />} />
+                <Route path='/contestMng' element={<ContestManager />} />
               </Route>
             </Route>
             <Route path='/login' element={<Authen />} />

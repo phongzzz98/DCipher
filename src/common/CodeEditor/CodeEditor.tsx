@@ -22,9 +22,10 @@ interface CodeEditorProps {
     setUserCode: (value: string) => void;
     userCodeLang?: string;
     setUserCodeLang: (value: string) => void;
+    setOuterAPILang?: (value: string) => void;
 }
 
-export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLang }: CodeEditorProps) => {
+export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLang, setOuterAPILang }: CodeEditorProps) => {
     // State variable to set users source code
     const [userLang, setUserLang] = useState("python");
     const [userTheme, setUserTheme] = useState("merbivore_soft");
@@ -62,19 +63,25 @@ export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLan
                 setDefaultOption(option?.value)
                 setUserLang(option.value.split('|')[0])
                 setApiLang(option.value.split('|')[1])
+                if (setOuterAPILang)
+                    setOuterAPILang(option.value.split('|')[1])
             } else {
                 setDefaultOption('python|python')
                 setUserLang('python')
                 setApiLang('python')
+                if (setOuterAPILang)
+                    setOuterAPILang('python')
             }
         }
-    }, [languages, userCodeLang])
+    }, [languages, setOuterAPILang, userCodeLang])
 
     const onChangeLanguage = (value: string) => {
         const resultArr = value.split('|');
         console.log(resultArr);
         setUserLang(resultArr[0]);
         setApiLang(resultArr[1]);
+        if (setOuterAPILang)
+            setOuterAPILang(resultArr[1])
         setUserCodeLang(resultArr[0]);
         setDefaultOption(value);
     }

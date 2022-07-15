@@ -11,7 +11,8 @@ import {
     SmileOutlined,
     LockOutlined,
     TrophyOutlined,
-    LaptopOutlined
+    LaptopOutlined,
+    ContainerOutlined
 } from "@ant-design/icons";
 import { Avatar, Menu, Popover } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -68,12 +69,13 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
         { key: '1', label: 'Home', path: '/' },
         { key: '2', label: 'Playground', path: '/playground' },
         { key: '3', label: 'Tags', path: '/tags' },
-        { key: '4', label: 'My Page', path: '/mypage' },
+        { key: '4', label: 'Hackathon', path: '/contest' },
         { key: '5', label: 'Users', path: '/users' },
         { key: '7', label: 'UserManager', path: '/userMng' },
         { key: '8', label: 'PostManager', path: '/postMng' },
         { key: '9', label: 'TagManager', path: '/tagMng' },
         { key: '10', label: 'ScoreManager', path: '/scoreMng' },
+        { key: '11', label: 'ContestManager', path: '/contestMng' },
     ]
     const [selectedKey, setSelectedKey] = useState(items.find(item => location.pathname === item.path)?.key)
 
@@ -90,7 +92,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
     return (
         <div>
             {
-                accessToken !== null ?
+                accessToken ?
                     <Popover
                         content={
                             <div>
@@ -160,6 +162,11 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                             <Menu.Item key="10" icon={<TrophyOutlined />}>
                                 <Link to={'/scoreMng'}>
                                     <span className="navbar-span">Quản lý điểm</span>
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="11" icon={<ContainerOutlined />}>
+                                <Link to={'/contestMng'}>
+                                    <span className="navbar-span">Quản lý Hackathon</span>
                                 </Link>
                             </Menu.Item>
                         </Menu.SubMenu> : null

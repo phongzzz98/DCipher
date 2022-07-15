@@ -1,3 +1,20 @@
 .contest-page{
     padding: 50px 70px;
 }
+.contest-intro{
+    color: #ababab;
+    font-family: 'SofiaProRegular';
+    font-size: 0.8em;
+}
+.contest-lists{
+    margin-bottom: 70px;
+}
+.contest-list-container{
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+}
+.difficulty-text {
+    font-size: 1.1em;
+    margin-right: 15px;
+}

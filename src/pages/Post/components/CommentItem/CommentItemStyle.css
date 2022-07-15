@@ -1,28 +1,55 @@
-.comment-markdown-section{
+.comment-markdown-section {
     /* background-color: hsl(210,8%,95%); */
     padding: 15px;
     border-radius: 10px;
 }
-.comment-user{
+
+.comment-user {
     font-size: 1.3em;
     color: black;
 }
-.comment-time{
+
+.comment-time {
     font-family: 'SofiaProRegular';
     font-size: 1.2em;
     color: #696969;
 }
-.comment-heart{
+
+.comment-heart {
     font-size: 1.3em;
 }
-.comment-filled-heart{
+
+.comment-filled-heart {
     font-size: 1.3em;
     color: crimson;
 }
-.comment-heart:hover{
+
+.comment-heart:hover {
     cursor: pointer;
 }
-.comment-vote-number{
+
+.comment-vote-number {
     font-size: 1.3em;
     margin-left: 5px;
+}
+
+.icon-edit-comment {
+    font-size: 1.2em;
+    color: black;
+    margin-right: 5px;
+}
+
+.icon-edit-comment:hover {
+    color: var(--ant-primary-color);
+    cursor: pointer;
+}
+
+.icon-remove-comment {
+    font-size: 1.2em;
+    color: crimson;
+}
+
+.icon-remove-comment:hover {
+    filter: brightness(85%);
+    cursor: pointer;
 }
