@@ -41,7 +41,7 @@ export const Contest = () => {
 
   return (
     <div className='contest-page'>
-      <h1>Hackathon</h1>
+      <h1>Contest</h1>
       <p className='contest-intro'>Nơi tập hợp các bài tập lập trình thuật toán nhằm mục đích học tập và rèn luyện kỹ năng giải thuật.</p>
       <div className='contest-lists'>
         <div className='table-header-container'>

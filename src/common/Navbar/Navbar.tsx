@@ -69,7 +69,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
         { key: '1', label: 'Home', path: '/' },
         { key: '2', label: 'Playground', path: '/playground' },
         { key: '3', label: 'Tags', path: '/tags' },
-        { key: '4', label: 'Hackathon', path: '/contest' },
+        { key: '4', label: 'Contest', path: '/contest' },
         { key: '5', label: 'Users', path: '/users' },
         { key: '7', label: 'UserManager', path: '/userMng' },
         { key: '8', label: 'PostManager', path: '/postMng' },
@@ -166,7 +166,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                             </Menu.Item>
                             <Menu.Item key="11" icon={<ContainerOutlined />}>
                                 <Link to={'/contestMng'}>
-                                    <span className="navbar-span">Quản lý Hackathon</span>
+                                    <span className="navbar-span">Quản lý Contest</span>
                                 </Link>
                             </Menu.Item>
                         </Menu.SubMenu> : null
@@ -188,7 +188,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                 </Menu.Item>
                 <Menu.Item key="4" icon={<LaptopOutlined />}>
                     <Link to={'contest'}>
-                        <span className="navbar-span">Hackathon</span>
+                        <span className="navbar-span">Contest</span>
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="5" icon={<TeamOutlined />}>

@@ -3,10 +3,13 @@ import { RootState } from "../../store/store";
 import { notification } from "antd";
 import { IContestState } from "../interface/ContestType";
 import {
+  createProblemAction,
   deleteProblemAction,
+  editProblemAction,
   getAllProblemAction,
   getAllProblemAdminAction,
   getOneProblemAction,
+  getOneProblemAdminAction,
   getProblemStatisticAction,
   getProblemStatisticDetailAction,
   submitProblemAction,
@@ -23,6 +26,21 @@ const initialState: IContestState = {
     input: [],
     output: [],
     rank: 0,
+  },
+  problemAdmin: {
+    code: "",
+    content: "",
+    created_at: "",
+    id: 0,
+    input: "",
+    language: "",
+    output: "",
+    question: "",
+    rank: 0,
+    score: 0,
+    title: "",
+    updated_at: "",
+    user_id: 0,
   },
   statistic: [],
   statisticDetail: {
@@ -60,6 +78,15 @@ export const contestSlice = createSlice({
         });
       });
     builder
+      .addCase(getOneProblemAdminAction.fulfilled, (state, action) => {
+        state.problemAdmin = action.payload;
+      })
+      .addCase(getOneProblemAdminAction.rejected, () => {
+        notification.error({
+          message: "Get problem fail!",
+        });
+      });
+    builder
       .addCase(deleteProblemAction.fulfilled, () => {
         notification.success({
           message: "Xóa bài thành công!",
@@ -68,6 +95,28 @@ export const contestSlice = createSlice({
       .addCase(deleteProblemAction.rejected, () => {
         notification.error({
           message: "Lỗi khi xóa!",
+        });
+      });
+    builder
+      .addCase(createProblemAction.fulfilled, () => {
+        notification.success({
+          message: "Tạo bài thành công!",
+        });
+      })
+      .addCase(createProblemAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi tạo bài!",
+        });
+      });
+    builder
+      .addCase(editProblemAction.fulfilled, () => {
+        notification.success({
+          message: "Sửa bài thành công!",
+        });
+      })
+      .addCase(editProblemAction.rejected, () => {
+        notification.error({
+          message: "Lỗi khi sửa bài!",
         });
       });
     builder
@@ -128,6 +177,10 @@ export const allProblemsAdminSelector = createSelector(
 export const oneProblemsSelector = createSelector(
   selectSelf,
   (state) => state.problem
+);
+export const oneProblemAdminSelector = createSelector(
+  selectSelf,
+  (state) => state.problemAdmin
 );
 export const statisticSelector = createSelector(
   selectSelf,

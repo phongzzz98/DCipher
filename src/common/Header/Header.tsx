@@ -1,5 +1,5 @@
-import { Avatar, Button, Input, Popover, Tooltip } from 'antd'
-import { MenuUnfoldOutlined, MenuFoldOutlined, MoreOutlined, PlusCircleOutlined, BellFilled } from '@ant-design/icons';
+import { Avatar, Button, Input, List, Popover, Tooltip } from 'antd'
+import { MenuUnfoldOutlined, MenuFoldOutlined, MoreOutlined, PlusCircleOutlined, BellFilled, SmileOutlined } from '@ant-design/icons';
 import './HeaderStyle.css'
 import logo from '../../assets/svg/dclogo.svg'
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { axiosInstance } from '../../configs/axios';
 import { useEffect, useState } from 'react';
 import { ApplicationDispatch } from '../../store/store';
 import { searchPostAction, searchPostByTagAction } from '../../redux/actions/PostAction';
-import { INotification } from '../../redux/interface/UserType';
 import { getNotificationAction } from '../../redux/actions/UserAction';
 import { notificationSelector } from '../../redux/reducers/UserReducer';
 
@@ -25,10 +24,11 @@ export const Header = (props: HeaderProps) => {
     const accessToken = useSelector(accessTokenSelector)
     const user = useSelector(userInfoSelector)
     const notifications = useSelector(notificationSelector)
+    const [loading, setLoading] = useState(false)
     const [notiNumber, setnotiNumber] = useState(0)
 
     useEffect(() => {
-        if(user.id !== 0){
+        if (user.id !== 0) {
             const getNotiNumber = () => {
                 axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/${user.id}`)
                     .then((res) => {
@@ -41,10 +41,28 @@ export const Header = (props: HeaderProps) => {
     }, [user.id])
 
     const content = (
-        notifications.map((item, index) =>
-            <div key={index}>
-                <p>{item.content}</p>
-            </div>)
+        // notifications.map((item, index) =>
+        //     <div key={index}>
+        //         <p>{item.content}</p>
+        //     </div>)
+        <List
+            size='default'
+            loading={loading}
+            bordered
+            dataSource={notifications}
+            renderItem={noti => (
+                <List.Item>
+                    <List.Item.Meta
+                        avatar=
+                        {
+                             <SmileOutlined style={{ fontSize: '1.3em' }} />
+                        }
+                        // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                        title={<a style={{ wordBreak: 'break-all', fontSize: '1em' }} /*onClick={() => navigate(`/problem/${problem.problem_id}`)}*/>{noti.content}</a>}
+                    />
+                </List.Item>
+            )}
+        />
     );
 
     const searchPost = (value: string) => {
@@ -56,6 +74,7 @@ export const Header = (props: HeaderProps) => {
 
     const getNotification = (id: number) => {
         dispatch(getNotificationAction(id))
+        setnotiNumber(0)
     }
     console.log(user)
     return (
@@ -66,7 +85,7 @@ export const Header = (props: HeaderProps) => {
                 <div>
                     <Link to={'/'}>
                         <Avatar
-                        size={40}
+                            size={40}
                             shape="square"
                             className="header-avatar"
                             src={logo}
@@ -88,13 +107,13 @@ export const Header = (props: HeaderProps) => {
                 {!accessToken ?
                     <Button onClick={() => navigate('/login')} size='middle' type='ghost' className='login-btn'>Đăng nhập/Đăng ký</Button> :
                     <>
-                        <Popover placement="bottomRight" title='Notification' content={content} trigger="click">
+                        <Popover id='noti-popover' placement="bottomRight" title='Thông báo' content={content} trigger="click">
                             <div className='notification'>
                                 <BellFilled onClick={() => getNotification(user.id)} className='more-btn' />
                                 {
-                                  notiNumber !== 0 ?
-                                  <span className='noti-number'>{notiNumber}</span> :
-                                  null
+                                    notiNumber !== 0 ?
+                                        <span className='noti-number'>{notiNumber}</span> :
+                                        null
                                 }
                             </div>
                         </Popover>

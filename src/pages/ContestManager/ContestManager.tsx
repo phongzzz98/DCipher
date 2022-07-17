@@ -1,5 +1,5 @@
-import { Row, Col, Input, Button, Table, Tooltip, Modal } from 'antd'
-import { ContainerOutlined, FileProtectOutlined, BarChartOutlined, EditOutlined, CheckCircleOutlined, DeleteFilled, CloseCircleOutlined, UserAddOutlined, UsergroupAddOutlined, MessageFilled, HeartFilled, EyeOutlined, EyeFilled, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { Row, Col, Input, Button, Table, Modal } from 'antd'
+import { ContainerOutlined, FileProtectOutlined, BarChartOutlined, EditOutlined, DeleteFilled, EyeOutlined, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { AdminInfoBlock } from '../../common/Admin/AdminInfoBlock/AdminInfoBlock'
@@ -10,12 +10,15 @@ import { ApplicationDispatch } from '../../store/store';
 import { deleteProblemAction, getAllProblemAction, getAllProblemAdminAction } from '../../redux/actions/ContestAction';
 import { allProblemsAdminSelector, allProblemsSelector } from '../../redux/reducers/ContestReducer';
 import { IAdminProblemItem } from '../../redux/interface/ContestType';
+import { CreateContestModal } from './components/CreateContestModal/CreateContestModal';
+import { EditContestModal } from './components/EditContestModal/EditContestModal';
 
 export const ContestManager = () => {
     const dispatch: ApplicationDispatch = useDispatch()
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [searchProb, setSearchProb] = useState('')
+    const [createModalVisible, setCreateModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [problemID, setProblemID] = useState(0);
     const problemList = useSelector(allProblemsSelector)
@@ -58,7 +61,7 @@ export const ContestManager = () => {
                 await dispatch(deleteProblemAction(id))
                 await dispatch(getAllProblemAction())
                 await dispatch(getAllProblemAdminAction())
-                navigate('/postMng')
+                navigate('/contestMng')
             },
         });
     };
@@ -68,11 +71,11 @@ export const ContestManager = () => {
         setEditModalVisible(true)
     }
 
-    const defaultContestMngFooter = () => <Button style={{ width: '100%' }} icon={<PlusOutlined />} type='dashed' onClick={() => { }}>Tạo bài mới</Button>;
+    const defaultContestMngFooter = () => <Button style={{ width: '100%' }} icon={<PlusOutlined />} type='dashed' onClick={() => { setCreateModalVisible(true) }}>Tạo bài mới</Button>;
 
     return (
         <div className='contest-manager-page'>
-            <h1>Quản lý Hackathon</h1>
+            <h1>Quản lý Contest</h1>
             <Row gutter={[16, 16]}>
                 <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số bài tập' quantity={`${problemList.length}`} icon={<ContainerOutlined />} iconBlockColor='#29d1aa' /></Col>
                 <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số lượt giải' quantity={`${timeSolved}`} icon={<FileProtectOutlined />} iconBlockColor='#6584FE' /></Col>
@@ -86,7 +89,7 @@ export const ContestManager = () => {
                         allowClear
                         onChange={(e) => { setSearchProb(e.target.value) }}
                     />
-                    <Button type='primary' onClick={() => { navigate('/create') }}>Tạo bài mới</Button>
+                    <Button type='primary' onClick={() => { setCreateModalVisible(true) }}>Tạo bài mới</Button>
                 </div>
                 <Table className="contest-table"
                     dataSource={cloneProblemList}
@@ -119,6 +122,8 @@ export const ContestManager = () => {
                     />
                 </Table>
             </div>
+            <EditContestModal editModalVisible={editModalVisible} setEditModalVisible={setEditModalVisible} problemID={problemID} />
+            <CreateContestModal createModalVisible={createModalVisible} setCreateModalVisible={setCreateModalVisible} />
         </div>
     )
 }

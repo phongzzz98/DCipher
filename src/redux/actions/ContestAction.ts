@@ -1,6 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { deleteProblemAPI, getAllProblemAdminAPI, getAllProblemAPI, getOneProblemAPI, getProblemStatisticAPI, getStatisticDetailAPI, submitProblemAPI } from "../api/ContestAPI";
-import { IStatisticDetailIDs, IStatisticIDs, ISubmitProblem } from "../interface/ContestType";
+import {
+  createProblemAPI,
+  deleteProblemAPI,
+  editProblemAPI,
+  getAllProblemAdminAPI,
+  getAllProblemAPI,
+  getOneProblemAdminAPI,
+  getOneProblemAPI,
+  getProblemStatisticAPI,
+  getStatisticDetailAPI,
+  submitProblemAPI,
+} from "../api/ContestAPI";
+import {
+  ICreateProblem,
+  IEditProblem,
+  IStatisticDetailIDs,
+  IStatisticIDs,
+  ISubmitProblem,
+} from "../interface/ContestType";
 
 export const getAllProblemAction = createAsyncThunk(
   "getAllProblem",
@@ -34,6 +51,15 @@ export const getOneProblemAction = createAsyncThunk(
   }
 );
 
+export const getOneProblemAdminAction = createAsyncThunk(
+  "getOneProblemAdmin",
+  async (id: number) => {
+    const res = await getOneProblemAdminAPI(id);
+    console.log(res)
+    return res;
+  }
+);
+
 export const getProblemStatisticAction = createAsyncThunk(
   "getStatistic",
   async (data: IStatisticIDs) => {
@@ -46,6 +72,22 @@ export const getProblemStatisticDetailAction = createAsyncThunk(
   "getStatisticDetail",
   async (data: IStatisticDetailIDs) => {
     const res = await getStatisticDetailAPI(data);
+    return res;
+  }
+);
+
+export const createProblemAction = createAsyncThunk(
+  "createProblem",
+  async (data: ICreateProblem) => {
+    const res = await createProblemAPI(data);
+    return res;
+  }
+);
+
+export const editProblemAction = createAsyncThunk(
+  "editProblem",
+  async (data: IEditProblem) => {
+    const res = await editProblemAPI(data);
     return res;
   }
 );

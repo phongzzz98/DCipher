@@ -2,6 +2,7 @@ export interface IContestState {
   problems: IProblemItem[];
   problemsAdmin: IAdminProblemItem[];
   problem: IProblem;
+  problemAdmin: IAdminProblemItem;
   statistic: IStatistic[];
   statisticDetail: IStatisticDetail;
 }
@@ -38,6 +39,29 @@ export interface IProblem {
   input: string[];
   output: string[];
   rank: number;
+}
+
+export interface ICreateProblem {
+  user_id: number;
+  question: string;
+  title: string;
+  input: string;
+  output: string;
+  rank: number;
+  score: number;
+  content: string;   
+}
+
+export interface IEditProblem {
+  problem_id: number;
+  user_id: number;
+  question: string;
+  title: string;
+  input: string;
+  output: string;
+  rank: number;
+  score: number;
+  content: string;   
 }
 
 export interface ISubmitProblem {

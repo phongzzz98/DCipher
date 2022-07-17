@@ -1,0 +1,28 @@
+.create-contest-form-item{
+    font-family: 'SofiaProMedium';
+}
+.create-problem-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-problem-markdown-section {
+    width: 100%;
+    font-family: 'SofiaProRegular';
+}
+.dynamic-delete-button {
+    position: relative;
+    top: 4px;
+    margin: 0 8px;
+    color: #999;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .dynamic-delete-button:hover {
+    color: #777;
+  }
+  .dynamic-delete-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }

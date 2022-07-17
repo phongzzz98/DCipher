@@ -126,6 +126,7 @@ export const PostManager = () => {
                     pagination={{
                         pageSize: 8,
                     }}
+                    scroll={{ x: 1500 }}
                     loading={loading}
                     size='large'
                     bordered={true}
@@ -133,14 +134,14 @@ export const PostManager = () => {
                     sticky={true}
                     footer={defaultUserMngFooter}
                 >
-                    <Table.Column title="Tiêu đề" render={(post: IHomePost) => <span>{post.title}</span>} width="19%" />
+                    <Table.Column fixed='left' title="Tiêu đề" render={(post: IHomePost) => <span>{post.title}</span>} width="19%" />
                     <Table.Column title="Người tạo" className='icon-col' render={(post: IHomePost) => <span>{post.username}</span>} width="13%" />
                     <Table.Column title="Ngày tạo" className='icon-col' render={(post: IHomePost) => <span>{moment(post.created_at).format('DD/MM/YYYY')}</span>} width="15%" />
                     <Table.Column title="Trạng thái" className='icon-col' render={(post: IHomePost) => post.poststatus === 1 ? <span style={{ color: '#38c565' }}>Đã duyệt</span> : <span style={{ color: '#ff3448' }}>Chưa duyệt</span>} width="15%" />
                     <Table.Column title={<Tooltip placement='bottom' title='Lượt xem'><EyeFilled style={{ fontSize: '1.4em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.viewnumber}</span>} width="7%" />
                     <Table.Column title={<Tooltip placement='bottom' title='Lượt thích'><HeartFilled style={{ fontSize: '1.4em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.votenumber}</span>} width="7%" />
                     <Table.Column title={<Tooltip placement='bottom' title='Số bình luận'><MessageFilled style={{ fontSize: '1.3em' }} /></Tooltip>} className='icon-col' render={(post: IHomePost) => <span>{post.commentnumber}</span>} width="7%" />
-                    <Table.Column className="user-mng-action" title="Hành động" width="17%"
+                    <Table.Column fixed='right' className="user-mng-action" title="Hành động" width="10%"
                         render={(post: IHomePost) => (
                             <>
                                 {

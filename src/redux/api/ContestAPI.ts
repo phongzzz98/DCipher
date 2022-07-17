@@ -1,5 +1,11 @@
 import { axiosInstance } from "../../configs/axios";
-import { IStatisticDetailIDs, IStatisticIDs, ISubmitProblem } from "../interface/ContestType";
+import {
+  ICreateProblem,
+  IEditProblem,
+  IStatisticDetailIDs,
+  IStatisticIDs,
+  ISubmitProblem,
+} from "../interface/ContestType";
 
 export const getAllProblemAPI = async () => {
   try {
@@ -28,6 +34,51 @@ export const getOneProblemAPI = async (id: number) => {
   }
 };
 
+export const getOneProblemAdminAPI = async (id: number) => {
+  try {
+    const res = await axiosInstance.get(`/admin/problems/${id}`);
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const createProblemAPI = async (data: ICreateProblem) => {
+  try {
+    const res = await axiosInstance.post(`/problems`, {
+      user_id: data.user_id,
+      question: data.question,
+      title: data.title,
+      input: data.input,
+      output: data.output,
+      rank: data.rank,
+      score: data.score,
+      content: data.content
+    });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const editProblemAPI = async (data: IEditProblem) => {
+  try {
+    const res = await axiosInstance.put(`/problems/${data.problem_id}`, {
+      user_id: data.user_id,
+      question: data.question,
+      title: data.title,
+      input: data.input,
+      output: data.output,
+      rank: data.rank,
+      score: data.score,
+      content: data.content
+    });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
 export const deleteProblemAPI = async (id: number) => {
   try {
     const res = await axiosInstance.delete(`/problems/${id}`);
@@ -48,7 +99,9 @@ export const getProblemStatisticAPI = async (data: IStatisticIDs) => {
 
 export const getStatisticDetailAPI = async (data: IStatisticDetailIDs) => {
   try {
-    const res = await axiosInstance.get(`/compiledetails/${data.uid}/${data.cid}`);
+    const res = await axiosInstance.get(
+      `/compiledetails/${data.uid}/${data.cid}`
+    );
     return res.data;
   } catch (error: any) {
     return error.res.data;
@@ -61,11 +114,10 @@ export const submitProblemAPI = async (data: ISubmitProblem) => {
       user_id: data.user_id,
       problem_id: data.problem_id,
       code: data.code,
-      language: data.language
+      language: data.language,
     });
     return res.data;
   } catch (error: any) {
     return error.res.data;
   }
 };
-

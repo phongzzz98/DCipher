@@ -71,7 +71,7 @@ export const UserPage = () => {
             </div>
             <div className='main-info'>
                 <PublicProfileBlock userAbout={user.about} userDisplayname={user.displayname} userLink={user.linkSNS} />
-                <StatusBlock userPosts={user.post_created} commentNumber={user.number_of_comment} score={user.score} />
+                <StatusBlock userID={user.userid} userPosts={user.post_created} commentNumber={user.number_of_comment} score={user.score} />
                 <PublicFollowingBlock userFollow={user.user_follow} id={id!} selectedUser={user} />
             </div>
             <div className='user-posts-block'>

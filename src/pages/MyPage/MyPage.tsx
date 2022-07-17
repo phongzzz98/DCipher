@@ -54,7 +54,7 @@ export const MyPage = () => {
       </div>
       <div className='main-info'>
         <ProfileBlock userDetail={userDetails} />
-        <StatusBlock userPosts={userPosts} commentNumber={userComments.length} score={userDetails.score} />
+        <StatusBlock userID={user.id} userPosts={userPosts} commentNumber={userComments.length} score={userDetails.score} />
         <FollowingBlock userFollowing={userDetails.user_following} userFollow={userDetails.user_follow} />
       </div>
       <div className='user-posts-block'>

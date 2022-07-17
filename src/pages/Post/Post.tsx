@@ -33,7 +33,7 @@ export const Post = () => {
   const [followData, setFollowData] = useState<IFollowData>()
   const [visible, setVisible] = useState(false);
   const accessToken = useSelector(accessTokenSelector)
-  
+
   useEffect(() => {
     dispatch(getOnePostAction(id!))
   }, [dispatch, id])
@@ -105,6 +105,7 @@ export const Post = () => {
         content: value
       }).then(async () => {
         await dispatch(getOnePostAction(id!))
+        setValue('')
         setLoadingComment(false)
         notification.success({
           message: 'Đã đăng bình luận!'
@@ -183,7 +184,7 @@ export const Post = () => {
                     </div>
                     <div
                       className="user-popover-item"
-                    onClick={showDeleteConfirm}
+                      onClick={showDeleteConfirm}
                     >
                       <DeleteOutlined style={{ marginRight: 7, color: 'crimson' }} />
                       <span className="navbar-span" style={{ color: 'crimson' }}>Xóa bài viết</span>

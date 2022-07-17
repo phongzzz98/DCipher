@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getAllTagAction } from '../../../../redux/actions/TagAction';
 import { IUserPost } from '../../../../redux/interface/UserType';
+import { userInfoSelector } from '../../../../redux/reducers/AuthReducer';
 import { allTagSelector } from '../../../../redux/reducers/TagReducer';
 import { ApplicationDispatch } from '../../../../store/store';
 import { dynamicSort } from '../../../../utils/util';
@@ -14,6 +15,7 @@ interface IStatusBlockProps {
     userPosts: IUserPost[],
     commentNumber: number,
     score: number,
+    userID: number,
 }
 
 interface IDataList {
@@ -21,8 +23,9 @@ interface IDataList {
     value: number;
 }
 
-export const StatusBlock = ({ userPosts, commentNumber, score }: IStatusBlockProps) => {
+export const StatusBlock = ({ userPosts, commentNumber, score, userID }: IStatusBlockProps) => {
     const dispatch: ApplicationDispatch = useDispatch()
+    const user = useSelector(userInfoSelector)
     const navigate = useNavigate()
     const tagList = useSelector(allTagSelector);
     const cloneTagList = [...tagList]
@@ -103,7 +106,11 @@ export const StatusBlock = ({ userPosts, commentNumber, score }: IStatusBlockPro
                             </span>
                         }
                     >
-                        <Button onClick={() => navigate('/create')} shape='round' type="primary">Tạo bài viết</Button>
+                        {
+                            user.id === userID ?
+                            <Button onClick={() => navigate('/create')} shape='round' type="primary">Tạo bài viết</Button> :
+                            null
+                        }
                     </Empty>
             }
         </div>

@@ -197,7 +197,7 @@ export const UserManager = () => {
                     <Table.Column className="user-mng-action" title="Hành động" width="15%"
                         render={(user: IUserAdmin) => (
                             <>
-                                <EyeOutlined className='icon-view' />
+                                <EyeOutlined className='icon-view' onClick={() => navigate(`/user/${user.id}`)} />
                                 <EditOutlined className="icon-edit" onClick={() => showEditModal(user.id)} />
                                 <DeleteFilled twoToneColor="#eb2f3f" className="icon-remove" onClick={() => showDeleteConfirm(user.id)} />
                             </>

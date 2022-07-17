@@ -12,6 +12,7 @@ import { userInfoSelector } from '../../../../redux/reducers/AuthReducer'
 import { EditCommentModal } from '../EditCommentModal/EditCommentModal'
 import { ApplicationDispatch } from '../../../../store/store'
 import { deleteCommentAction, getOnePostAction } from '../../../../redux/actions/PostAction'
+import { useNavigate } from 'react-router-dom'
 
 interface CommentItemProps {
   comment: IComment;
@@ -20,6 +21,7 @@ interface CommentItemProps {
 
 export const CommentItem = ({ comment, postID }: CommentItemProps) => {
   const dispatch: ApplicationDispatch = useDispatch()
+  const navigate = useNavigate()
   const [voted, setVoted] = useState(false)
   const [editModalVisible, setEditModalVisible] = useState(false)
   const user = useSelector(userInfoSelector)
@@ -76,7 +78,7 @@ export const CommentItem = ({ comment, postID }: CommentItemProps) => {
   return (
     <div>
       <Comment
-        author={<span className='comment-user'>{comment.commentusername}</span>}
+        author={<span onClick={()=>{ navigate(`/user/${comment.commentuserid}`)}} className='comment-user'>{comment.commentusername}</span>}
         avatar={<Avatar src={comment.avatarImage ? comment.avatarImage : defaultAvatar} alt="Ảnh đại diện" />}
         content={
           <div className="comment-main" data-color-mode="light">
