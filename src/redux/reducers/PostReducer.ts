@@ -9,6 +9,7 @@ import {
   deletePostAction,
   editCommentAction,
   editPostAction,
+  getAllCommentAction,
   getAllPostAction,
   getMostVotedPostAction,
   getOnePostAction,
@@ -61,6 +62,7 @@ const initialState: IPostState = {
       votenumber: 0,
     },
   ],
+  comments: [],
 };
 
 export const postSlice = createSlice({
@@ -169,6 +171,15 @@ export const postSlice = createSlice({
         });
       });
     builder
+      .addCase(getAllCommentAction.fulfilled, (state, action) => {
+        state.comments = action.payload;
+      })
+      .addCase(getAllCommentAction.rejected, () => {
+        notification.error({
+          message: "Get all comment fail!",
+        });
+      });
+    builder
       .addCase(editCommentAction.fulfilled, () => {
         notification.success({
           message: "Sửa bình luận thành công!",
@@ -211,6 +222,10 @@ export const mostVotedPostsSelector = createSelector(
 export const searchedPostsSelector = createSelector(
   selectSelf,
   (state) => state.searchedPosts
+);
+export const allCommentSelector = createSelector(
+  selectSelf,
+  (state) => state.comments
 );
 
 export default postSlice.reducer;

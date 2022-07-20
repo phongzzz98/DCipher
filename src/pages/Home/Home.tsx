@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import defaultAvatar from '../../assets/images/BlankAvatar.jpg'
 import { List, Avatar, Space, Tag, Tooltip } from 'antd';
 import { MessageOutlined, HeartOutlined, EyeOutlined } from '@ant-design/icons';
@@ -15,14 +15,20 @@ import 'moment/locale/vi'
 export const Home = () => {
   const dispatch: ApplicationDispatch = useDispatch()
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   moment.locale('vi')
   useEffect(() => {
-    dispatch(getAllPostAction());
-    dispatch(getMostVotedPostAction());
+    const fetchData = async () => {
+      setLoading(true)
+      await dispatch(getAllPostAction());
+      await dispatch(getMostVotedPostAction());
+      setLoading(false)
+    }
+    fetchData()
   }, [dispatch])
   const postList: IHomePost[] = useSelector(allPostSelector);
   const clonePostList = [...postList]
-  const tempList = clonePostList.filter((post)=> post.poststatus === 1)
+  const tempList = clonePostList.filter((post) => post.poststatus === 1)
   const mostVotePostList: IHomePost[] = useSelector(mostVotedPostsSelector);
 
   const IconText = ({ icon, text }: any) => (
@@ -37,49 +43,55 @@ export const Home = () => {
       <div className='ramdom-list'>
         <h1>Trang chủ</h1>
         <List
+          loading={loading}
           itemLayout="vertical"
           size="large"
           pagination={{
             onChange: page => {
               console.log(page);
             },
-            pageSize: 8,
-            position: 'bottom',
+            position: 'both',
+            pageSizeOptions: [10, 25, 50, 100],
+            showSizeChanger: true,
+            responsive: true,
           }}
           dataSource={tempList}
           renderItem={item => (
             <List.Item
               key={item.postid}
+              className='home-list-item-container'
             >
-              <List.Item.Meta
-                // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                title={<a style={{wordBreak: 'break-all'}} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
-                description={item.content.slice(0, 500).concat('...')}
-              />
-              <div className='avatar-and-tags'>
-                <div className='home-avatar'>
-                  <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar } />
-                  <span className='post-username'>{item.username}</span>
-                </div>
-                <div className='home-tags'>
-                  {item.posttag.map((tag) => <Tag className='tag' color={tag.colorcode}>{tag.tagcontent}</Tag>)}
-                </div>
-              </div>
-              <div className='actions-and-time'>
-                <div className='home-posttime'>
-                  <Tooltip placement='right' title={moment(item.created_at).format('DD/MM/YYYY --- HH:mm:ss')}>
-                    <span className='home-time-text'>{moment(item.created_at).fromNow()}</span>
-                  </Tooltip>
-                </div>
-                <div className='home-actions'>
-                  <div className='action'>
-                    <IconText icon={MessageOutlined} text={item.commentnumber} key="list-vertical-message" />
+              <div className='home-list-item'>
+                <List.Item.Meta
+                  // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                  title={<a style={{ wordBreak: 'break-all' }} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
+                  description={item.content.slice(0, 500).concat('...')}
+                />
+                <div className='avatar-and-tags'>
+                  <div className='home-avatar'>
+                    <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar} />
+                    <span className='post-username'>{item.username}</span>
                   </div>
-                  <div className='action'>
-                    <IconText icon={HeartOutlined} text={item.votenumber} key="list-vertical-star" />
+                  <div className='home-tags'>
+                    {item.posttag.map((tag) => <Tag className='tag' color={tag.colorcode}>{tag.tagcontent}</Tag>)}
                   </div>
-                  <div className='action'>
-                    <IconText icon={EyeOutlined} text={item.viewnumber} key="list-vertical-eye" />
+                </div>
+                <div className='actions-and-time'>
+                  <div className='home-posttime'>
+                    <Tooltip placement='right' title={moment(item.created_at).format('DD/MM/YYYY --- HH:mm:ss')}>
+                      <span className='home-time-text'>{moment(item.created_at).fromNow()}</span>
+                    </Tooltip>
+                  </div>
+                  <div className='home-actions'>
+                    <div className='action'>
+                      <IconText icon={MessageOutlined} text={item.commentnumber} key="list-vertical-message" />
+                    </div>
+                    <div className='action'>
+                      <IconText icon={HeartOutlined} text={item.votenumber} key="list-vertical-star" />
+                    </div>
+                    <div className='action'>
+                      <IconText icon={EyeOutlined} text={item.viewnumber} key="list-vertical-eye" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -101,11 +113,11 @@ export const Home = () => {
             >
               <List.Item.Meta
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                title={<a style={{wordBreak: 'break-all'}} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
+                title={<a style={{ wordBreak: 'break-all' }} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
               />
               <div className='avatar-and-tags'>
                 <div className='home-avatar'>
-                  <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar } />
+                  <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar} />
                   <span className='post-username'>{item.username}</span>
                 </div>
                 <div className='home-actions'>

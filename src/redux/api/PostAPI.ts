@@ -121,6 +121,15 @@ export const searchPostByTagAPI = async (value: string) => {
   }
 };
 
+export const getAllCommentAPI = async () => {
+  try {
+    const res = await axiosInstance.get(`/comment`);
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
 export const editCommentAPI = async (data: IEditComment) => {
   try {
     const res = await axiosInstance.put(`/comment/${data.id}`, {

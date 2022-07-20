@@ -40,6 +40,7 @@ export const CodeEditor = ({ userCode, setUserCode, userCodeLang, setUserCodeLan
     const languages = [
         { value: "c|c", label: "C" },
         { value: "c_cpp|cpp", label: "C++" },
+        { value: "csharp|csharp", label: "C#" },
         { value: "python|python", label: "Python" },
         { value: "java|java", label: "Java" },
         { value: "javascript|nodejs", label: "Javascript" },

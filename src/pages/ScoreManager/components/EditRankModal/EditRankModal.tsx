@@ -1,6 +1,7 @@
-import { Modal, Form, Input, InputNumber, notification } from 'antd'
+import { Modal, Form, Input, InputNumber, notification, Button, Popover, Tag } from 'antd'
 import { useForm } from 'antd/lib/form/Form';
 import React, { useEffect, useState } from 'react'
+import { ChromePicker } from 'react-color';
 import { useDispatch, useSelector } from 'react-redux';
 import { editRankAction, getAllRankAction, getOneRankAction } from '../../../../redux/actions/AchievementAction';
 import { IEditRank } from '../../../../redux/interface/AchievementType';
@@ -24,6 +25,7 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
     const dispatch: ApplicationDispatch = useDispatch()
     const [form] = useForm();
     const [confirmLoading, setConfirmLoading] = useState(false);
+    const [colorPicker, setColorPicker] = useState('#ffffff')
     const selectedRank = useSelector(oneRankSelector)
     const [currentField, setCurrentField] = useState<{ name: string, value: any }[]>(initialField)
 
@@ -38,6 +40,7 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
                 { name: 'editRankAbout', value: selectedRank.about },
                 { name: 'editRankScore', value: selectedRank.score },
             ])
+            setColorPicker(selectedRank.colorcode ? selectedRank.colorcode : '#fff')
         }
         else
             setCurrentField(initialField)
@@ -46,6 +49,12 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
     const handleCancel = () => {
         setEditModalVisible(false);
     };
+
+    const pickerPopover = (
+        <div>
+            <ChromePicker color={colorPicker} disableAlpha={true} onChange={(value) => setColorPicker(value.hex)} />
+        </div>
+    );
 
     const handleOk = () => {
         form.validateFields().then(values => {
@@ -63,6 +72,7 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
                         about: values.editRankAbout,
                         rank: values.editRankName,
                         score: values.editRankScore,
+                        colorcode: colorPicker
                     }
                     await dispatch(editRankAction(newRank))
                     await dispatch(getOneRankAction(rankID))
@@ -96,6 +106,20 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
                 </Form.Item>
                 <Form.Item className='edit-rank-form-item' label="Điểm thấp nhất" name='editRankScore' rules={[{ required: true, message: 'Hãy nhập số điểm!' }]}>
                     <InputNumber defaultValue={0} min={0} size="middle" /*onChange={(e) => setTagName(e.target.value)}*/ />
+                </Form.Item>
+                <Form.Item className='create-rank-form-item' label="Mã màu" name='editRankColor'>
+                    <Input
+                        value={colorPicker || ""}
+                        size='middle'
+                        onChange={(e) => setColorPicker(e.target.value)}
+                        suffix={
+                            <Popover trigger={"click"} placement='topRight' content={pickerPopover}>
+                                <Button style={{ background: colorPicker }}> </Button>
+                            </Popover>
+                        }
+                    />
+                    <span>Preview: </span>
+                    <Tag style={{ paddingLeft: 5, paddingRight: 5, borderRadius: '2em', marginTop: 5 }} color={colorPicker === '#ffffff' ? '' : colorPicker}>{colorPicker}</Tag>
                 </Form.Item>
             </Form>
         </Modal>

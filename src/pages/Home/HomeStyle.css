@@ -5,6 +5,14 @@
     width: 100%;
     position: relative;
 }
+.home-list-item-container {
+    border: none !important;
+}
+.home-list-item{
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+}
 .ramdom-list{
     width: 70%;
     padding-right: 20px;
@@ -60,7 +68,11 @@
     margin-top: 7px;
 }
 .home-avatar{
-    width: 400px;
+    max-width: 400px;
+    /* border: 1px solid black; */
+    border-radius: 2em;
+    padding-right: 15px;
+    box-shadow: -3px 0 5px 0 rgb(0 0 0 / 20%);
 }
 .post-username{
     font-family: 'SofiaProRegular';

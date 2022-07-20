@@ -40,6 +40,7 @@ export interface IPostState {
   mostVotedPosts: IHomePost[];
   searchedPosts: IHomePost[];
   singlePost: IPost[];
+  comments: IAdminComment[]
 }
 
 export type IHomePost = {
@@ -113,6 +114,18 @@ export interface IComment {
   user_vote_comment: number[];
   created_at: string;
   updated_at: string;
+}
+
+export interface IAdminComment {
+  id: number;
+  userid: number;
+  postid: number;
+  content: string;
+  votenumber: number;
+  created_at: string;
+  updated_at: string;
+  posttitle: string;
+  username: string;
 }
 
 export interface IEditComment {

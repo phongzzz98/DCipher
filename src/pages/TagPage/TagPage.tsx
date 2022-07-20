@@ -37,7 +37,7 @@ export const TagPage = () => {
                 <i style={{fontSize: 24, marginRight: 10}} className={tag.icon_class}></i>
                 <span style={{fontSize: 24}}>{tag.content}</span>
                 <p>{tag.description}</p>
-                <span>{tag.postusetag}</span>
+                <span>{tag.postusetag} bài viết</span>
             </div>
           </Card.Grid>)}
         </Card>

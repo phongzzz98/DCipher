@@ -26,6 +26,7 @@ import { Contest } from './pages/Contest/Contest';
 import { Problem } from './pages/Problem/Problem';
 import { ProblemDetail } from './pages/ProblemDetail/ProblemDetail';
 import { ContestManager } from './pages/ContestManager/ContestManager';
+import { CommentManager } from './pages/CommentManager/CommentManager';
 
 const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((module) => ({
   default: module.MainLayout,
@@ -71,6 +72,7 @@ function App() {
                 <Route path='/postMng' element={<PostManager />} />
                 <Route path='/scoreMng' element={<ScoreManager />} />
                 <Route path='/contestMng' element={<ContestManager />} />
+                <Route path='/commentMng' element={<CommentManager />} />
               </Route>
             </Route>
             <Route path='/login' element={<Authen />} />

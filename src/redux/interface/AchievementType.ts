@@ -10,12 +10,14 @@ export interface IRank {
   rank: string;
   created_at: string;
   updated_at: string;
+  colorcode: string;
 }
 
 export interface ICreateRank {
   score: number;
   about: string;
   rank: number;
+  colorcode: string;
 }
 
 export interface IEditRank {
@@ -23,4 +25,5 @@ export interface IEditRank {
   score: number;
   about: string;
   rank: number;
+  colorcode: string;
 }

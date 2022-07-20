@@ -6,6 +6,7 @@ import {
   deletePostAPI,
   editCommentAPI,
   editPostAPI,
+  getAllCommentAPI,
   getAllPostAPI,
   getMostVotedPostAPI,
   getOnePostAPI,
@@ -92,6 +93,14 @@ export const searchPostByTagAction = createAsyncThunk(
   "searchPostByTag",
   async (value: string) => {
     const res = await searchPostByTagAPI(value);
+    return res;
+  }
+);
+
+export const getAllCommentAction = createAsyncThunk(
+  "getAllComment",
+  async () => {
+    const res = await getAllCommentAPI();
     return res;
   }
 );

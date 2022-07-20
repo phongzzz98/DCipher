@@ -91,7 +91,7 @@ export const CreateUserModal = ({ createModalVisible, setCreateModalVisible }: C
                 </Form.Item>
                 <Form.Item className='create-user-form-item' label="Phân quyền" name='createUserRole'>
                     <Radio.Group name="radiogroup" defaultValue={1} onChange={(e) => setRoleSelect(e.target.value)}>
-                        <Radio value={0}>Admin</Radio>
+                        <Radio value={0}>Quản trị viên</Radio>
                         <Radio value={1}>Thành viên</Radio>
                     </Radio.Group>
                 </Form.Item>

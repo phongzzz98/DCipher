@@ -19,6 +19,7 @@ const initialState: IAchievementState = {
     updated_at: "",
     rank: "",
     score: 0,
+    colorcode: "",
   },
 };
 

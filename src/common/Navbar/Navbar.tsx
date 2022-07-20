@@ -5,14 +5,15 @@ import {
     TagsOutlined,
     UserOutlined,
     TeamOutlined,
-    AppstoreOutlined,
+    DashboardOutlined,
     TagOutlined,
     FileTextOutlined,
     SmileOutlined,
     LockOutlined,
     TrophyOutlined,
     LaptopOutlined,
-    ContainerOutlined
+    ContainerOutlined,
+    CommentOutlined
 } from "@ant-design/icons";
 import { Avatar, Menu, Popover } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -138,7 +139,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                     user.role === 0 && accessToken ?
                         <Menu.SubMenu
                             key={'6'}
-                            icon={<AppstoreOutlined />}
+                            icon={<DashboardOutlined />}
                             title={
                                 <span className="navbar-span">Admin</span>
                             }
@@ -167,6 +168,11 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                             <Menu.Item key="11" icon={<ContainerOutlined />}>
                                 <Link to={'/contestMng'}>
                                     <span className="navbar-span">Quản lý Contest</span>
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="12" icon={<CommentOutlined />}>
+                                <Link to={'/commentMng'}>
+                                    <span className="navbar-span">Quản lý bình luận</span>
                                 </Link>
                             </Menu.Item>
                         </Menu.SubMenu> : null
