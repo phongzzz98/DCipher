@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import defaultAvatar from '../../assets/images/BlankAvatar.jpg'
-import { List, Avatar, Space, Tag, Tooltip } from 'antd';
+import { List, Avatar, Space, Tag, Tooltip, Col, Row } from 'antd';
 import { MessageOutlined, HeartOutlined, EyeOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllPostAction, getMostVotedPostAction } from '../../redux/actions/PostAction';
+import { getAllPostAction, getMostVotedPostAction, searchPostByTagAction } from '../../redux/actions/PostAction';
 import { ApplicationDispatch } from '../../store/store';
 import { allPostSelector, mostVotedPostsSelector } from '../../redux/reducers/PostReducer';
 import './HomeStyle.css'
@@ -11,22 +11,29 @@ import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { IHomePost } from '../../redux/interface/PostType';
 import 'moment/locale/vi'
+import { getAllRankAction } from '../../redux/actions/AchievementAction';
+import { allRankSelector } from '../../redux/reducers/AchievementReducer';
 
 export const Home = () => {
   const dispatch: ApplicationDispatch = useDispatch()
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
+
   moment.locale('vi')
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
       await dispatch(getAllPostAction());
       await dispatch(getMostVotedPostAction());
+      // await dispatch(getAllRankAction())
       setLoading(false)
     }
     fetchData()
   }, [dispatch])
+
   const postList: IHomePost[] = useSelector(allPostSelector);
+  const rankList = useSelector(allRankSelector)
+  console.log(rankList);
   const clonePostList = [...postList]
   const tempList = clonePostList.filter((post) => post.poststatus === 1)
   const mostVotePostList: IHomePost[] = useSelector(mostVotedPostsSelector);
@@ -37,6 +44,11 @@ export const Home = () => {
       {text}
     </Space>
   );
+
+  const onClickTag = async (value: string) => {
+    await dispatch(searchPostByTagAction(value))
+    navigate('/search')
+  }
 
   return (
     <div className='home-container'>
@@ -68,13 +80,19 @@ export const Home = () => {
                   description={item.content.slice(0, 500).concat('...')}
                 />
                 <div className='avatar-and-tags'>
-                  <div className='home-avatar'>
-                    <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar} />
-                    <span className='post-username'>{item.username}</span>
-                  </div>
-                  <div className='home-tags'>
-                    {item.posttag.map((tag) => <Tag className='tag' color={tag.colorcode}>{tag.tagcontent}</Tag>)}
-                  </div>
+                  <Row gutter={[0, 15]} style={{width: '100%'}}>
+                    <Col xs={24} md={24} lg={24} xl={6} >
+                      <div className='home-avatar'>
+                        <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar} />
+                        <span className='post-username'>{item.username}</span>
+                      </div>
+                    </Col>
+                    <Col className='home-tags' xs={24} md={24} lg={24} xl={18} >
+                      <div style={{width: '100%'}} >
+                        {item.posttag.map((tag) => <Tag onClick={() => onClickTag(tag.tagcontent)} className='tag' color={tag.colorcode}>{tag.tagcontent}</Tag>)}
+                      </div>
+                    </Col>
+                  </Row>
                 </div>
                 <div className='actions-and-time'>
                   <div className='home-posttime'>

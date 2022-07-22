@@ -6,7 +6,7 @@ import { ApplicationDispatch } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteRankAction, getAllRankAction } from '../../redux/actions/AchievementAction';
 import { allRankSelector } from '../../redux/reducers/AchievementReducer';
-import { dynamicSort } from '../../utils/util';
+import { dynamicSort, inRange } from '../../utils/util';
 import { IRank } from '../../redux/interface/AchievementType';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +18,7 @@ export const ScoreManager = () => {
     const navigate = useNavigate()
     const rankList = useSelector(allRankSelector)
     const [cloneRankList, setcloneRankList] = useState([...rankList])
+    cloneRankList.sort(dynamicSort('-min_score'))
     const [createModalVisible, setCreateModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [selectedRankID, setSelectedRankID] = useState(0)
@@ -76,7 +77,10 @@ export const ScoreManager = () => {
             },
         });
     };
-
+    console.log(
+        // rankList.some((rank)=> inRange(77,rank.min_score,rank.max_score))
+        rankList.find((rank)=>inRange(12,rank.min_score,rank.max_score))
+    )
     return (
         <div className='score-manager-page'>
             <h1>Quản lý xếp hạng</h1>
@@ -97,7 +101,8 @@ export const ScoreManager = () => {
                 <Table className="post-table"
                     dataSource={cloneRankList}
                     pagination={{
-                        pageSize: 8,
+                        pageSizeOptions: [5, 10, 20, 50],
+                        showSizeChanger: true
                     }}
                     loading={loading}
                     size='large'
@@ -108,7 +113,8 @@ export const ScoreManager = () => {
                 >
                     <Table.Column title="Tên hạng" render={(rank: IRank) => <span>{rank.rank}</span>} width="15%" />
                     <Table.Column title="Nội dung" render={(rank: IRank) => <span>{rank.about}</span>} width="35%" />
-                    <Table.Column title="Điểm thấp nhất" className='icon-col' render={(rank: IRank) => <span>{rank.score}</span>} width="15%" />
+                    <Table.Column title="Điểm thấp nhất" className='icon-col' render={(rank: IRank) => <span>{rank.min_score}</span>} width="15%" />
+                    <Table.Column title="Điểm cao nhất" className='icon-col' render={(rank: IRank) => <span>{rank.max_score}</span>} width="15%" />
                     <Table.Column title="Ngày tạo" className='icon-col' render={(rank: IRank) => <span>{moment(rank.created_at).format('DD/MM/YYYY')}</span>} width="15%" />
                     <Table.Column className="user-mng-action" title="Hành động" width="15%"
                         render={(rank: IRank) => (

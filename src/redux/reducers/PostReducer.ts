@@ -82,7 +82,8 @@ export const postSlice = createSlice({
     builder
       .addCase(createPostAction.fulfilled, () => {
         notification.success({
-          message: "Tạo bài viết thành công!",
+          message: "Đã tạo bài viết! Xin hãy chờ duyệt",
+          duration: 4
         });
       })
       .addCase(createPostAction.rejected, () => {

@@ -20,6 +20,8 @@ const initialState: IAchievementState = {
     rank: "",
     score: 0,
     colorcode: "",
+    max_score: 0,
+    min_score: 0,
   },
 };
 

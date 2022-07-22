@@ -7,6 +7,7 @@ import { editRankAction, getAllRankAction, getOneRankAction } from '../../../../
 import { IEditRank } from '../../../../redux/interface/AchievementType';
 import { oneRankSelector } from '../../../../redux/reducers/AchievementReducer';
 import { ApplicationDispatch } from '../../../../store/store';
+import { validateHexString } from '../../../../utils/util';
 import './EditRankModalStyle.css'
 
 interface EditRankModalProps {
@@ -38,7 +39,8 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
             setCurrentField([
                 { name: 'editRankName', value: selectedRank.rank },
                 { name: 'editRankAbout', value: selectedRank.about },
-                { name: 'editRankScore', value: selectedRank.score },
+                { name: 'editRankLowScore', value: selectedRank.min_score },
+                { name: 'editRankHighScore', value: selectedRank.max_score },
             ])
             setColorPicker(selectedRank.colorcode ? selectedRank.colorcode : '#fff')
         }
@@ -64,6 +66,12 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
                     message: "Vui lòng nhập các trường còn thiếu!"
                 })
             }
+            else if(!validateHexString(colorPicker)){
+                notification.error({
+                  placement: 'bottomRight',
+                  message: "Mã màu sai quy định, vui nhập mã HEX!"
+                })
+              }
             else {
                 setConfirmLoading(true);
                 setTimeout(async () => {
@@ -71,8 +79,10 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
                         id: rankID,
                         about: values.editRankAbout,
                         rank: values.editRankName,
-                        score: values.editRankScore,
-                        colorcode: colorPicker
+                        min_score: values.editRankLowScore,
+                        max_score: values.editRankHighScore,
+                        colorcode: colorPicker,
+                        score: values.editRankLowScore
                     }
                     await dispatch(editRankAction(newRank))
                     await dispatch(getOneRankAction(rankID))
@@ -104,7 +114,10 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
                 <Form.Item className='edit-rank-form-item' label="Mô tả" name='editRankAbout' rules={[{ required: true, message: 'Hãy nhập mô tả!' }]}>
                     <Input.TextArea size="middle" />
                 </Form.Item>
-                <Form.Item className='edit-rank-form-item' label="Điểm thấp nhất" name='editRankScore' rules={[{ required: true, message: 'Hãy nhập số điểm!' }]}>
+                <Form.Item className='edit-rank-form-item' label="Điểm thấp nhất" name='editRankLowScore' rules={[{ required: true, message: 'Hãy nhập số điểm!' }]}>
+                    <InputNumber defaultValue={0} min={0} size="middle" /*onChange={(e) => setTagName(e.target.value)}*/ />
+                </Form.Item>
+                <Form.Item className='edit-rank-form-item' label="Điểm cao nhất" name='editRankHighScore' rules={[{ required: true, message: 'Hãy nhập số điểm!' }]}>
                     <InputNumber defaultValue={0} min={0} size="middle" /*onChange={(e) => setTagName(e.target.value)}*/ />
                 </Form.Item>
                 <Form.Item className='create-rank-form-item' label="Mã màu" name='editRankColor'>

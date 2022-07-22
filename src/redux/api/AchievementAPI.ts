@@ -22,10 +22,12 @@ export const getOneRankAPI = async (id: number) => {
 export const createRankAPI = async (data: ICreateRank) => {
   try {
     const res = await axiosInstance.post(`/score`, {
-      score: data.score,
+      min_score: data.min_score,
+      max_score: data.max_score,
       about: data.about,
       rank: data.rank,
-      colorcode: data.colorcode
+      colorcode: data.colorcode,
+      score: data.min_score,
     });
     return res.data;
   } catch (error: any) {
@@ -36,10 +38,12 @@ export const createRankAPI = async (data: ICreateRank) => {
 export const editRankAPI = async (data: IEditRank) => {
   try {
     const res = await axiosInstance.put(`/score/${data.id}`, {
-      score: data.score,
+      min_score: data.min_score,
+      max_score: data.max_score,
       about: data.about,
       rank: data.rank,
-      colorcode: data.colorcode
+      colorcode: data.colorcode,
+      score: data.min_score,
     });
     return res.data;
   } catch (error: any) {

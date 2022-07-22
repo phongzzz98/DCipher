@@ -1,5 +1,5 @@
-import { Avatar, Button, Input, List, Popover, Tooltip } from 'antd'
-import { MenuUnfoldOutlined, MenuFoldOutlined, MoreOutlined, PlusCircleOutlined, BellFilled, SmileOutlined } from '@ant-design/icons';
+import { Avatar, Button, Input, List, Popover, Select, Tooltip } from 'antd'
+import { MenuUnfoldOutlined, MenuFoldOutlined, SwapOutlined, MoreOutlined, PlusCircleOutlined, BellFilled, SmileOutlined } from '@ant-design/icons';
 import './HeaderStyle.css'
 import logo from '../../assets/svg/dclogo.svg'
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,6 +11,9 @@ import { ApplicationDispatch } from '../../store/store';
 import { searchPostAction, searchPostByTagAction } from '../../redux/actions/PostAction';
 import { getNotificationAction } from '../../redux/actions/UserAction';
 import { notificationSelector } from '../../redux/reducers/UserReducer';
+import { getAllTagAction } from '../../redux/actions/TagAction';
+import { dynamicSort } from '../../utils/util';
+import { allTagSelector } from '../../redux/reducers/TagReducer';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -26,6 +29,15 @@ export const Header = (props: HeaderProps) => {
     const notifications = useSelector(notificationSelector)
     const [loading, setLoading] = useState(false)
     const [notiNumber, setnotiNumber] = useState(0)
+    const [searchModeSwitch, setSearchModeSwitch] = useState(false)
+    const tagList = useSelector(allTagSelector);
+    let cloneTagList = [...tagList]
+    cloneTagList.sort(dynamicSort('content'))
+    const [searchTags, setSearchTags] = useState<string[]>([])
+
+    useEffect(() => {
+        dispatch(getAllTagAction())
+    }, [dispatch])
 
     useEffect(() => {
         if (user.id !== 0) {
@@ -55,7 +67,7 @@ export const Header = (props: HeaderProps) => {
                     <List.Item.Meta
                         avatar=
                         {
-                             <SmileOutlined style={{ fontSize: '1.3em' }} />
+                            <SmileOutlined style={{ fontSize: '1.3em' }} />
                         }
                         // eslint-disable-next-line jsx-a11y/anchor-is-valid
                         title={<a style={{ wordBreak: 'break-all', fontSize: '1em' }} /*onClick={() => navigate(`/problem/${problem.problem_id}`)}*/>{noti.content}</a>}
@@ -72,11 +84,22 @@ export const Header = (props: HeaderProps) => {
             })
     }
 
+    const handleChangeMultipleTag = (value: string[]) => {
+        console.log(value);
+        setSearchTags(value)
+    }
+
+    const handleClickSearchByTag = async () => {
+        const tagsToSearch = searchTags.join(',')
+        await dispatch(searchPostByTagAction(tagsToSearch))
+        navigate('/search')
+    }
+
     const getNotification = (id: number) => {
         dispatch(getNotificationAction(id))
         setnotiNumber(0)
     }
-    console.log(user)
+    console.log(searchTags)
     return (
         <div className="header-app">
             <div className='header-main'>
@@ -95,13 +118,34 @@ export const Header = (props: HeaderProps) => {
                 <span className={!isNavbarOpen ? "header-logo-start-to-off logo-inactive" : "header-logo logo-active"}>DCipher</span>
             </div>
             <div className='search-bar'>
-                <Input.Search
-                    placeholder="input search text"
-                    allowClear
-                    enterButton="Tìm kiếm"
-                    size="middle"
-                    onSearch={value => searchPost(value)}
-                />
+                <Tooltip title={!searchModeSwitch ? 'Đổi sang tìm theo thẻ' : 'Đổi sang tìm theo tên'}>
+                    <SwapOutlined className='swap-icon' rotate={searchModeSwitch ? 90 : 180} onClick={() => setSearchModeSwitch(!searchModeSwitch)} />
+                </Tooltip>
+                {
+                    searchModeSwitch ?
+                        <>
+                            <Select
+                                mode="multiple"
+                                allowClear
+                                style={{ width: '100%' }}
+                                placeholder="Chọn các thẻ"
+                                onChange={handleChangeMultipleTag}
+                                getPopupContainer={trigger => trigger.parentNode}
+                            >
+                                {cloneTagList.map((tag) => <Select.Option key={tag.content}>{tag.content}</Select.Option>)}
+                            </Select>
+                            <Button type='primary' onClick={handleClickSearchByTag} >Tìm kiếm</Button>
+                        </>
+                        :
+                        <Input.Search
+                            placeholder="Tìm theo tên"
+                            allowClear
+                            enterButton="Tìm kiếm"
+                            size="middle"
+                            onSearch={value => searchPost(value)}
+                        />
+
+                }
             </div>
             <div className='header-actions'>
                 {!accessToken ?

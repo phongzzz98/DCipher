@@ -1,3 +1,13 @@
-.search-list{
+.search-list {
     width: 100%;
+}
+
+.search-list-item-container {
+    border: none !important;
+}
+
+.search-list-item {
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
 }

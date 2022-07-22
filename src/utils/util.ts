@@ -28,3 +28,7 @@ export const groupBy = (xs: any, key: any) => {
     return rv;
   }, {});
 };
+
+export const inRange = (x: number, min: number, max: number) => {
+  return (x - min) * (x - max) <= 0;
+};

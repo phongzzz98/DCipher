@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { createRankAction, getAllRankAction } from '../../../../redux/actions/AchievementAction';
 import { ICreateRank } from '../../../../redux/interface/AchievementType';
 import { ApplicationDispatch } from '../../../../store/store';
+import { validateHexString } from '../../../../utils/util';
 import './CreateRankModalStyle.css'
 
 interface CreateRankModalProps {
@@ -38,14 +39,22 @@ export const CreateRankModal = ({ createModalVisible, setCreateModalVisible }: C
                     message: "Vui lòng nhập các trường còn thiếu!"
                 })
             }
+            else if(!validateHexString(colorPicker)){
+                notification.error({
+                  placement: 'bottomRight',
+                  message: "Mã màu sai quy định, vui nhập mã HEX!"
+                })
+              }
             else {
                 setConfirmLoading(true);
                 setTimeout(async () => {
                     const newRank: ICreateRank = {
                         about: values.createRankAbout,
                         rank: values.createRankName,
-                        score: values.createRankScore,
+                        min_score: values.createRankLowScore,
+                        max_score: values.createRankHighScore,
                         colorcode: colorPicker,
+                        score: values.createRankLowScore,
                     }
                     await dispatch(createRankAction(newRank))
                     await dispatch(getAllRankAction())
@@ -76,7 +85,10 @@ export const CreateRankModal = ({ createModalVisible, setCreateModalVisible }: C
                 <Form.Item className='create-rank-form-item' label="Mô tả" name='createRankAbout' rules={[{ required: true, message: 'Hãy nhập mô tả!' }]}>
                     <Input.TextArea size="middle" />
                 </Form.Item>
-                <Form.Item className='create-rank-form-item' label="Điểm thấp nhất" name='createRankScore' rules={[{ required: true, message: 'Hãy nhập số điểm!' }]}>
+                <Form.Item className='create-rank-form-item' label="Điểm thấp nhất" name='createRankLowScore' rules={[{ required: true, message: 'Hãy nhập số điểm!' }]}>
+                    <InputNumber defaultValue={0} min={0} size="middle" /*onChange={(e) => setTagName(e.target.value)}*/ />
+                </Form.Item>
+                <Form.Item className='create-rank-form-item' label="Điểm cao nhất" name='createRankHighScore' rules={[{ required: true, message: 'Hãy nhập số điểm!' }]}>
                     <InputNumber defaultValue={0} min={0} size="middle" /*onChange={(e) => setTagName(e.target.value)}*/ />
                 </Form.Item>
                 <Form.Item className='create-rank-form-item' label="Mã màu" name='createRankColor'>
