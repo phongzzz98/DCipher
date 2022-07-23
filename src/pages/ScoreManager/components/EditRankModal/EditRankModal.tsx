@@ -4,16 +4,17 @@ import React, { useEffect, useState } from 'react'
 import { ChromePicker } from 'react-color';
 import { useDispatch, useSelector } from 'react-redux';
 import { editRankAction, getAllRankAction, getOneRankAction } from '../../../../redux/actions/AchievementAction';
-import { IEditRank } from '../../../../redux/interface/AchievementType';
+import { IEditRank, IRank } from '../../../../redux/interface/AchievementType';
 import { oneRankSelector } from '../../../../redux/reducers/AchievementReducer';
 import { ApplicationDispatch } from '../../../../store/store';
-import { validateHexString } from '../../../../utils/util';
+import { inRange, validateHexString } from '../../../../utils/util';
 import './EditRankModalStyle.css'
 
 interface EditRankModalProps {
     editModalVisible: boolean;
     setEditModalVisible: Function;
     rankID: number;
+    rankList: IRank[];
 }
 
 const initialField = [
@@ -22,7 +23,7 @@ const initialField = [
     { name: 'editRankScore', value: 0 },
 ]
 
-export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }: EditRankModalProps) => {
+export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID, rankList }: EditRankModalProps) => {
     const dispatch: ApplicationDispatch = useDispatch()
     const [form] = useForm();
     const [confirmLoading, setConfirmLoading] = useState(false);
@@ -66,12 +67,18 @@ export const EditRankModal = ({ editModalVisible, setEditModalVisible, rankID }:
                     message: "Vui lòng nhập các trường còn thiếu!"
                 })
             }
-            else if(!validateHexString(colorPicker)){
+            else if (!validateHexString(colorPicker)) {
                 notification.error({
-                  placement: 'bottomRight',
-                  message: "Mã màu sai quy định, vui nhập mã HEX!"
+                    placement: 'bottomRight',
+                    message: "Mã màu sai quy định, vui nhập mã HEX!"
                 })
-              }
+            }
+            else if (rankList.filter((rank) => rank.id !== rankID).some((rank) => inRange(values.editRankLowScore, rank.min_score, rank.max_score)) || rankList.filter((rank) => rank.id !== rankID).some((rank) => inRange(values.editRankHighScore, rank.min_score, rank.max_score))) {
+                notification.error({
+                    placement: 'bottomRight',
+                    message: "Số điểm thấp nhất hoặc cao nhất đang nằm trong vùng điểm của xếp hạng khác!"
+                })
+            }
             else {
                 setConfirmLoading(true);
                 setTimeout(async () => {

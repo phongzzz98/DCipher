@@ -13,6 +13,8 @@ import { IHomePost } from '../../redux/interface/PostType';
 import 'moment/locale/vi'
 import { getAllRankAction } from '../../redux/actions/AchievementAction';
 import { allRankSelector } from '../../redux/reducers/AchievementReducer';
+import { inRange } from '../../utils/util';
+import { getOneUsersAction } from '../../redux/actions/UserAction';
 
 export const Home = () => {
   const dispatch: ApplicationDispatch = useDispatch()
@@ -25,7 +27,7 @@ export const Home = () => {
       setLoading(true)
       await dispatch(getAllPostAction());
       await dispatch(getMostVotedPostAction());
-      // await dispatch(getAllRankAction())
+      await dispatch(getAllRankAction())
       setLoading(false)
     }
     fetchData()
@@ -33,10 +35,17 @@ export const Home = () => {
 
   const postList: IHomePost[] = useSelector(allPostSelector);
   const rankList = useSelector(allRankSelector)
-  console.log(rankList);
   const clonePostList = [...postList]
   const tempList = clonePostList.filter((post) => post.poststatus === 1)
   const mostVotePostList: IHomePost[] = useSelector(mostVotedPostsSelector);
+
+  const renderColor = (userScore: number) => {
+    const userRank = rankList.find((rank) => inRange(userScore, rank.min_score, rank.max_score))
+    if (userRank)
+      return userRank.colorcode
+    else
+      return '#ffffff'
+  }
 
   const IconText = ({ icon, text }: any) => (
     <Space>
@@ -50,6 +59,11 @@ export const Home = () => {
     navigate('/search')
   }
 
+  const onClickUser = async (id: number) => {
+    await dispatch(getOneUsersAction(id))
+    navigate(`/user/${id}`)
+  }
+
   return (
     <div className='home-container'>
       <div className='ramdom-list'>
@@ -59,9 +73,6 @@ export const Home = () => {
           itemLayout="vertical"
           size="large"
           pagination={{
-            onChange: page => {
-              console.log(page);
-            },
             position: 'both',
             pageSizeOptions: [10, 25, 50, 100],
             showSizeChanger: true,
@@ -80,15 +91,15 @@ export const Home = () => {
                   description={item.content.slice(0, 500).concat('...')}
                 />
                 <div className='avatar-and-tags'>
-                  <Row gutter={[0, 15]} style={{width: '100%'}}>
+                  <Row gutter={[0, 15]} style={{ width: '100%' }}>
                     <Col xs={24} md={24} lg={24} xl={6} >
-                      <div className='home-avatar'>
+                      <div onClick={() => onClickUser(item.userid)} className='home-avatar' style={{ boxShadow: `1px 3px 4px 1px ${renderColor(item.score)}` }}>
                         <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar} />
                         <span className='post-username'>{item.username}</span>
                       </div>
                     </Col>
                     <Col className='home-tags' xs={24} md={24} lg={24} xl={18} >
-                      <div style={{width: '100%'}} >
+                      <div style={{ width: '100%' }} >
                         {item.posttag.map((tag) => <Tag onClick={() => onClickTag(tag.tagcontent)} className='tag' color={tag.colorcode}>{tag.tagcontent}</Tag>)}
                       </div>
                     </Col>

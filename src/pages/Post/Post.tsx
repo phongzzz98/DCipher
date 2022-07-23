@@ -3,7 +3,7 @@ import { Avatar, Tag, Button, notification, Tooltip, Popover, Modal } from 'antd
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { deletePostAction, getOnePostAction } from '../../redux/actions/PostAction'
+import { deletePostAction, getOnePostAction, searchPostByTagAction } from '../../redux/actions/PostAction'
 import { onePostSelector } from '../../redux/reducers/PostReducer'
 import { ApplicationDispatch } from '../../store/store'
 import './PostStyle.css'
@@ -168,6 +168,11 @@ export const Post = () => {
     });
   };
 
+  const onClickTag = async (value: string) => {
+    await dispatch(searchPostByTagAction(value))
+    navigate('/search')
+  }
+
   return (
     <div>
       <div className='post-container'>
@@ -204,10 +209,10 @@ export const Post = () => {
             <span className='post-time'>{moment(selectedPost[0].post_created_at).fromNow()}</span>
           </Tooltip>
           <div className='post-tag-container'>
-            {selectedPost[0].posttag.map((tag) => <Tag className='tag' color={tag.tagcolor}>{tag.tagcontent}</Tag>)}
+            {selectedPost[0].posttag.map((tag) => <Tag onClick={() => onClickTag(tag.tagcontent)} className='tag' color={tag.tagcolor}>{tag.tagcontent}</Tag>)}
           </div>
           <div className='post-user-container'>
-            <span className='post-user'>bởi <Avatar className='post-avatar' src={selectedPost[0].avatarImage} />{selectedPost[0].postusername}</span>
+            <span className='post-user'><Avatar className='post-avatar' src={selectedPost[0].avatarImage} />{selectedPost[0].postusername}</span>
             {accessToken ? selectedPost[0].userid !== user.id ?
               followed ?
                 <Button icon={<CheckOutlined />} size='small' type='default' onClick={() => onUnfollow()} >Đã theo dõi</Button>

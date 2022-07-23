@@ -53,11 +53,12 @@ export interface IOneUserAdmin {
 }
 
 export interface INotification {
-  content: string;
+  content?: string;
   created_at: string;
-  postid: number;
-  title: string;
+  postid?: number;
+  title?: string;
   username: string;
+  userid?: number;
 }
 
 export interface IUserDetails {

@@ -2,32 +2,33 @@ import { Avatar, Card } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getAllRankAction } from '../../redux/actions/AchievementAction';
 import { getAllUsersAction, getOneUsersAction } from '../../redux/actions/UserAction';
+import { allRankSelector } from '../../redux/reducers/AchievementReducer';
 import { allUsersSelector } from '../../redux/reducers/UserReducer';
 import { ApplicationDispatch } from '../../store/store';
-import { dynamicSort } from '../../utils/util';
+import { dynamicSort, inRange } from '../../utils/util';
 import './UsersStyle.css'
 
 export const Users = () => {
     const dispatch: ApplicationDispatch = useDispatch()
     const navigate = useNavigate()
+    const rankList = useSelector(allRankSelector)
     const userList = useSelector(allUsersSelector);
     const cloneUserList = [...userList]
     cloneUserList.sort(dynamicSort('-score'))
 
     useEffect(() => {
         dispatch(getAllUsersAction())
+        dispatch(getAllRankAction())
     }, [dispatch])
 
-    const renderColor = (score: number) => {
-        if (score >= 5 && score < 10)
-          return '#87e8de'
-        else if (score >= 10 && score < 15)
-          return '#597ef7'
-        else if (score >= 15)
-          return '#f5222d'
+    const renderColor = (userScore: number) => {
+        const userRank = rankList.find((rank) => inRange(userScore, rank.min_score, rank.max_score))
+        if (userRank)
+          return userRank.colorcode
         else
-          return "#ae5924"
+          return '#ffffff'
       }
     
     const onClickUser = async (id: number) => {

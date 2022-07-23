@@ -77,6 +77,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
         { key: '9', label: 'TagManager', path: '/tagMng' },
         { key: '10', label: 'ScoreManager', path: '/scoreMng' },
         { key: '11', label: 'ContestManager', path: '/contestMng' },
+        { key: '12', label: 'CommentManager', path: '/commentMng' },
     ]
     const [selectedKey, setSelectedKey] = useState(items.find(item => location.pathname === item.path)?.key)
 

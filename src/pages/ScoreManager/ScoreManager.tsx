@@ -6,7 +6,7 @@ import { ApplicationDispatch } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteRankAction, getAllRankAction } from '../../redux/actions/AchievementAction';
 import { allRankSelector } from '../../redux/reducers/AchievementReducer';
-import { dynamicSort, inRange } from '../../utils/util';
+import { dynamicSort } from '../../utils/util';
 import { IRank } from '../../redux/interface/AchievementType';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
@@ -77,10 +77,7 @@ export const ScoreManager = () => {
             },
         });
     };
-    console.log(
-        // rankList.some((rank)=> inRange(77,rank.min_score,rank.max_score))
-        rankList.find((rank)=>inRange(12,rank.min_score,rank.max_score))
-    )
+    
     return (
         <div className='score-manager-page'>
             <h1>Quản lý xếp hạng</h1>
@@ -126,8 +123,8 @@ export const ScoreManager = () => {
                     />
                 </Table>
             </div>
-            <EditRankModal editModalVisible={editModalVisible} setEditModalVisible={setEditModalVisible} rankID={selectedRankID} />                
-            <CreateRankModal createModalVisible={createModalVisible} setCreateModalVisible={setCreateModalVisible} />
+            <EditRankModal rankList={rankList} editModalVisible={editModalVisible} setEditModalVisible={setEditModalVisible} rankID={selectedRankID} />                
+            <CreateRankModal rankList={rankList} createModalVisible={createModalVisible} setCreateModalVisible={setCreateModalVisible} />
         </div>
     )
 }

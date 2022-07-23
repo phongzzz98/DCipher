@@ -181,7 +181,8 @@ export const UserManager = () => {
                 <Table className="user-table"
                     dataSource={cloneUserList2}
                     pagination={{
-                        pageSize: 8,
+                        pageSizeOptions: [5, 10, 20, 50],
+                        showSizeChanger: true
                     }}
                     loading={loading}
                     size='large'

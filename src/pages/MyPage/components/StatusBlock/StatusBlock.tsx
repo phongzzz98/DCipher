@@ -3,12 +3,14 @@ import { Button, Descriptions, Empty, Tag } from 'antd'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getAllRankAction } from '../../../../redux/actions/AchievementAction';
 import { getAllTagAction } from '../../../../redux/actions/TagAction';
 import { IUserPost } from '../../../../redux/interface/UserType';
+import { allRankSelector } from '../../../../redux/reducers/AchievementReducer';
 import { userInfoSelector } from '../../../../redux/reducers/AuthReducer';
 import { allTagSelector } from '../../../../redux/reducers/TagReducer';
 import { ApplicationDispatch } from '../../../../store/store';
-import { dynamicSort } from '../../../../utils/util';
+import { dynamicSort, inRange } from '../../../../utils/util';
 import './StatusBlockStyle.css'
 
 interface IStatusBlockProps {
@@ -26,6 +28,7 @@ interface IDataList {
 export const StatusBlock = ({ userPosts, commentNumber, score, userID }: IStatusBlockProps) => {
     const dispatch: ApplicationDispatch = useDispatch()
     const user = useSelector(userInfoSelector)
+    const rankList = useSelector(allRankSelector)
     const navigate = useNavigate()
     const tagList = useSelector(allTagSelector);
     const cloneTagList = [...tagList]
@@ -34,6 +37,7 @@ export const StatusBlock = ({ userPosts, commentNumber, score, userID }: IStatus
 
     useEffect(() => {
         dispatch(getAllTagAction())
+        dispatch(getAllRankAction())
     }, [dispatch])
     const data: IDataList[] = []
     const colorCodes: string[] = []
@@ -72,16 +76,13 @@ export const StatusBlock = ({ userPosts, commentNumber, score, userID }: IStatus
         color: colorCodes,
     };
 
-    const renderRank = (score: number) => {
-        if (score >= 5 && score < 10)
-            return <Tag style={{ borderRadius: '2em' }} color="cyan">Beginner</Tag>
-        else if (score >= 10 && score < 15)
-            return <Tag style={{ borderRadius: '2em' }} color="geekblue">Competent</Tag>
-        else if (score >= 15)
-            return <Tag style={{ borderRadius: '2em' }} color="red">Expert</Tag>
+    const renderRank = (userScore: number) => {
+        const userRank = rankList.find((rank) => inRange(userScore, rank.min_score, rank.max_score))
+        if (userRank)
+          return <Tag style={{ borderRadius: '2em' }} color={userRank.colorcode}>{userRank.rank}</Tag>
         else
-            return <Tag style={{ borderRadius: '2em' }} color="#ae5924">Novice</Tag>
-    }
+          return <Tag style={{ borderRadius: '2em' }} color="">Unrank</Tag>
+      }
 
     return (
         <div className='status-block'>

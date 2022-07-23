@@ -4,18 +4,19 @@ import React, { useState } from 'react'
 import { ChromePicker } from 'react-color';
 import { useDispatch } from 'react-redux';
 import { createRankAction, getAllRankAction } from '../../../../redux/actions/AchievementAction';
-import { ICreateRank } from '../../../../redux/interface/AchievementType';
+import { ICreateRank, IRank } from '../../../../redux/interface/AchievementType';
 import { ApplicationDispatch } from '../../../../store/store';
-import { validateHexString } from '../../../../utils/util';
+import { inRange, validateHexString } from '../../../../utils/util';
 import './CreateRankModalStyle.css'
 
 interface CreateRankModalProps {
     createModalVisible: boolean;
     setCreateModalVisible: Function;
+    rankList: IRank[]
 }
 
 
-export const CreateRankModal = ({ createModalVisible, setCreateModalVisible }: CreateRankModalProps) => {
+export const CreateRankModal = ({ createModalVisible, setCreateModalVisible, rankList }: CreateRankModalProps) => {
     const dispatch: ApplicationDispatch = useDispatch()
     const [form] = useForm();
     const [confirmLoading, setConfirmLoading] = useState(false);
@@ -39,12 +40,18 @@ export const CreateRankModal = ({ createModalVisible, setCreateModalVisible }: C
                     message: "Vui lòng nhập các trường còn thiếu!"
                 })
             }
-            else if(!validateHexString(colorPicker)){
+            else if (!validateHexString(colorPicker)) {
                 notification.error({
-                  placement: 'bottomRight',
-                  message: "Mã màu sai quy định, vui nhập mã HEX!"
+                    placement: 'bottomRight',
+                    message: "Mã màu sai quy định, vui nhập mã HEX!"
                 })
-              }
+            }
+            else if (rankList.some((rank) => inRange(values.createRankLowScore, rank.min_score, rank.max_score)) || rankList.some((rank) => inRange(values.createRankHighScore, rank.min_score, rank.max_score))) {
+                notification.error({
+                    placement: 'bottomRight',
+                    message: "Số điểm thấp nhất hoặc cao nhất đang nằm trong vùng điểm của xếp hạng khác!"
+                })
+            }
             else {
                 setConfirmLoading(true);
                 setTimeout(async () => {

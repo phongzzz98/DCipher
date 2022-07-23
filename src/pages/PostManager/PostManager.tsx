@@ -124,7 +124,8 @@ export const PostManager = () => {
                 <Table className="post-table"
                     dataSource={clonePostList}
                     pagination={{
-                        pageSize: 8,
+                        pageSizeOptions: [5, 10, 20, 50],
+                        showSizeChanger: true
                     }}
                     scroll={{ x: 1500 }}
                     loading={loading}

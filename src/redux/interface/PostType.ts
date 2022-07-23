@@ -57,6 +57,7 @@ export type IHomePost = {
   posttag: IHomeTag[];
   viewnumber: number;
   avatarImage: string;
+  score: number
 };
 
 export type IHomeTag = {

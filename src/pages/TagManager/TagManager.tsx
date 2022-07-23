@@ -143,8 +143,9 @@ export const TagManager = () => {
         <Table className="tag-table"
           dataSource={cloneTagList2}
           pagination={{
-            pageSize: 8,
-          }}
+            pageSizeOptions: [5, 10, 20, 50],
+            showSizeChanger: true
+        }}
           size='large'
           bordered={true}
           rowKey={(tag: ITag) => tag.id}

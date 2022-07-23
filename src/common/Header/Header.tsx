@@ -14,6 +14,7 @@ import { notificationSelector } from '../../redux/reducers/UserReducer';
 import { getAllTagAction } from '../../redux/actions/TagAction';
 import { dynamicSort } from '../../utils/util';
 import { allTagSelector } from '../../redux/reducers/TagReducer';
+import { INotification } from '../../redux/interface/UserType';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -51,7 +52,7 @@ export const Header = (props: HeaderProps) => {
         }
         else return;
     }, [user.id])
-
+    console.log(notifications)
     const content = (
         // notifications.map((item, index) =>
         //     <div key={index}>
