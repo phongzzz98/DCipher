@@ -116,7 +116,7 @@ export const CreateUserModal = ({ createModalVisible, setCreateModalVisible }: C
                     <DatePicker placeholder='Chọn ngày sinh' format={['DD/MM/YYYY', 'DD/MM/YY']} />
                 </Form.Item>
                 <Form.Item className='create-user-form-item' label="Điểm" name='createUserScore' >
-                    <InputNumber defaultValue={0} min={0} max={100} size="middle" /*onChange={(e) => setTagName(e.target.value)}*/ />
+                    <InputNumber defaultValue={0} min={0} size="middle" /*onChange={(e) => setTagName(e.target.value)}*/ />
                 </Form.Item>
                 <div className="ant-col ant-col-3 ant-form-item-label">
                     <label>Liên kết</label>

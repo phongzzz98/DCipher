@@ -7,7 +7,7 @@ import { deletePostAction, getOnePostAction, searchPostByTagAction } from '../..
 import { onePostSelector } from '../../redux/reducers/PostReducer'
 import { ApplicationDispatch } from '../../store/store'
 import './PostStyle.css'
-import { HeartOutlined, ExclamationCircleOutlined, HeartFilled, FlagOutlined, FlagFilled, PlusSquareOutlined, CheckOutlined, MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { HeartOutlined, ExclamationCircleOutlined, QuestionCircleOutlined, HeartFilled, FlagOutlined, FlagFilled, PlusSquareOutlined, CheckOutlined, MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { axiosInstance } from '../../configs/axios'
 import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer'
 import { IComment } from '../../redux/interface/PostType'
@@ -16,6 +16,7 @@ import moment from 'moment'
 import { IFollowData } from '../../redux/interface/UserType'
 import { followUserAction, unfollowUserAction } from '../../redux/actions/UserAction'
 import { CodeReader } from '../../common/CodeReader/CodeReader'
+import { MDHelpPopUp } from '../../common/MDHelpPopUp/MDHelpPopUp'
 
 export const Post = () => {
   const { id } = useParams<{ id: string }>()
@@ -30,6 +31,7 @@ export const Post = () => {
   const [bookmarked, setBookmarked] = useState(false)
   const [postVoteNumber, setPostVoteNumber] = useState(0)
   const [loadingComment, setLoadingComment] = useState(false)
+  const [helpPopup, setHelpPopup] = useState(false)
   const [followData, setFollowData] = useState<IFollowData>()
   const [visible, setVisible] = useState(false);
   const accessToken = useSelector(accessTokenSelector)
@@ -261,6 +263,7 @@ export const Post = () => {
                   value={value}
                   onChange={setValue}
                 />
+                <QuestionCircleOutlined style={{fontSize: '1.2rem'}} onClick={() => setHelpPopup(true)} />
                 <div className='comment-btn'>
                   <Button loading={loadingComment} shape='round' size='middle' type="primary" htmlType="submit" onClick={handleSubmitComment} >Đăng bình luận</Button>
                 </div>
@@ -276,6 +279,7 @@ export const Post = () => {
           }
         </div>
       </div>
+      <MDHelpPopUp helpModalVisible={helpPopup} setHelpModalVisible={setHelpPopup} />
     </div>
   )
 }

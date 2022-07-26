@@ -14,11 +14,13 @@ import { editPostAction, getOnePostAction } from '../../redux/actions/PostAction
 import { onePostSelector } from '../../redux/reducers/PostReducer';
 import { useForm } from 'antd/lib/form/Form';
 import { IEditPost } from '../../redux/interface/PostType';
+import { MDHelpPopUp } from '../../common/MDHelpPopUp/MDHelpPopUp';
 
 export const EditPost = () => {
   const user = useSelector(userInfoSelector);
   const { id } = useParams<{ id: string }>()
   const tagList = useSelector(allTagSelector);
+  const [helpPopup, setHelpPopup] = useState(false)
   let cloneTagList = [...tagList]
   cloneTagList.sort(dynamicSort('content'))
   const options: any[] = []
@@ -107,7 +109,7 @@ return (
               height={300}
             />
           </div>
-          <QuestionCircleOutlined />
+          <QuestionCircleOutlined onClick={() => setHelpPopup(true)} />
         </Form.Item>
         <Form.Item className='create-post-form-item' label="Gán thẻ" name='editPostTag'>
           <Select
@@ -132,6 +134,7 @@ return (
         </Form.Item>
       </Form>
     </div>
+    <MDHelpPopUp helpModalVisible={helpPopup} setHelpModalVisible={setHelpPopup} />
   </div>
 )
 }

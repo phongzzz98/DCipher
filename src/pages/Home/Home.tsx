@@ -92,13 +92,13 @@ export const Home = () => {
                 />
                 <div className='avatar-and-tags'>
                   <Row gutter={[0, 15]} style={{ width: '100%' }}>
-                    <Col xs={24} md={24} lg={24} xl={6} >
+                    <Col xs={24} md={24} lg={24} xl={7} >
                       <div onClick={() => onClickUser(item.userid)} className='home-avatar' style={{ boxShadow: `1px 3px 4px 1px ${renderColor(item.score)}` }}>
                         <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar} />
                         <span className='post-username'>{item.username}</span>
                       </div>
                     </Col>
-                    <Col className='home-tags' xs={24} md={24} lg={24} xl={18} >
+                    <Col className='home-tags' xs={24} md={24} lg={24} xl={17} >
                       <div style={{ width: '100%' }} >
                         {item.posttag.map((tag) => <Tag onClick={() => onClickTag(tag.tagcontent)} className='tag' color={tag.colorcode}>{tag.tagcontent}</Tag>)}
                       </div>

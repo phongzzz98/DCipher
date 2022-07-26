@@ -2,9 +2,11 @@ import MDEditor from '@uiw/react-md-editor'
 import { Modal, notification } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import { editCommentAction, getOnePostAction } from '../../../../redux/actions/PostAction';
 import { IComment, IEditComment } from '../../../../redux/interface/PostType';
 import { ApplicationDispatch } from '../../../../store/store';
+import { MDHelpPopUp } from '../../../../common/MDHelpPopUp/MDHelpPopUp';
 
 interface EditCommentModalProps {
     editModalVisible: boolean;
@@ -15,6 +17,7 @@ interface EditCommentModalProps {
 
 export const EditCommentModal = ({editModalVisible, setEditModalVisible, comment, postID}: EditCommentModalProps) => {
     const dispatch: ApplicationDispatch = useDispatch()
+    const [helpPopup, setHelpPopup] = useState(false)
     const [value, setValue] = useState<any>("");
     const [confirmLoading, setConfirmLoading] = useState(false);
     const handleCancel = () => {
@@ -67,7 +70,9 @@ export const EditCommentModal = ({editModalVisible, setEditModalVisible, comment
                     value={value}
                     onChange={setValue}
                 />
+                <QuestionCircleOutlined style={{fontSize: '1.2rem', marginTop: 5}} onClick={() => setHelpPopup(true)} />
             </div>
+            <MDHelpPopUp helpModalVisible={helpPopup} setHelpModalVisible={setHelpPopup} />
         </Modal>
     )
 }

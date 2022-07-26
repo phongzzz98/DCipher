@@ -49,7 +49,7 @@ export interface ICreateProblem {
   output: string;
   rank: number;
   score: number;
-  content: string;   
+  content: string;
 }
 
 export interface IEditProblem {
@@ -61,7 +61,7 @@ export interface IEditProblem {
   output: string;
   rank: number;
   score: number;
-  content: string;   
+  content: string;
 }
 
 export interface ISubmitProblem {
@@ -102,8 +102,11 @@ export interface IStatisticDetail {
 
 export interface ICompile {
   testcase: number;
-  status: string;
+  status: number;
   cpuTime: string;
   memory: string;
   created_at: string;
+  input: string;
+  output: string;
+  user_output: string;
 }

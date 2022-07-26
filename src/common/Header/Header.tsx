@@ -14,7 +14,6 @@ import { notificationSelector } from '../../redux/reducers/UserReducer';
 import { getAllTagAction } from '../../redux/actions/TagAction';
 import { dynamicSort } from '../../utils/util';
 import { allTagSelector } from '../../redux/reducers/TagReducer';
-import { INotification } from '../../redux/interface/UserType';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -43,9 +42,11 @@ export const Header = (props: HeaderProps) => {
     useEffect(() => {
         if (user.id !== 0) {
             const getNotiNumber = () => {
+                setLoading(true)
                 axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/${user.id}`)
                     .then((res) => {
                         setnotiNumber(res.data[0].notification);
+                        setLoading(false)
                     })
             }
             getNotiNumber()
@@ -53,11 +54,14 @@ export const Header = (props: HeaderProps) => {
         else return;
     }, [user.id])
     console.log(notifications)
+    const handleClickNoti = (postID?: number, userID?: number) => {
+        if (!userID)
+            navigate(`/post/${postID}`)
+        else if (!postID)
+            navigate(`/user/${userID}`)
+        else return
+    }
     const content = (
-        // notifications.map((item, index) =>
-        //     <div key={index}>
-        //         <p>{item.content}</p>
-        //     </div>)
         <List
             size='default'
             loading={loading}
@@ -71,7 +75,7 @@ export const Header = (props: HeaderProps) => {
                             <SmileOutlined style={{ fontSize: '1.3em' }} />
                         }
                         // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                        title={<a style={{ wordBreak: 'break-all', fontSize: '1em' }} /*onClick={() => navigate(`/problem/${problem.problem_id}`)}*/>{noti.content}</a>}
+                        title={<a style={{ wordBreak: 'break-all', fontSize: '1em' }} onClick={() => { handleClickNoti(noti.postid, noti.userid) }}>{noti.content}</a>}
                     />
                 </List.Item>
             )}

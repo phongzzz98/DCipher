@@ -1,12 +1,15 @@
 import { Avatar, Divider, List, Skeleton, Tabs, Tag } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useDispatch, useSelector } from 'react-redux'
+import { getAllRankAction } from '../../../../redux/actions/AchievementAction'
 import { getUserDetailsAction } from '../../../../redux/actions/UserAction'
 import { IUserFollow } from '../../../../redux/interface/UserType'
+import { allRankSelector } from '../../../../redux/reducers/AchievementReducer'
 import { userInfoSelector } from '../../../../redux/reducers/AuthReducer'
 import { userDetailSelector } from '../../../../redux/reducers/UserReducer'
 import { ApplicationDispatch } from '../../../../store/store'
+import { inRange } from '../../../../utils/util'
 import './FollowingBlockStyle.css'
 
 interface IFollowingBlockProps {
@@ -15,19 +18,22 @@ interface IFollowingBlockProps {
 }
 export const FollowingBlock = ({ userFollowing, userFollow }: IFollowingBlockProps) => {
   const [loading, setLoading] = useState(false);
+  const rankList = useSelector(allRankSelector)
   const dispatch: ApplicationDispatch = useDispatch()
   const user = useSelector(userInfoSelector)
   const userDetails = useSelector(userDetailSelector)
-  const renderRank = (score: number) => {
-    if (score >= 5 && score < 10)
-      return <Tag style={{ borderRadius: '2em' }} color="cyan">Beginner</Tag>
-    else if (score >= 10 && score < 15)
-      return <Tag style={{ borderRadius: '2em' }} color="geekblue">Competent</Tag>
-    else if (score >= 15)
-      return <Tag style={{ borderRadius: '2em' }} color="red">Expert</Tag>
-    else
-      return <Tag style={{ borderRadius: '2em' }} color="#ae5924">Novice</Tag>
-  }
+
+  useEffect(() => {
+    dispatch(getAllRankAction())
+}, [dispatch])
+
+const renderRank = (userScore: number) => {
+  const userRank = rankList.find((rank) => inRange(userScore, rank.min_score, rank.max_score))
+  if (userRank)
+      return <Tag style={{ borderRadius: '2em' }} color={userRank.colorcode}>{userRank.rank}</Tag>
+  else
+      return <Tag style={{ borderRadius: '2em' }} color="">Unrank</Tag>
+}
 
   const loadMoreData = async () => {
     if (loading) {

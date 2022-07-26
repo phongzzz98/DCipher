@@ -96,9 +96,12 @@
 }
 #noti-popover{
     min-width: 50vw;
-    max-height: 80vh;
-    overflow-y: scroll;
 }
+#noti-popover .ant-list {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
 .noti-number{
     position: absolute;
     top: 0;

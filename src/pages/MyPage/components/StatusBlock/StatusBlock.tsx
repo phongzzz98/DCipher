@@ -52,7 +52,6 @@ export const StatusBlock = ({ userPosts, commentNumber, score, userID }: IStatus
             colorCodes.push(tag.colorcode)
         }
     })
-    console.log(data)
     const config = {
         appendPadding: 12,
         data,
@@ -79,10 +78,10 @@ export const StatusBlock = ({ userPosts, commentNumber, score, userID }: IStatus
     const renderRank = (userScore: number) => {
         const userRank = rankList.find((rank) => inRange(userScore, rank.min_score, rank.max_score))
         if (userRank)
-          return <Tag style={{ borderRadius: '2em' }} color={userRank.colorcode}>{userRank.rank}</Tag>
+            return <Tag style={{ borderRadius: '2em' }} color={userRank.colorcode}>{userRank.rank}</Tag>
         else
-          return <Tag style={{ borderRadius: '2em' }} color="">Unrank</Tag>
-      }
+            return <Tag style={{ borderRadius: '2em' }} color="">Unrank</Tag>
+    }
 
     return (
         <div className='status-block'>
@@ -96,7 +95,7 @@ export const StatusBlock = ({ userPosts, commentNumber, score, userID }: IStatus
                 data.length !== 0 ?
                     <Pie className='pie-chart' {...config} /> :
                     <Empty
-                        style={{paddingTop: 20}}
+                        style={{ paddingTop: 20 }}
                         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                         imageStyle={{
                             height: 60,
@@ -109,8 +108,8 @@ export const StatusBlock = ({ userPosts, commentNumber, score, userID }: IStatus
                     >
                         {
                             user.id === userID ?
-                            <Button onClick={() => navigate('/create')} shape='round' type="primary">Tạo bài viết</Button> :
-                            null
+                                <Button onClick={() => navigate('/create')} shape='round' type="primary">Tạo bài viết</Button> :
+                                null
                         }
                     </Empty>
             }

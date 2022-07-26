@@ -1,4 +1,5 @@
 import { Avatar, List, Space, Tag, Tooltip } from 'antd';
+import defaultAvatar from '../../assets/images/BlankAvatar.jpg'
 import moment from 'moment';
 import React from 'react'
 import { useSelector } from 'react-redux';
@@ -10,7 +11,6 @@ import { IHomePost } from '../../redux/interface/PostType';
 
 export const Search = () => {
     const postList: IHomePost[] = useSelector(searchedPostsSelector)
-    console.log('Searched', postList)
     const navigate = useNavigate()
     const IconText = ({ icon, text }: any) => (
         <Space>
@@ -27,9 +27,6 @@ export const Search = () => {
                     itemLayout="vertical"
                     size="large"
                     pagination={{
-                        onChange: page => {
-                            console.log(page);
-                        },
                         pageSize: 9,
                         position: 'bottom',
                     }}
@@ -47,7 +44,7 @@ export const Search = () => {
                                 />
                                 <div className='avatar-and-tags'>
                                     <div className='home-avatar'>
-                                        <Avatar src={'https://joeschmoe.io/api/v1/random'} />
+                                        <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar} />
                                         <span className='post-username'>{item.username}</span>
                                     </div>
                                     <div className='home-tags'>

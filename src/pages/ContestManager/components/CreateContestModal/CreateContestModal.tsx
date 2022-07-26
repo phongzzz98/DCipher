@@ -1,6 +1,6 @@
 import MDEditor from '@uiw/react-md-editor';
 import { Modal, Form, Input, InputNumber, Select, notification } from 'antd'
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, QuestionCircleOutlined } from '@ant-design/icons';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationDispatch } from '../../../../store/store';
@@ -11,6 +11,7 @@ import { useForm } from 'antd/lib/form/Form';
 import { ICreateProblem } from '../../../../redux/interface/ContestType';
 import { userInfoSelector } from '../../../../redux/reducers/AuthReducer';
 import { createProblemAction, getAllProblemAdminAction } from '../../../../redux/actions/ContestAction';
+import { MDHelpPopUp } from '../../../../common/MDHelpPopUp/MDHelpPopUp';
 
 interface CreateContestModalProps {
   createModalVisible: boolean;
@@ -39,6 +40,7 @@ export const CreateContestModal = ({ createModalVisible, setCreateModalVisible }
   const user = useSelector(userInfoSelector)
   const [form] = useForm();
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [helpPopup, setHelpPopup] = useState(false)
   const [valueTopic, setValueTopic] = useState<any>("");
   const [selectedDifficulty, setSelectedDifficulty] = useState(0)
 
@@ -166,6 +168,7 @@ export const CreateContestModal = ({ createModalVisible, setCreateModalVisible }
                 },
               }}
             />
+            <QuestionCircleOutlined onClick={() => setHelpPopup(true)} />
           </div>
         </Form.Item>
         <Form.Item className='create-contest-form-item' label="Độ khó" name='createContestDifficulty' rules={[{ required: true, message: 'Hãy chọn độ khó!', }]}>
@@ -244,6 +247,7 @@ export const CreateContestModal = ({ createModalVisible, setCreateModalVisible }
           </Form.Item>
         </Form.Item>
       </Form>
+      <MDHelpPopUp helpModalVisible={helpPopup} setHelpModalVisible={setHelpPopup} />
     </Modal>
   )
 }

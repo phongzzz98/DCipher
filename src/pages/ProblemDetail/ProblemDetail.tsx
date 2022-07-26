@@ -62,17 +62,21 @@ export const ProblemDetail = () => {
                 <Table className="stat-table"
                     dataSource={statDetails.compile_details}
                     // loading={loading}
+                    scroll={{ x: 1500 }}
                     pagination={false}
                     size='middle'
                     bordered={true}
                     rowKey={(stat: ICompile) => stat.testcase}
                     sticky={true}
                 >
-                    <Table.Column className='stat-align' title="Test Case" render={(stat: ICompile) => <span>{stat.testcase}</span>} width="10%" />
+                    <Table.Column fixed='left' className='stat-align' title="Test Case" render={(stat: ICompile) => <span>{stat.testcase}</span>} width="10%" />
+                    <Table.Column className='stat-align' title="Input" render={(stat: ICompile) => <span>{stat.input}</span>} width="25%" />
+                    <Table.Column className='stat-align' title="Output" render={(stat: ICompile) => <span>{stat.output}</span>} width="25%" />
+                    <Table.Column className='stat-align' title="Kết quả của bạn" render={(stat: ICompile) => <span>{stat.user_output}</span>} width="25%" />
                     <Table.Column className='stat-align' title="Thời gian" render={(stat: ICompile) => <span>{moment(stat.created_at).format('DD/MM/YYYY --- HH:mm:ss')}</span>} width="35%" />
                     <Table.Column className='stat-align' title="CPU Time" render={(stat: ICompile) => <span>{stat.cpuTime}</span>} width="25%" />
                     <Table.Column className='stat-align' title="Bộ nhớ" render={(stat: ICompile) => <span>{stat.memory}</span>} width="25%" />
-                    <Table.Column className='stat-align' title="Kết quả" render={(stat: ICompile) => stat.status ?
+                    <Table.Column fixed='right' className='stat-align' title="Kết quả" render={(stat: ICompile) => stat.status === 1 ?
                         <Tooltip placement='top' title='Đúng'>
                             <CheckCircleTwoTone style={{ fontSize: '2em' }} twoToneColor="#52c41a" />
                         </Tooltip>

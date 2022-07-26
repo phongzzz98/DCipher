@@ -64,6 +64,7 @@ export const EditUserModal = ({ editModalVisible, setEditModalVisible, userID }:
                 { name: 'editUserLinkTW', value: selectedUser.twitter_account },
             ])
             setCurrentImage(selectedUser.avatarImage)
+            setRoleSelect(selectedUser.role)
         }
         else
             setCurrentField(initialField)
@@ -160,7 +161,7 @@ export const EditUserModal = ({ editModalVisible, setEditModalVisible, userID }:
                     <DatePicker placeholder='Chọn ngày sinh' format={['DD/MM/YYYY', 'DD/MM/YY']} />
                 </Form.Item>
                 <Form.Item className='create-user-form-item' label="Điểm" name='editUserScore' >
-                    <InputNumber defaultValue={0} min={0} max={100} size="middle" />
+                    <InputNumber defaultValue={0} min={0} size="middle" />
                 </Form.Item>
                 <div className="ant-col ant-col-3 ant-form-item-label">
                     <label>Liên kết</label>
