@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { createContext, Suspense, useState } from 'react';
 import { ConfigProvider } from 'antd';
 import './App.css';
 import { Authen } from './pages/Authentication/Authen';
@@ -32,19 +32,26 @@ const MainLayout = React.lazy(() => import('./common/Layout/MainLayout').then((m
   default: module.MainLayout,
 })));
 
-function App() {
-  // useEffect(() => {
+export const ApplicationContext = createContext<{
+  theme: string,
+  setTheme: React.Dispatch<React.SetStateAction<string>>
+}>({
+  theme: '#fc2626',
+  setTheme: () => {}
+})
 
-  // }, [])
+function App() {
+  const [theme, setTheme] = useState('#fc2626')
 
   const dark = {
     theme: {
-      primaryColor: '#fc2626',
+      primaryColor: theme,
     }
   }
 
   ConfigProvider.config(dark)
   return (
+    <ApplicationContext.Provider value={{ theme, setTheme }}>
     <BrowserRouter>
       <div className="App">
         <Suspense fallback={<Loading />} >
@@ -81,6 +88,7 @@ function App() {
         </Suspense>
       </div>
     </BrowserRouter>
+    </ApplicationContext.Provider>
   );
 }
 

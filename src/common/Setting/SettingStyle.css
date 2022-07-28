@@ -1,0 +1,12 @@
+.setting-item {
+    display: flex;
+}
+
+.setting-label {
+    flex: 30%;
+    font-size: 1.1rem;
+}
+
+.setting-item-content {
+    flex: 70%;
+}

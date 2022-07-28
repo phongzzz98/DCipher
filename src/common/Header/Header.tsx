@@ -1,5 +1,5 @@
 import { Avatar, Button, Input, List, Popover, Select, Tooltip } from 'antd'
-import { MenuUnfoldOutlined, MenuFoldOutlined, SwapOutlined, MoreOutlined, PlusCircleOutlined, BellFilled, SmileOutlined } from '@ant-design/icons';
+import { MenuUnfoldOutlined, MenuFoldOutlined, SwapOutlined, PlusCircleOutlined, BellFilled, SmileOutlined, SettingOutlined } from '@ant-design/icons';
 import './HeaderStyle.css'
 import logo from '../../assets/svg/dclogo.svg'
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ import { notificationSelector } from '../../redux/reducers/UserReducer';
 import { getAllTagAction } from '../../redux/actions/TagAction';
 import { dynamicSort } from '../../utils/util';
 import { allTagSelector } from '../../redux/reducers/TagReducer';
+import { Setting } from '../Setting/Setting';
 
 interface HeaderProps {
     setIsNavbarOpen: Function
@@ -28,6 +29,7 @@ export const Header = (props: HeaderProps) => {
     const user = useSelector(userInfoSelector)
     const notifications = useSelector(notificationSelector)
     const [loading, setLoading] = useState(false)
+    const [settingModalVisible, setSettingModalVisible] = useState(false)
     const [notiNumber, setnotiNumber] = useState(0)
     const [searchModeSwitch, setSearchModeSwitch] = useState(false)
     const tagList = useSelector(allTagSelector);
@@ -171,8 +173,9 @@ export const Header = (props: HeaderProps) => {
                         </Tooltip>
                     </>
                 }
-                <span className='more-btn'><MoreOutlined /></span>
+                <span className='more-btn'><SettingOutlined onClick={() => setSettingModalVisible(true)} /></span>
             </div>
+            <Setting settingModalVisible={settingModalVisible} setSettingModalVisible={setSettingModalVisible} />
         </div>
     )
 }
