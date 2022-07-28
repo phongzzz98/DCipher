@@ -40,7 +40,7 @@
 
 .problem-markdown-section {
     width: 100%;
-    /* padding: 15px; */
+    height: fit-content;
     font-family: 'SofiaProRegular';
 }
 

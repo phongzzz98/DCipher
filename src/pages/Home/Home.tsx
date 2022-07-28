@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import defaultAvatar from '../../assets/images/BlankAvatar.jpg'
-import { List, Avatar, Space, Tag, Tooltip, Col, Row } from 'antd';
-import { MessageOutlined, HeartOutlined, EyeOutlined } from '@ant-design/icons';
+import { List, Avatar, Space, Tag, Tooltip, Col, Row, Badge } from 'antd';
+import { MessageOutlined, HeartOutlined, EyeOutlined, TrophyFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPostAction, getMostVotedPostAction, searchPostByTagAction } from '../../redux/actions/PostAction';
 import { ApplicationDispatch } from '../../store/store';
@@ -39,12 +39,18 @@ export const Home = () => {
   const tempList = clonePostList.filter((post) => post.poststatus === 1)
   const mostVotePostList: IHomePost[] = useSelector(mostVotedPostsSelector);
 
-  const renderColor = (userScore: number) => {
+  const renderRank = (userScore: number) => {
     const userRank = rankList.find((rank) => inRange(userScore, rank.min_score, rank.max_score))
     if (userRank)
-      return userRank.colorcode
+      return {
+        color: userRank.colorcode,
+        rankName: userRank.rank
+      }
     else
-      return '#ffffff'
+      return {
+        color: '#ffffff',
+        rankName: 'Unrank'
+      }
   }
 
   const IconText = ({ icon, text }: any) => (
@@ -92,13 +98,17 @@ export const Home = () => {
                 />
                 <div className='avatar-and-tags'>
                   <Row gutter={[0, 15]} style={{ width: '100%' }}>
-                    <Col xs={24} md={24} lg={24} xl={7} >
-                      <div onClick={() => onClickUser(item.userid)} className='home-avatar' style={{ boxShadow: `1px 3px 4px 1px ${renderColor(item.score)}` }}>
-                        <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar} />
+                    <Badge.Ribbon text={
+                      <Tooltip title={renderRank(item.score).rankName}>
+                        <TrophyFilled />
+                      </Tooltip>
+                    } color={renderRank(item.score).color}>
+                      <div onClick={() => onClickUser(item.userid)} className='home-avatar'>
+                        <Avatar size={40} src={item.avatarImage ? item.avatarImage : defaultAvatar} />
                         <span className='post-username'>{item.username}</span>
                       </div>
-                    </Col>
-                    <Col className='home-tags' xs={24} md={24} lg={24} xl={17} >
+                    </Badge.Ribbon>
+                    <Col className='home-tags' xs={24} md={24} lg={24} xl={24} >
                       <div style={{ width: '100%' }} >
                         {item.posttag.map((tag) => <Tag onClick={() => onClickTag(tag.tagcontent)} className='tag' color={tag.colorcode}>{tag.tagcontent}</Tag>)}
                       </div>
@@ -131,6 +141,7 @@ export const Home = () => {
       <div className='most-voted-list'>
         <h1>Bài viết nổi bật</h1>
         <List
+          loading={loading}
           itemLayout="vertical"
           size="large"
           dataSource={mostVotePostList.slice(0, 10)}
@@ -142,7 +153,7 @@ export const Home = () => {
             >
               <List.Item.Meta
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                title={<a style={{ wordBreak: 'break-all' }} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
+                title={<a style={{ wordBreak: 'break-all', fontSize: '0.9rem' }} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
               />
               <div className='avatar-and-tags'>
                 <div className='home-avatar'>

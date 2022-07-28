@@ -1,5 +1,11 @@
 import { axiosInstance } from "../../configs/axios";
-import { IApprovePost, ICreatePost, IEditComment, IEditPost } from "../interface/PostType";
+import {
+  IApprovePost,
+  ICreatePost,
+  IEditComment,
+  IEditPost,
+  IVote,
+} from "../interface/PostType";
 
 export const getAllPostAPI = async () => {
   try {
@@ -20,16 +26,15 @@ export const getMostVotedPostAPI = async () => {
 };
 
 export const getOnePostAPI = async (id: string | undefined) => {
-  try{
-    if(id === undefined)
-     return;
-    else{
-      const res = await axiosInstance.get(`/post/${id}`)
-      console.log(res)
-      return res.data
+  try {
+    if (id === undefined) return;
+    else {
+      const res = await axiosInstance.get(`/post/${id}`);
+      console.log(res);
+      return res.data;
     }
   } catch (error: any) {
-    return error.res.data
+    return error.res.data;
   }
 };
 
@@ -78,7 +83,7 @@ export const approvePostAPI = async (data: IApprovePost) => {
   try {
     const res = await axiosInstance.put(`post/status/${data.id}`, {
       status: data.status,
-      id: data.id, 
+      id: data.id,
     });
     return res.data;
   } catch (error: any) {
@@ -90,7 +95,7 @@ export const unapprovePostAPI = async (data: IApprovePost) => {
   try {
     const res = await axiosInstance.put(`post/status/${data.id}`, {
       status: data.status,
-      id: data.id, 
+      id: data.id,
     });
     return res.data;
   } catch (error: any) {
@@ -98,11 +103,10 @@ export const unapprovePostAPI = async (data: IApprovePost) => {
   }
 };
 
-
 export const searchPostAPI = async (value: string) => {
   try {
     const res = await axiosInstance.post(`/searchpost`, {
-      search: value
+      search: value,
     });
     return res.data;
   } catch (error: any) {
@@ -112,9 +116,9 @@ export const searchPostAPI = async (value: string) => {
 
 export const searchPostByTagAPI = async (value: string) => {
   try {
-    const searchValue = value.split(',')
+    const searchValue = value.split(",");
     const res = await axiosInstance.post(`/searchpostbytag`, {
-      search: searchValue
+      search: searchValue,
     });
     return res.data;
   } catch (error: any) {
@@ -135,7 +139,7 @@ export const editCommentAPI = async (data: IEditComment) => {
   try {
     const res = await axiosInstance.put(`/comment/${data.id}`, {
       content: data.content,
-      votenumber: data.votenumber
+      votenumber: data.votenumber,
     });
     return res.data;
   } catch (error: any) {
@@ -146,6 +150,32 @@ export const editCommentAPI = async (data: IEditComment) => {
 export const deleteCommentAPI = async (id: number) => {
   try {
     const res = await axiosInstance.delete(`/comment/${id}`);
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const votePostAPI = async (data: IVote) => {
+  try {
+    const res = await axiosInstance.post(`/vote`, {
+      userid: data.userid,
+      postid: data.postid,
+    });
+    return res.data;
+  } catch (error: any) {
+    return error.res.data;
+  }
+};
+
+export const unvotePostAPI = async (data: IVote) => {
+  try {
+    const res = await axiosInstance.delete(`/deletevote`, {
+      data: {
+        userid: data.userid,
+        postid: data.postid,
+      },
+    });
     return res.data;
   } catch (error: any) {
     return error.res.data;

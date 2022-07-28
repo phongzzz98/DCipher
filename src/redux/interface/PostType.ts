@@ -40,7 +40,7 @@ export interface IPostState {
   mostVotedPosts: IHomePost[];
   searchedPosts: IHomePost[];
   singlePost: IPost[];
-  comments: IAdminComment[]
+  comments: IAdminComment[];
 }
 
 export type IHomePost = {
@@ -57,7 +57,7 @@ export type IHomePost = {
   posttag: IHomeTag[];
   viewnumber: number;
   avatarImage: string;
-  score: number
+  score: number;
 };
 
 export type IHomeTag = {
@@ -156,4 +156,9 @@ export interface IPostTag {
 export interface IApprovePost {
   status: number;
   id: number;
+}
+
+export interface IVote {
+  userid: number;
+  postid: number;
 }

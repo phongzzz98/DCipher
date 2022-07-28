@@ -35,34 +35,30 @@
 
 .most-voted-list .ant-list-item:last-child {
     border-bottom: 2px rgba(0, 0, 0, 0.2) solid;
-    ;
 }
 
 .most-voted-list-item {
-    border: 2px rgba(0, 0, 0, 0.2) solid;
     margin-bottom: 15px;
-    border-radius: 25px;
+    border-radius: 15px;
+    background-color: white;
 }
 
 .most-voted-list-item:first-child {
-    background: linear-gradient(135deg, rgb(219, 172, 0), hsl(210, 8%, 95%));
-    border: 3px rgb(219, 172, 0) solid;
+    background: linear-gradient(90deg, rgb(239, 189, 11) 2%, #fff 0%);
     margin-bottom: 15px;
-    border-radius: 25px;
+    border-radius: 15px;
 }
 
 .most-voted-list-item:nth-child(2) {
-    background: linear-gradient(135deg, rgb(166, 166, 166), hsl(210, 8%, 95%));
-    border: 3px rgb(166, 166, 166) solid;
+    background: linear-gradient(90deg, rgb(166, 166, 166) 2%, #fff 0%);
     margin-bottom: 15px;
-    border-radius: 25px;
+    border-radius: 15px;
 }
 
 .most-voted-list-item:nth-child(3) {
-    background: linear-gradient(135deg, #B87333, hsl(210, 8%, 95%));
-    border: 3px #B87333 solid;
+    background: linear-gradient(90deg, #B87333 2%, #fff 0%);
     margin-bottom: 15px;
-    border-radius: 25px;
+    border-radius: 15px;
 }
 
 .most-voted-list-item:hover {
@@ -96,9 +92,9 @@
     max-width: 180px;
     /* border: 1px solid black; */
     width: fit-content;
-    border-radius: 2em;
-    padding-right: 15px;
-    /* box-shadow: 1px 3px 4px 1px rgb(0 0 0 / 20%); */
+    border-radius: 2em 1em 1em 2em;
+    padding-right: 30px;
+    box-shadow: 1px 3px 4px 1px rgb(0 0 0 / 20%);
 }
 
 .home-avatar:hover {

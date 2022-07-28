@@ -5,12 +5,11 @@ import logo from '../../assets/svg/dclogo.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer';
-import { axiosInstance } from '../../configs/axios';
 import { useEffect, useState } from 'react';
 import { ApplicationDispatch } from '../../store/store';
 import { searchPostAction, searchPostByTagAction } from '../../redux/actions/PostAction';
-import { getNotificationAction } from '../../redux/actions/UserAction';
-import { notificationSelector } from '../../redux/reducers/UserReducer';
+import { getNotificationAction, getUserDetailsAction } from '../../redux/actions/UserAction';
+import { notificationSelector, userDetailSelector } from '../../redux/reducers/UserReducer';
 import { getAllTagAction } from '../../redux/actions/TagAction';
 import { dynamicSort } from '../../utils/util';
 import { allTagSelector } from '../../redux/reducers/TagReducer';
@@ -27,6 +26,7 @@ export const Header = (props: HeaderProps) => {
     const accessToken = useSelector(accessTokenSelector)
     const user = useSelector(userInfoSelector)
     const notifications = useSelector(notificationSelector)
+    const userDetails = useSelector(userDetailSelector)
     const [loading, setLoading] = useState(false)
     const [notiNumber, setnotiNumber] = useState(0)
     const [searchModeSwitch, setSearchModeSwitch] = useState(false)
@@ -41,19 +41,17 @@ export const Header = (props: HeaderProps) => {
 
     useEffect(() => {
         if (user.id !== 0) {
-            const getNotiNumber = () => {
+            const getNotiNumber = async () => {
                 setLoading(true)
-                axiosInstance.get(`https://code-ide-forum.herokuapp.com/api/userdetails/${user.id}`)
-                    .then((res) => {
-                        setnotiNumber(res.data[0].notification);
-                        setLoading(false)
-                    })
+                await dispatch(getUserDetailsAction(user.id))
+                setnotiNumber(userDetails.notification);
+                setLoading(false)
             }
             getNotiNumber()
         }
         else return;
-    }, [user.id])
-    console.log(notifications)
+    }, [dispatch, user.id, userDetails.notification])
+
     const handleClickNoti = (postID?: number, userID?: number) => {
         if (!userID)
             navigate(`/post/${postID}`)

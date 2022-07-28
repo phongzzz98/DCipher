@@ -3,14 +3,14 @@ import { Avatar, Tag, Button, notification, Tooltip, Popover, Modal } from 'antd
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { deletePostAction, getOnePostAction, searchPostByTagAction } from '../../redux/actions/PostAction'
+import { deletePostAction, getOnePostAction, searchPostByTagAction, unvotePostAction, votePostAction } from '../../redux/actions/PostAction'
 import { onePostSelector } from '../../redux/reducers/PostReducer'
 import { ApplicationDispatch } from '../../store/store'
 import './PostStyle.css'
 import { HeartOutlined, ExclamationCircleOutlined, QuestionCircleOutlined, HeartFilled, FlagOutlined, FlagFilled, PlusSquareOutlined, CheckOutlined, MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { axiosInstance } from '../../configs/axios'
 import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer'
-import { IComment } from '../../redux/interface/PostType'
+import { IComment, IVote } from '../../redux/interface/PostType'
 import { CommentItem } from './components/CommentItem/CommentItem'
 import moment from 'moment'
 import { IFollowData } from '../../redux/interface/UserType'
@@ -68,28 +68,24 @@ export const Post = () => {
     setVisible(newVisible);
   };
 
-  const votePost = () => {
-    axiosInstance.post(`https://code-ide-forum.herokuapp.com/api/vote`, {
+  const votePost = async () => {
+    const votePost: IVote = {
       userid: user.id,
-      postid: id,
-    }).then(() => {
-      setPostVoteNumber(postVoteNumber + 1)
-    }).then(() => {
-      setVoted(true);
-    })
+      postid: parseInt(id!),
+    }
+    await dispatch(votePostAction(votePost))
+    setPostVoteNumber(postVoteNumber + 1)
+    setVoted(true);
   }
 
-  const unvotePost = () => {
-    axiosInstance.delete(`https://code-ide-forum.herokuapp.com/api/deletevote`, {
-      data: {
-        userid: user.id,
-        postid: parseInt(id!),
-      }
-    }).then(() => {
-      setPostVoteNumber(postVoteNumber - 1)
-    }).then(() => {
-      setVoted(false);
-    })
+  const unvotePost = async () => {
+    const unvotePost: IVote = {
+      userid: user.id,
+      postid: parseInt(id!),
+    }
+    await dispatch(unvotePostAction(unvotePost))
+    setPostVoteNumber(postVoteNumber - 1)
+    setVoted(false);
   }
 
   const handleSubmitComment = async () => {

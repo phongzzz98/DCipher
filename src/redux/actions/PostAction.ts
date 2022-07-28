@@ -12,12 +12,15 @@ import {
   getOnePostAPI,
   searchPostAPI,
   searchPostByTagAPI,
+  unvotePostAPI,
+  votePostAPI,
 } from "../api/PostAPI";
 import {
   IApprovePost,
   ICreatePost,
   IEditComment,
   IEditPost,
+  IVote,
 } from "../interface/PostType";
 
 export const getAllPostAction = createAsyncThunk("getAllPost", async () => {
@@ -117,6 +120,22 @@ export const deleteCommentAction = createAsyncThunk(
   "deleteComment",
   async (id: number) => {
     const res = await deleteCommentAPI(id);
+    return res;
+  }
+);
+
+export const votePostAction = createAsyncThunk(
+  "votePost",
+  async (data: IVote) => {
+    const res = await votePostAPI(data);
+    return res;
+  }
+);
+
+export const unvotePostAction = createAsyncThunk(
+  "unvotePost",
+  async (data: IVote) => {
+    const res = await unvotePostAPI(data);
     return res;
   }
 );
