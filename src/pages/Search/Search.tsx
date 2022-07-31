@@ -4,7 +4,7 @@ import moment from 'moment';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { MessageOutlined, HeartOutlined, TrophyFilled } from '@ant-design/icons';
+import { MessageOutlined, HeartOutlined, TrophyFilled, EyeOutlined } from '@ant-design/icons';
 import { searchedPostsSelector } from '../../redux/reducers/PostReducer';
 import './SearchStyle.css'
 import { IHomePost } from '../../redux/interface/PostType';
@@ -18,6 +18,8 @@ export const Search = () => {
     const rankList = useSelector(allRankSelector)
     const dispatch: ApplicationDispatch = useDispatch()
     const postList: IHomePost[] = useSelector(searchedPostsSelector)
+    const clonePostList = [...postList]
+    const tempList = clonePostList.filter((post) => post.poststatus === 1)
     const navigate = useNavigate()
     const IconText = ({ icon, text }: any) => (
         <Space>
@@ -59,8 +61,8 @@ export const Search = () => {
                         pageSizeOptions: [10, 25, 50, 100],
                         showSizeChanger: true,
                         responsive: true,
-                      }}
-                    dataSource={postList}
+                    }}
+                    dataSource={tempList}
                     renderItem={item => (
                         <List.Item
                             key={item.postid}
@@ -103,6 +105,9 @@ export const Search = () => {
                                         </div>
                                         <div className='action'>
                                             <IconText icon={HeartOutlined} text={item.votenumber} key="list-vertical-star" />
+                                        </div>
+                                        <div className='action'>
+                                            <IconText icon={EyeOutlined} text={item.viewnumber} key="list-vertical-eye" />
                                         </div>
                                     </div>
                                 </div>

@@ -31,6 +31,7 @@ export const CodeReader = ({ userCode, userCodeLang }: CodeReaderProps) => {
     const [userOutput, setUserOutput] = useState("");
     const [loading, setLoading] = useState(false);
     const [apiLang, setApiLang] = useState('python');
+    const [displayLang, setDisplayLang] = useState('')
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const languages = [
@@ -58,9 +59,11 @@ export const CodeReader = ({ userCode, userCodeLang }: CodeReaderProps) => {
             if (option !== undefined) {
                 setUserLang(option.value.split('|')[0])
                 setApiLang(option.value.split('|')[1])
+                setDisplayLang(option.label)
             } else {
                 setUserLang('python')
                 setApiLang('python')
+                setDisplayLang('Python')
             }
         }
     }, [languages, userCodeLang])
@@ -94,7 +97,7 @@ export const CodeReader = ({ userCode, userCodeLang }: CodeReaderProps) => {
                             <label className='header-label' htmlFor="select-language">Ngôn ngữ: </label>
                         </div>
                         <div>
-                            <span className='user-code-lang'>{capitalizeFirstLetter(userCodeLang)}</span>
+                            <span className='user-code-lang'>{capitalizeFirstLetter(displayLang)}</span>
                         </div>
                     </Form.Item>
                     <Form.Item name='theme-select' className='code-editor-form-item'>

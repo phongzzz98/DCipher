@@ -144,7 +144,7 @@ export const Home = () => {
           loading={loading}
           itemLayout="vertical"
           size="large"
-          dataSource={mostVotePostList.slice(0, 10)}
+          dataSource={mostVotePostList.slice(0, 5)}
           renderItem={item => (
             <List.Item
               key={item.postid}
@@ -155,12 +155,12 @@ export const Home = () => {
                 // eslint-disable-next-line jsx-a11y/anchor-is-valid
                 title={<a style={{ wordBreak: 'break-all', fontSize: '0.9rem' }} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
               />
-              <div className='avatar-and-tags'>
+              <div className='avatar-and-tags-most-vote'>
                 <div className='home-avatar-most-vote'>
                   <Avatar src={item.avatarImage === 'NULL' || item.avatarImage === '' ? defaultAvatar : item.avatarImage} />
                   <span className='post-username'>{item.username}</span>
                 </div>
-                <div className='home-actions'>
+                <div className='home-actions-most-vote'>
                   <div className='action'>
                     <IconText icon={MessageOutlined} text={item.commentnumber} key="list-vertical-message" />
                   </div>

@@ -1,7 +1,7 @@
 import { Badge, Descriptions, Table, Tooltip } from 'antd'
 import moment from 'moment'
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getOneProblemAction, getProblemStatisticDetailAction } from '../../redux/actions/ContestAction'
@@ -12,12 +12,23 @@ import './ProblemDetailStyle.css'
 import { userInfoSelector } from '../../redux/reducers/AuthReducer';
 import { CodeReader } from '../../common/CodeReader/CodeReader';
 
+const languages = [
+    { value: "c|c", label: "C" },
+    { value: "c_cpp|cpp", label: "C++" },
+    { value: "csharp|csharp", label: "C#" },
+    { value: "python|python", label: "Python" },
+    { value: "java|java", label: "Java" },
+    { value: "javascript|nodejs", label: "Javascript" },
+    { value: "php|php", label: "PHP" },
+];
+
 export const ProblemDetail = () => {
     const { uid, cid } = useParams<{ uid: string, cid: string }>()
     const dispatch: ApplicationDispatch = useDispatch()
     const user = useSelector(userInfoSelector)
     const statDetails = useSelector(statisticDetailSelector)
     const problem = useSelector(oneProblemsSelector)
+    const [lang, setLang] = useState('python')
     useEffect(() => {
         const probStatisticDetailIDs: IStatisticDetailIDs = {
             uid: parseInt(uid!),
@@ -28,9 +39,18 @@ export const ProblemDetail = () => {
     }, [cid, dispatch, uid])
 
     useEffect(() => {
-        if (statDetails.problem_id !== 0)
+        if (statDetails.problem_id !== 0) {
             dispatch(getOneProblemAction(statDetails.problem_id))
+        }
     }, [dispatch, statDetails])
+
+    useEffect(() => {
+        const userLang = languages.find((lang) => lang.value.split('|')[1] === statDetails.language)
+        console.log(userLang);
+        if (userLang !== undefined)
+            setLang(userLang.value.split('|')[0])
+    }, [statDetails.language])
+    
 
 
     return (
@@ -89,7 +109,7 @@ export const ProblemDetail = () => {
             </div>
             <div className='result-status'>
                 <h6 style={{ marginBottom: 15 }}>Code</h6>
-                <CodeReader userCode={statDetails.code} userCodeLang={statDetails.language} />
+                <CodeReader userCode={statDetails.code} userCodeLang={lang} />
             </div>
         </div>
     )

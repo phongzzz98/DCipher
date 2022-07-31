@@ -90,7 +90,6 @@ export const Header = (props: HeaderProps) => {
     }
 
     const handleChangeMultipleTag = (value: string[]) => {
-        console.log(value);
         setSearchTags(value)
     }
 
@@ -130,9 +129,10 @@ export const Header = (props: HeaderProps) => {
                     searchModeSwitch ?
                         <>
                             <Select
+                                maxTagCount={5}
                                 mode="multiple"
                                 allowClear
-                                style={{ width: '100%' }}
+                                style={{ maxWidth: '100%', minWidth: '90%' }}
                                 placeholder="Chọn các thẻ"
                                 onChange={handleChangeMultipleTag}
                                 getPopupContainer={trigger => trigger.parentNode}

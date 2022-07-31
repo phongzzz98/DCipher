@@ -88,6 +88,14 @@
     margin-top: 10px;
 }
 
+.avatar-and-tags-most-vote {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+}
+
 .home-avatar {
     max-width: 180px;
     width: fit-content;
@@ -133,6 +141,13 @@
     display: flex;
     width: 10%;
     justify-content: flex-end;
+}
+
+.home-actions-most-vote {
+    align-self: flex-start;
+    display: flex;
+    width: 10%;
+    justify-content: flex-start;
 }
 
 .action {
