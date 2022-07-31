@@ -13,11 +13,12 @@ import { StatusBlock } from '../MyPage/components/StatusBlock/StatusBlock'
 import { PublicProfileBlock } from './components/PublicProfileBlock/PublicProfileBlock'
 import { PublicFollowingBlock } from './components/PublicFollowingBlock/PublicFollowingBlock'
 import { IFollowData } from '../../redux/interface/UserType'
-import { userInfoSelector } from '../../redux/reducers/AuthReducer'
+import { accessTokenSelector, userInfoSelector } from '../../redux/reducers/AuthReducer'
 import moment from 'moment'
 
 export const UserPage = () => {
     const user = useSelector(oneUserSelector)
+    const accessToken = useSelector(accessTokenSelector)
     const userInfo = useSelector(userInfoSelector)
     const dispatch: ApplicationDispatch = useDispatch()
     const { id } = useParams<{ id: string }>()
@@ -62,12 +63,12 @@ export const UserPage = () => {
                         <h6>tham gia từ {moment(user.created_at).format('DD/MM/YYYY')}</h6>
                     </div>
                 </div>
-                {user.userid !== userInfo.id ?
+                {accessToken ?  user.userid !== userInfo.id ?
                     followed ?
-                        <Button style={{borderRadius: '10px'}} icon={<CheckOutlined />} size='large' type='default' onClick={() => onUnfollow()} >Đã theo dõi</Button>
+                        <Button style={{ borderRadius: '10px' }} icon={<CheckOutlined />} size='large' type='default' onClick={() => onUnfollow()} >Đã theo dõi</Button>
                         :
-                        <Button style={{borderRadius: '10px'}} icon={<PlusSquareOutlined />} size='large' type='primary' onClick={() => onFollow()} >Theo dõi</Button>
-                    : null}
+                        <Button style={{ borderRadius: '10px' }} icon={<PlusSquareOutlined />} size='large' type='primary' onClick={() => onFollow()} >Theo dõi</Button>
+                    : null : null}
             </div>
             <div className='main-info'>
                 <PublicProfileBlock userAbout={user.about} userDisplayname={user.displayname} userLink={user.linkSNS} />

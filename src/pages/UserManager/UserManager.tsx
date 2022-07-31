@@ -160,9 +160,9 @@ export const UserManager = () => {
         <div className='user-manager-page'>
             <h1>Quản lý người dùng</h1>
             <Row gutter={[16, 16]}>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số người dùng' quantity={`${userList.length}`} icon={<TeamOutlined />} iconBlockColor='#29d1aa' /></Col>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Người dùng mới theo tháng' quantity={`+${userThisMonth}`} icon={<UserAddOutlined />} iconBlockColor='#6584FE' /></Col>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Người dùng mới theo năm' quantity={`+${userThisYear}`} icon={<UsergroupAddOutlined />} iconBlockColor='#DF6B31' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số người dùng' quantity={`${userList.length}`} icon={<TeamOutlined />} iconBlockColor='#2af1aa' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Người dùng mới theo tháng' quantity={`+${userThisMonth}`} icon={<UserAddOutlined />} iconBlockColor='#65c4FE' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Người dùng mới theo năm' quantity={`+${userThisYear}`} icon={<UsergroupAddOutlined />} iconBlockColor='#DFFB31' /></Col>
             </Row>
             <h5 style={{ marginTop: 15 }}>Thống kê</h5>
             <div className='user-mng-chart'>

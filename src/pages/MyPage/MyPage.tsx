@@ -36,7 +36,7 @@ export const MyPage = () => {
     }
     else return;
   }, [dispatch, user.id])
-  console.log(userDetails)
+  
   return (
     <div className='my-page'>
       <div className='my-page-backdrop'>

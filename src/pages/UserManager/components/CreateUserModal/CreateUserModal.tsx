@@ -63,11 +63,11 @@ export const CreateUserModal = ({ createModalVisible, setCreateModalVisible }: C
 
     const renderImage = () => {
         return (
-          <div style={{ justifyContent: 'center' }} className="ant-row ant-form-item edit-profile-form-item">
-            <Image width={300} src={currentImage} />
-          </div>
+            <div style={{ justifyContent: 'center' }} className="ant-row ant-form-item edit-profile-form-item">
+                <Image width={300} src={currentImage} />
+            </div>
         )
-      }
+    }
 
     return (
         <Modal
@@ -95,7 +95,11 @@ export const CreateUserModal = ({ createModalVisible, setCreateModalVisible }: C
                         <Radio value={1}>Thành viên</Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item className='create-user-form-item' label="Tên hiển thị" name='createUserDisplayname' rules={[{ required: true, message: 'Hãy nhập tên hiển thị!', }]}>
+                <Form.Item className='create-user-form-item' label="Tên hiển thị" name='createUserDisplayname' rules={[
+                    { required: true, message: 'Hãy nhập tên hiển thị!', },
+                    { max: 16, message: 'Hãy nhập từ 2 đến 16 ký tự' },
+                    { min: 2, message: 'Hãy nhập từ 2 đến 16 ký tự' },
+                ]}>
                     <Input size="middle" /*onChange={(e) => setTagName(e.target.value)}*/ />
                 </Form.Item>
                 <Form.Item className='create-user-form-item' label="Mô tả" name='createUserAbout' >
@@ -104,9 +108,9 @@ export const CreateUserModal = ({ createModalVisible, setCreateModalVisible }: C
                 <Form.Item className='create-user-form-item' label="Ảnh đại diện" name='createUserAvatar' >
                     <Input size="middle" onChange={(e) => setCurrentImage(e.target.value)} />
                 </Form.Item>
-                {currentImage ? renderImage(): 
-                    <div style={{padding: 15 ,border: '1px solid #ececec', width: '40%', margin: '0 auto', borderRadius: '15px', marginBottom: 25}}>
-                        <Empty description='Chưa có ảnh'/>
+                {currentImage ? renderImage() :
+                    <div style={{ padding: 15, border: '1px solid #ececec', width: '40%', margin: '0 auto', borderRadius: '15px', marginBottom: 25 }}>
+                        <Empty description='Chưa có ảnh' />
                     </div>
                 }
                 <Form.Item className='create-user-form-item' label="Tên thật" name='createUserFullname' >

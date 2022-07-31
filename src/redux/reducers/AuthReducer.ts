@@ -38,7 +38,7 @@ export const authSlice = createSlice({
         id: 0,
         role: 0,
         updated_at: "",
-        username: "Anonymous",
+        username: "",
       };
     },
   },

@@ -80,9 +80,8 @@ export const EditPost = () => {
             tagid: values.editPostTag,
             userid: user.id
           }
-          console.log(editedPost);
           await dispatch(editPostAction(editedPost))
-          navigate('/')
+          navigate(`/post/${id}`)
         }
       }
       catch (error) {

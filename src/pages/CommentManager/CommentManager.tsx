@@ -74,21 +74,23 @@ export const CommentManager = () => {
                 </div>
                 <Table className="user-table"
                     dataSource={cloneCommentList}
+                    scroll={{ x: 1500 }}
                     pagination={{
-                        pageSize: 8,
+                        pageSizeOptions: [5, 10, 20, 50, 100],
+                        showSizeChanger: true
                     }}
                     loading={loading}
                     size='large'
                     bordered={true}
-                    // rowKey={(comment: IAdminComment) => comment.userid}
+                    rowKey={(comment: IAdminComment) => comment.id}
                     sticky={true}
                 >
-                    <Table.Column title="Nội dung" render={(comment: IAdminComment) => <span>{comment.content.length > 200 ? comment.content.slice(0,200).concat('...') : comment.content}</span>} width="20%" />
-                    <Table.Column title="Người tạo" render={(comment: IAdminComment) => <span>{comment.username}</span>} width="30%" />
-                    <Table.Column title="Số Vote" className='icon-col' render={(comment: IAdminComment) => <span>{comment.votenumber}</span>} width="15%" />
+                    <Table.Column title="Nội dung" render={(comment: IAdminComment) => <span>{comment.content.length > 200 ? comment.content.slice(0,200).concat('...') : comment.content}</span>} width="40%" />
+                    <Table.Column title="Người tạo" render={(comment: IAdminComment) => <span>{comment.username}</span>} width="20%" />
+                    <Table.Column title="Số Vote" className='icon-col' render={(comment: IAdminComment) => <span>{comment.votenumber}</span>} width="10%" />
                     <Table.Column title="Thời gian tạo" className='icon-col' render={(comment: IAdminComment) => <span>{moment(comment.created_at).format('DD/MM/YYYY --- HH:mm:ss')}</span>} width="20%" />
                     <Table.Column title="Thời gian sửa" className='icon-col' render={(comment: IAdminComment) => <span>{moment(comment.updated_at).format('DD/MM/YYYY --- HH:mm:ss')}</span>} width="20%" />
-                    <Table.Column className="user-mng-action" title="Hành động" width="15%"
+                    <Table.Column fixed='right' className="user-mng-action" title="Hành động" width="15%"
                         render={(comment: IAdminComment) => (
                             <>
                                 <EyeOutlined className='icon-view' onClick={() => navigate(`/post/${comment.postid}`)} />

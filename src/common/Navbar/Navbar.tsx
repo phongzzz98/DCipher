@@ -121,7 +121,7 @@ export const Navbar = ({ isNavbarOpen }: NavbarProps) => {
                         className="user-popover"
                     >
                         <div className="avatar-container">
-                            <Avatar className="avatar" src={userDetails.avatarImage !== "" ? userDetails.avatarImage : blankAva} />
+                            <Avatar className="avatar" src={userDetails.avatarImage === 'NULL' || userDetails.avatarImage === '' ? blankAva : userDetails.avatarImage} />
                             {!isNavbarOpen ? <span className="user-name">{user.username}</span> : null}
                         </div>
                     </Popover> :

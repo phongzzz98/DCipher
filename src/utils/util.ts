@@ -22,6 +22,11 @@ export const validateHexString = (s: string) => {
   return /^#[0-9A-F]{6}$/i.test(s);
 };
 
+export const validateEmail = (email: string) => {
+  const re = /\S+@\S+\.\S+/;
+  return re.test(email);
+};
+
 export const groupBy = (xs: any, key: any) => {
   return xs.reduce((rv: any, x: any) => {
     (rv[x[key]] = rv[x[key]] || []).push(x);

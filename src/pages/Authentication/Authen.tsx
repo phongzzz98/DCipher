@@ -16,7 +16,7 @@ export const Authen = () => {
                 <h1>
                     <span className={isLogin? 'login-text' : 'login-text deactive-text'} onClick={() => setIsLogin(true)}>Đăng nhập</span> / <span className={!isLogin? 'signup-text' : 'signup-text deactive-text'} onClick={() => setIsLogin(false)}>Đăng kí</span>
                 </h1>
-                {isLogin ? <LoginForm /> : <SignUpForm />}
+                {isLogin ? <LoginForm /> : <SignUpForm setIsLogin={setIsLogin}/>}
             </div>
         </div>
     )

@@ -93,7 +93,7 @@ export const EditProfile = () => {
         >
           <Input size="middle" />
         </Form.Item>
-        <Form.Item className='edit-profile-form-item' label="Tên thật" name='editFullname'>
+        <Form.Item className='edit-profile-form-item' label="Tên thật" name='editFullname' rules={[{ max: 100, message: 'Nhập nhiều nhất là 100 ký tự' }]}>
           <Input size="middle" />
         </Form.Item>
         <Form.Item className='edit-profile-form-item' label="Ảnh đại diện" name='editAvatar'>

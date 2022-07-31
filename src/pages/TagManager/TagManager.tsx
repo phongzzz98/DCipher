@@ -122,9 +122,9 @@ export const TagManager = () => {
     <div className='tag-manager-page'>
       <h1>Quản lý thẻ</h1>
       <Row gutter={[20, 20]}>
-        <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số thẻ' quantity={`${tagList.length}`} icon={<TagsFilled />} iconBlockColor='#29d1aa' /></Col>
-        <Col xs={24} xl={8} ><AdminInfoBlock description='Số bài viết dùng thẻ' quantity={`${postUseTag}/${postList.length}`} icon={<ProfileFilled />} iconBlockColor='#6584FE' /></Col>
-        <Col xs={24} xl={8} ><AdminInfoBlock description='Thẻ nổi bật' componentInfo={<div className='popular-tags'>{renderPopularTags()}</div>} icon={<ProjectOutlined />} iconBlockColor='#DF6B31' /></Col>
+        <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số thẻ' quantity={`${tagList.length}`} icon={<TagsFilled />} iconBlockColor='#89f13a' /></Col>
+        <Col xs={24} xl={8} ><AdminInfoBlock description='Số bài viết dùng thẻ' quantity={`${postUseTag}/${postList.length}`} icon={<ProfileFilled />} iconBlockColor='#15f4FE' /></Col>
+        <Col xs={24} xl={8} ><AdminInfoBlock description='Thẻ nổi bật' componentInfo={<div className='popular-tags'>{renderPopularTags()}</div>} icon={<ProjectOutlined />} iconBlockColor='#fFeB81' /></Col>
       </Row>
       <h5 style={{ marginTop: 15 }}>Thống kê</h5>
       <div className='tag-mng-chart'>

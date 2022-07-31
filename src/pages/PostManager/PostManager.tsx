@@ -107,9 +107,9 @@ export const PostManager = () => {
         <div className='post-manager-page'>
             <h1>Quản lý bài viết</h1>
             <Row gutter={[16, 16]}>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số bài viết' quantity={`${postList.length}`} icon={<FileTextOutlined />} iconBlockColor='#29d1aa' /></Col>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong tháng' quantity={`+${postByMonth}`} icon={<FileMarkdownOutlined />} iconBlockColor='#6584FE' /></Col>
-                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong năm' quantity={`+${postByYear}`} icon={<ProjectOutlined rotate={180} />} iconBlockColor='#DF6B31' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Tổng số bài viết' quantity={`${postList.length}`} icon={<FileTextOutlined />} iconBlockColor='#79d1fa' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong tháng' quantity={`+${postByMonth}`} icon={<FileMarkdownOutlined />} iconBlockColor='#9584FE' /></Col>
+                <Col xs={24} xl={8} ><AdminInfoBlock description='Bài viết trong năm' quantity={`+${postByYear}`} icon={<ProjectOutlined rotate={180} />} iconBlockColor='#9FfB31' /></Col>
             </Row>
             <h5 style={{ marginTop: 15 }}>Danh sách bài viết</h5>
             <div className="user-table-container">

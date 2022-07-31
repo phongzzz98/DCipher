@@ -104,7 +104,7 @@ export const Home = () => {
                       </Tooltip>
                     } color={renderRank(item.score).color}>
                       <div onClick={() => onClickUser(item.userid)} className='home-avatar'>
-                        <Avatar size={40} src={item.avatarImage ? item.avatarImage : defaultAvatar} />
+                        <Avatar size={40} src={item.avatarImage === 'NULL' || item.avatarImage === '' ? defaultAvatar : item.avatarImage} />
                         <span className='post-username'>{item.username}</span>
                       </div>
                     </Badge.Ribbon>
@@ -156,8 +156,8 @@ export const Home = () => {
                 title={<a style={{ wordBreak: 'break-all', fontSize: '0.9rem' }} onClick={() => navigate(`/post/${item.postid}`)}>{item.title}</a>}
               />
               <div className='avatar-and-tags'>
-                <div className='home-avatar'>
-                  <Avatar src={item.avatarImage ? item.avatarImage : defaultAvatar} />
+                <div className='home-avatar-most-vote'>
+                  <Avatar src={item.avatarImage === 'NULL' || item.avatarImage === '' ? defaultAvatar : item.avatarImage} />
                   <span className='post-username'>{item.username}</span>
                 </div>
                 <div className='home-actions'>

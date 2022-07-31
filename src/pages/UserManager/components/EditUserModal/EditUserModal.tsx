@@ -108,11 +108,11 @@ export const EditUserModal = ({ editModalVisible, setEditModalVisible, userID }:
 
     const renderImage = () => {
         return (
-          <div style={{ justifyContent: 'center' }} className="ant-row ant-form-item edit-profile-form-item">
-            <Image width={300} src={currentImage} />
-          </div>
+            <div style={{ justifyContent: 'center' }} className="ant-row ant-form-item edit-profile-form-item">
+                <Image width={300} src={currentImage} />
+            </div>
         )
-      }
+    }
 
     return (
         <Modal
@@ -132,7 +132,7 @@ export const EditUserModal = ({ editModalVisible, setEditModalVisible, userID }:
                     <Input size="middle" disabled={true} />
                 </Form.Item>
                 <Form.Item className='create-user-form-item' label='Mật khẩu' name='editUserPassword'>
-                    <Button size='middle' type='link' onClick={() => setEditPasswordModalVisible(true)} ><span style={{textDecorationLine: 'underline'}}>Đổi mật khẩu</span></Button>
+                    <Button size='middle' type='link' onClick={() => setEditPasswordModalVisible(true)} ><span style={{ textDecorationLine: 'underline' }}>Đổi mật khẩu</span></Button>
                 </Form.Item>
                 <Form.Item className='create-user-form-item' label="Phân quyền" name='editUserRole'>
                     <Radio.Group name="radiogroup" value={roleSelect} onChange={(e) => setRoleSelect(e.target.value)}>
@@ -140,18 +140,22 @@ export const EditUserModal = ({ editModalVisible, setEditModalVisible, userID }:
                         <Radio value={1}>Thành viên</Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item className='create-user-form-item' label="Tên hiển thị" name='editUserDisplayname' rules={[{ required: true, message: 'Hãy nhập tên hiển thị!', }]}>
+                <Form.Item className='create-user-form-item' label="Tên hiển thị" name='editUserDisplayname' rules={[
+                    { required: true, message: 'Hãy nhập tên hiển thị!', },
+                    { max: 16, message: 'Hãy nhập từ 2 đến 16 ký tự' },
+                    { min: 2, message: 'Hãy nhập từ 2 đến 16 ký tự' },
+                ]}>
                     <Input size="middle" />
                 </Form.Item>
                 <Form.Item className='create-user-form-item' label="Mô tả" name='editUserAbout' >
                     <Input.TextArea size="middle" />
                 </Form.Item>
                 <Form.Item className='create-user-form-item' label="Ảnh đại diện" name='editUserAvatar' >
-                    <Input size="middle" onChange={(e) => setCurrentImage(e.target.value)}/>
+                    <Input size="middle" onChange={(e) => setCurrentImage(e.target.value)} />
                 </Form.Item>
-                {currentImage ? renderImage(): 
-                    <div style={{padding: 15 ,border: '1px solid #ececec', width: '40%', margin: '0 auto', borderRadius: '15px', marginBottom: 25}}>
-                        <Empty description='Chưa có ảnh'/>
+                {currentImage ? renderImage() :
+                    <div style={{ padding: 15, border: '1px solid #ececec', width: '40%', margin: '0 auto', borderRadius: '15px', marginBottom: 25 }}>
+                        <Empty description='Chưa có ảnh' />
                     </div>
                 }
                 <Form.Item className='create-user-form-item' label="Tên thật" name='editUserFullname' >

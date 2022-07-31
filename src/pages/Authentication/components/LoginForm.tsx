@@ -1,26 +1,34 @@
-import { Button, Checkbox, Form, Input } from 'antd'
+import { Button, Form, Input, notification } from 'antd'
 import { FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from '../../../redux/actions/AuthAction'
 import { ApplicationDispatch } from '../../../store/store'
 import { useNavigate } from 'react-router-dom'
 import { accessTokenSelector } from '../../../redux/reducers/AuthReducer'
+import { useForm } from 'antd/lib/form/Form'
+import { validateEmail } from '../../../utils/util'
 
 export const LoginForm = () => {
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
-    const [remember, setRemember] = useState(true)
+    const [form] = useForm();
     const dispatch: ApplicationDispatch = useDispatch()
     const accessToken = useSelector(accessTokenSelector)
     const navigate = useNavigate()
-
+    
     const handleSubmit = async (e: FormEvent) => {
-        try {
-            e.preventDefault();
-            await dispatch(loginAction({ email: userName, password: password, }))
-        } catch (error) {
-            console.log(error);
-        }
+        form.validateFields().then(async values => {
+            if (!validateEmail(values.loginEmail)) {
+                notification.error({
+                    placement: 'topRight',
+                    message: "Email không hợp lệ!"
+                })
+            }
+            else {
+                e.preventDefault();
+                await dispatch(loginAction({ email: userName, password: password, }))
+            }
+        })
     }
 
     useEffect(() => {
@@ -34,15 +42,14 @@ export const LoginForm = () => {
 
 
     return (
-        <Form className='log-form' labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ remember: true }} onSubmitCapture={handleSubmit} >
-            <Form.Item className='login-form-item' label="Email" name='loginUsername' rules={[{ required: true, message: 'Please input your username!', }]}>
+        <Form form={form} className='log-form' labelCol={{ span: 6 }} wrapperCol={{ span: 16 }} initialValues={{ remember: true }} onSubmitCapture={handleSubmit} >
+            <Form.Item className='login-form-item' label="Email" name='loginEmail' rules={[{ required: true, message: 'Hãy nhập email!', }]}>
                 <Input size="large" onChange={e => setUserName(e.target.value)} />
             </Form.Item>
-            <Form.Item className='login-form-item' label="Mật khẩu" name='loginPassword' rules={[{ required: true, message: 'Please input your password!' }]}>
+            <Form.Item className='login-form-item' label="Mật khẩu" name='loginPassword' rules={[{ required: true, message: 'Hãy nhập mật khẩu!' }]}>
                 <Input.Password size="large" onChange={e => setPassword(e.target.value)} />
             </Form.Item>
             <Form.Item className='login-form-item' id='loginButtons' valuePropName="checked" wrapperCol={{ offset: 6, span: 16 }}>
-                <Checkbox onChange={e => setRemember(e.target.checked)} checked={remember}>Nhớ mật khẩu</Checkbox>
                 <Button shape='round' size='large' type="primary" htmlType="submit">Đăng nhập</Button>
             </Form.Item>
         </Form>
